@@ -4,7 +4,6 @@ class RowAvailability extends Component {
   render() {
     return (
       <li className="row">
-        {console.log(this.props)}
         <div className="col-lg-2">{this.props.id}</div>
         <div className="col-lg-4">{this.props.host}</div>
         <div className="col-lg-2">{this.props.total}</div>
