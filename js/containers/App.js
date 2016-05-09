@@ -1,5 +1,5 @@
 import React from 'react';
-import FormDate from '../components/FormDate';
+import BoxAvailability from '../components/BoxAvailability';
 
 
 class App extends React.Component {
@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-          <FormDate />
+          <BoxAvailability />
       </div>
     )
   }

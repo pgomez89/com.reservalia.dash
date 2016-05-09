@@ -1,1 +1,1 @@
-export {default as FormDateReducer} from './FormDateReducer';
+export {default as BoxAvailabilityReducer} from './BoxAvailabilityReducer';

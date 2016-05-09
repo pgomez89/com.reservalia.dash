@@ -1,20 +1,29 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import FormDateActions from '../actions/FormDateActions';
+import BoxAvailabilityActions from '../actions/BoxAvailabilityActions';
 
 import HeaderBoxAvailability from './HeaderBoxAvailability';
 import RowAvailability from './RowAvailability';
 
-class FormDate extends Component {
+class BoxAvailability extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
+    const {dispatch} = this.props;
+    const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
+
+    fetch('http://www.mocky.io/v2/5730cff7100000ec0517f872')
+      .then(response => response.json())
+      .then(data => actions.getDataAvailabilty(data))
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   render() {
     const {dispatch, startDate, endDate,data} = this.props;
-    const actions = bindActionCreators(FormDateActions, dispatch);
+    const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
     const getAvailability = () => {
       fetch('http://www.mocky.io/v2/5723a664250000c708e2ed37')
@@ -42,7 +51,6 @@ class FormDate extends Component {
                  onChange={e => this.actions.chargeInput(e.target.value,e.target.name)}/>
         </div>
         <ul className="row box-list">
-
           <HeaderBoxAvailability />
           {
             data.map((elem) => {
@@ -59,4 +67,4 @@ class FormDate extends Component {
   }
 }
 
-export default connect(state => state.FormDateReducer)(FormDate)
+export default connect(state => state.BoxAvailabilityReducer)(BoxAvailability)

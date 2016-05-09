@@ -1,6 +1,4 @@
 "use strict";
-import {dispatch} from 'react';
-import {getDataAvailabilty} from '../actions/FormDateActions';
 
 module.exports = {
   getToday: () => {
