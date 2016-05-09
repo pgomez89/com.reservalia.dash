@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import FormDateActions from '../actions/FormDateActions';
-import styles from '../../css/app.css';
 
 import HeaderBoxAvailability from './HeaderBoxAvailability';
 import RowAvailability from './RowAvailability';
