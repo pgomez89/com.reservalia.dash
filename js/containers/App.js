@@ -1,15 +1,13 @@
-import React, {Component} from 'react';
-import BoxAvailability from '../components/BoxAvailability';
-import NavBar from '../components/NavBar';
+import React from 'react';
 import FormDate from '../components/FormDate';
 
-class App extends Component {
+
+class App extends React.Component {
+
   render() {
     return (
       <div>
-        <NavBar />
-        <FormDate />
-        <BoxAvailability />
+          <FormDate />
       </div>
     )
   }

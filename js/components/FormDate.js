@@ -1,47 +1,63 @@
-import React from 'react';
-import InputDate from './InputDate';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import FormDateActions from '../actions/FormDateActions';
+import styles from '../../css/app.css';
 
-class FormDate extends React.Component {
+import HeaderBoxAvailability from './HeaderBoxAvailability';
+import RowAvailability from './RowAvailability';
 
-  constructor(props) {
+class FormDate extends Component {
+
+  constructor(props){
     super(props);
-    this.state = {
-        nameInicio: "inicio",
-        nameFin: "fin"
-    };
   }
-
-  getToday() {
-    var today = new Date();
-    return today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
-  }
-
-  getOneMonthAgo() {
-    var today = new Date();
-    var month = today.getMonth() - 1;
-    return today.getDate() + "/" + month + "/" + today.getFullYear();
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log(event.target);
-  }
-
 
   render() {
+    const {dispatch, startDate, endDate,data} = this.props;
+    const actions = bindActionCreators(FormDateActions, dispatch);
+
+    const getAvailability = () => {
+      fetch('http://www.mocky.io/v2/5723a664250000c708e2ed37')
+        .then(response => response.json())
+        .then(data => actions.getDataAvailabilty(data))
+        .catch(error => {
+          console.error(error)
+        });
+    };
+
     return (
-      <form action="" onSubmit={this.handleSubmit}>
+      <main className="container">
+        <div className="row">
+          <button onClick={getAvailability}>
+            Buscar
+          </button>
+          <input type="text"
+                 value={startDate.value}
+                 name={startDate.name}
+                 onChange={e => this.actions.chargeInput(e.target.value,e.target.name)}/>
 
-        <InputDate name={this.state.nameInicio}
-                   value={this.getToday()}/>
+          <input type="text"
+                 value={endDate.value}
+                 name={endDate.name}
+                 onChange={e => this.actions.chargeInput(e.target.value,e.target.name)}/>
+        </div>
+        <ul className="row box-list">
 
-        <InputDate name={this.state.nameFin}
-                   value={this.getOneMonthAgo()}/>
-
-        <input type="submit" value="Buscar"/>
-      </form>
-    )
+          <HeaderBoxAvailability />
+          {
+            data.map((elem) => {
+              return <RowAvailability key={elem.id}
+                                      host={elem.host}
+                                      id={elem.id}
+                                      total={elem.total}
+                                      sinDisponibilidad={elem.sinDisponibilidad}/>
+            })
+          }
+        </ul>
+      </main>
+    );
   }
 }
 
-export default FormDate;
+export default connect(state => state.FormDateReducer)(FormDate)

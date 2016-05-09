@@ -1,5 +1,5 @@
 {
-  "name": "pruebas-react-redux-disponibilidad",
+  "name": "panel-disponibilidad",
   "version": "0.1.0",
   "scripts": {
     "start": "DEBUG=true node server.js",
@@ -8,19 +8,15 @@
   },
   "dependencies": {
     "babel-core": "^6.3.15",
-    "body-parser": "^1.15.0",
     "es6-promise": "^3.1.2",
-    "googleapis": "^5.2.1",
-    "isomorphic-fetch": "^2.2.1",
-    "jquery": "^2.2.3",
-    "lodash": "^4.11.1",
+    "whatwg-fetch": "^1.0.0",
+    "lodash": "^4.11.2",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "react-redux": "^4.0.0",
     "redux": "^3.0.4",
+    "react-redux": "^4.0.0",
     "redux-devtools": "^2.1.5",
-    "redux-thunk": "^1.0.0",
-    "whatwg-fetch": "^0.11.0"
+    "redux-thunk": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.15",
