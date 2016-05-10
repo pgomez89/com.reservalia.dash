@@ -13,7 +13,7 @@ class BoxAvailability extends Component {
     const {dispatch} = this.props;
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
-    fetch('http://www.mocky.io/v2/5730cff7100000ec0517f872')
+    fetch('/disponibilidad')
       .then(response => response.json())
       .then(data => actions.getDataAvailabilty(data))
       .catch(error => {
@@ -26,7 +26,7 @@ class BoxAvailability extends Component {
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
     const getAvailability = () => {
-      fetch('http://www.mocky.io/v2/5723a664250000c708e2ed37')
+      fetch('/disponibilidad')
         .then(response => response.json())
         .then(data => actions.getDataAvailabilty(data))
         .catch(error => {
