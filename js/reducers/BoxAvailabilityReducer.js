@@ -3,11 +3,11 @@ import {getToday, getOneMonthAgo,getAvailability} from '../libs/lib';
 
 let defaultState = {
   startDate: {
-    value: getToday(),
+    value: getOneMonthAgo(),
     name: 'inicio'
   },
   endDate: {
-    value: getOneMonthAgo(),
+    value: getToday(),
     name: 'fin'
   },
   data:  []

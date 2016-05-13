@@ -20,11 +20,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/disponibilidad', function (req, res) {
-  dispo.getInfoAvailability("2016-04-01", "2016-04-02", function(respuesta){
-    console.log(respuesta);
-    res.send(respuesta);
-  });
+app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
+  dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
+    .then( data => {
+      res.send(data)
+    });
 });
 
 app.listen(3000, 'localhost', function (err, result) {

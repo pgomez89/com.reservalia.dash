@@ -10,10 +10,10 @@ class BoxAvailability extends Component {
 
   constructor(props) {
     super(props);
-    const {dispatch} = this.props;
+    const {dispatch, startDate, endDate} = this.props;
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
-    fetch('/disponibilidad')
+    fetch('/disponibilidad' + '/' + startDate.value + '/' + endDate.value)
       .then(response => response.json())
       .then(data => actions.getDataAvailabilty(data))
       .catch(error => {
@@ -25,8 +25,8 @@ class BoxAvailability extends Component {
     const {dispatch, startDate, endDate,data} = this.props;
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
-    const getAvailability = () => {
-      fetch('/disponibilidad')
+    const getAvailability = (startDate, endDate) => {
+      fetch('/disponibilidad' + '/' + startDate + '/' + endDate)
         .then(response => response.json())
         .then(data => actions.getDataAvailabilty(data))
         .catch(error => {
@@ -37,25 +37,26 @@ class BoxAvailability extends Component {
     return (
       <main className="container">
         <div className="row">
-          <button onClick={getAvailability}>
+          <button onClick={e => {
+          e.preventDefault();
+          getAvailability(startDate.value,endDate.value)}}>
             Buscar
           </button>
           <input type="text"
                  value={startDate.value}
                  name={startDate.name}
-                 onChange={e => this.actions.chargeInput(e.target.value,e.target.name)}/>
+                 onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
 
           <input type="text"
                  value={endDate.value}
                  name={endDate.name}
-                 onChange={e => this.actions.chargeInput(e.target.value,e.target.name)}/>
+                 onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
         </div>
         <ul className="row box-list">
           <HeaderBoxAvailability />
           {
             data.map((elem) => {
-              return <RowAvailability key={elem.id}
-                                      host={elem.host}
+              return <RowAvailability host={elem.host}
                                       id={elem.id}
                                       total={elem.total}
                                       sinDisponibilidad={elem.sinDisponibilidad}/>
