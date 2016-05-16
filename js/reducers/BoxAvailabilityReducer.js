@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes';
-import {getToday, getOneMonthAgo,getAvailability} from '../libs/lib';
+import {getToday, getOneMonthAgo, sortData} from '../libs/lib';
 
 let defaultState = {
   startDate: {
@@ -10,7 +10,11 @@ let defaultState = {
     value: getToday(),
     name: 'fin'
   },
-  data:  []
+  data: {
+    sort: "",
+    elemSort: "",
+    content: []
+  }
 };
 
 export default function (state = defaultState, action) {
@@ -22,7 +26,16 @@ export default function (state = defaultState, action) {
         return {...state, endDate: {value: action.text, name: 'fin'}};
       }
     case ActionTypes.GET_AVAILABILITY:
-      return {...state, data: action.payload.content};
+      return {...state, data: {sort: 'DESC', elemSort: 'sinDisponibilidad', content: action.payload.content}};
+    case 'SORT_DATA':
+      return {
+        ...state,
+        data: {
+          sort: action.payload.typeSort == 'ASC' ? 'DESC' : 'ASC',
+          elemSort: action.payload.key,
+          content: sortData(action.payload.content, action.payload.typeSort, action.payload.key)
+        }
+      };
     default:
       return state;
   }

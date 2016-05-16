@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
   dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
     .then( data => {
-      res.send(data)
+      res.send(data);
     });
 });
 

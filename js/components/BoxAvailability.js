@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import BoxAvailabilityActions from '../actions/BoxAvailabilityActions';
-
+import {formatDate} from '../libs/lib';
 import HeaderBoxAvailability from './HeaderBoxAvailability';
 import RowAvailability from './RowAvailability';
 
@@ -12,8 +12,7 @@ class BoxAvailability extends Component {
     super(props);
     const {dispatch, startDate, endDate} = this.props;
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
-
-    fetch('/disponibilidad' + '/' + startDate.value + '/' + endDate.value)
+    fetch('/disponibilidad' + '/' + formatDate(startDate.value) + '/' + formatDate(endDate.value))
       .then(response => response.json())
       .then(data => actions.getDataAvailabilty(data))
       .catch(error => {
@@ -26,7 +25,7 @@ class BoxAvailability extends Component {
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
     const getAvailability = (startDate, endDate) => {
-      fetch('/disponibilidad' + '/' + startDate + '/' + endDate)
+      fetch('/disponibilidad' + '/' + formatDate(startDate) + '/' + formatDate(endDate))
         .then(response => response.json())
         .then(data => actions.getDataAvailabilty(data))
         .catch(error => {
@@ -43,26 +42,53 @@ class BoxAvailability extends Component {
             Buscar
           </button>
           <input type="text"
-                 value={startDate.value}
-                 name={startDate.name}
-                 onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
-
-          <input type="text"
                  value={endDate.value}
                  name={endDate.name}
                  onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
+          <input type="text"
+                 value={startDate.value}
+                 name={startDate.name}
+                 onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
         </div>
-        <ul className="row box-list">
-          <HeaderBoxAvailability />
+        <table id="table_id" className="table table-striped">
+          <thead>
+          <tr>
+            <th onClick={e => {
+              e.preventDefault();
+              actions.sortData(data.content,data.sort,'id');
+            }}>Id ▾▴</th>
+            <th>Host</th>
+            <th onClick={e => {
+              e.preventDefault();
+              actions.sortData(data.content,data.sort,'total');
+            }}>Total Busquedas ▾▴
+            </th>
+            <th onClick={e => {
+              e.preventDefault();
+              actions.sortData(data.content,data.sort,'sinDisponibilidad');
+            }}>Sin Disponibilidad ▾▴</th>
+            <th onClick={e => {
+              e.preventDefault();
+              actions.sortData(data.content,data.sort,'porcentaje');
+            }}>% ▾▴</th>
+          </tr>
+          </thead>
+          <tbody>
           {
-            data.map((elem) => {
-              return <RowAvailability host={elem.host}
-                                      id={elem.id}
-                                      total={elem.total}
-                                      sinDisponibilidad={elem.sinDisponibilidad}/>
+            data.content.map((elem) => {
+              return (
+                <tr>
+                  <th>{elem.id}</th>
+                  <td>{elem.host}</td>
+                  <td>{elem.total}</td>
+                  <td>{elem.sinDisponibilidad}</td>
+                  <td>{elem.porcentaje + '%'}</td>
+                </tr>
+              )
             })
           }
-        </ul>
+          </tbody>
+        </table>
       </main>
     );
   }
