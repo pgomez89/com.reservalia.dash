@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var express = require('express');
-var config = require('./webpack.config');
 
 var dispo = require('./lib/apiAnalytics');
 
