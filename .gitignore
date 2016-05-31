@@ -1,6 +1,6 @@
 .DS_Store
-dist/**
 node_modules/
 test/
 .idea/
 key/
+dist/

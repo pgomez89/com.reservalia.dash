@@ -8,12 +8,13 @@ var devFlagPlugin = new webpack.DefinePlugin({
 
 module.exports = {
   entry: [
-    './js/index.js'
+    './src/js/index.js',
+    './src/css/app.css'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/static/',
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
@@ -23,7 +24,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ },
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?module!cssnext-loader') }
+      {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")}
     ]
   },
   resolve: {

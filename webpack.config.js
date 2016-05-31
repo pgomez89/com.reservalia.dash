@@ -11,8 +11,8 @@ module.exports = {
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    './js/index.js',
-    './css/app.css'
+    './src/js/index.js',
+    './src/css/app.css'
   ],
   output: {
     path: path.join(__dirname, 'dist'),

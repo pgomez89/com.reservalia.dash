@@ -16,16 +16,16 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
+/*app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
   dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
     .then( data => {
       res.send(data);
     });
-});
+});*/
 
 app.listen(3000, 'localhost', function (err, result) {
   if (err) {

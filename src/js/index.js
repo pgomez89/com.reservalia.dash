@@ -12,11 +12,8 @@ ReactDOM.render(
     {/* <App /> is your app entry point */}
     <Provider store={store}>
       <App/>
-    </Provider>
+    </Provider>}
 
-    {/* only renders when running in DEV mode */
-      renderDevTools(store)
-    }
   </div>,
   document.getElementById('main')
 );

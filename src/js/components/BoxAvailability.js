@@ -5,6 +5,7 @@ import BoxAvailabilityActions from '../actions/BoxAvailabilityActions';
 import {formatDate} from '../libs/lib';
 import HeaderBoxAvailability from './HeaderBoxAvailability';
 import RowAvailability from './RowAvailability';
+import style from '../../css/app.css';
 
 class BoxAvailability extends Component {
 
@@ -12,7 +13,7 @@ class BoxAvailability extends Component {
     super(props);
     const {dispatch, startDate, endDate} = this.props;
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
-    fetch('/disponibilidad' + '/' + formatDate(startDate.value) + '/' + formatDate(endDate.value))
+    fetch('http://localhost:4000/disponibilidad' + '/' + formatDate(startDate.value) + '/' + formatDate(endDate.value))
       .then(response => response.json())
       .then(data => actions.getDataAvailabilty(data))
       .catch(error => {
@@ -25,7 +26,7 @@ class BoxAvailability extends Component {
     const actions = bindActionCreators(BoxAvailabilityActions, dispatch);
 
     const getAvailability = (startDate, endDate) => {
-      fetch('/disponibilidad' + '/' + formatDate(startDate) + '/' + formatDate(endDate))
+      fetch('http://localhost:4000/disponibilidad' + '/' + formatDate(startDate) + '/' + formatDate(endDate))
         .then(response => response.json())
         .then(data => actions.getDataAvailabilty(data))
         .catch(error => {
@@ -36,27 +37,40 @@ class BoxAvailability extends Component {
     return (
       <main className="container">
         <div className="row">
-          <button onClick={e => {
-          e.preventDefault();
-          getAvailability(startDate.value,endDate.value)}}>
-            Buscar
-          </button>
-          <input type="text"
-                 value={endDate.value}
-                 name={endDate.name}
-                 onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
-          <input type="text"
-                 value={startDate.value}
-                 name={startDate.name}
-                 onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
+          <div className="col-lg-12 buscador-fecha">
+            <form className="form-inline">
+              <div className="form-group">
+                <label className="label-margin">From</label>
+                <input className="form-control"
+                       type="text"
+                       value={endDate.value}
+                       name={endDate.name}
+                       onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
+              </div>
+              <div className="form-group">
+                <label className="label-margin">To</label>
+                <input className="form-control"
+                       type="text"
+                       value={startDate.value}
+                       name={startDate.name}
+                       onChange={e => actions.chargeInput(e.target.value,e.target.name)}/>
+              </div>
+              <button className="btn btn-default"
+                      onClick={e => { e.preventDefault();
+                      getAvailability(startDate.value,endDate.value)}}>
+                Buscar
+              </button>
+            </form>
+          </div>
         </div>
-        <table id="table_id" className="table table-striped">
+        <table id="table_id" className="table table-striped table-dispo">
           <thead>
           <tr>
             <th onClick={e => {
               e.preventDefault();
               actions.sortData(data.content,data.sort,'id');
-            }}>Id ▾▴</th>
+            }}>Id ▾▴
+            </th>
             <th>Host</th>
             <th onClick={e => {
               e.preventDefault();
@@ -66,11 +80,13 @@ class BoxAvailability extends Component {
             <th onClick={e => {
               e.preventDefault();
               actions.sortData(data.content,data.sort,'sinDisponibilidad');
-            }}>Sin Disponibilidad ▾▴</th>
+            }}>Sin Disponibilidad ▾▴
+            </th>
             <th onClick={e => {
               e.preventDefault();
               actions.sortData(data.content,data.sort,'porcentaje');
-            }}>% ▾▴</th>
+            }}>% ▾▴
+            </th>
           </tr>
           </thead>
           <tbody>
