@@ -9,11 +9,9 @@ const store = configureStore();
 
 ReactDOM.render(
   <div>
-    {/* <App /> is your app entry point */}
     <Provider store={store}>
       <App/>
-    </Provider>}
-
+    </Provider>
   </div>,
   document.getElementById('main')
 );

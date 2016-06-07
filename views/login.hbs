@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./static/app.css">
+</head>
 <body>
 
-<div class="container-fluid-full">
-    <div class="row-fluid">
-
-        <div class="row-fluid">
+<div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-reservalia">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Monitor Reservalia</a>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
             <div class="login-box">
                 <div class="icons">
 
@@ -16,16 +25,17 @@
 
                         <div class="input-prepend" title="Username">
                             <span class="add-on"><i class="halflings-icon user"></i></span>
-                            <input required class="input-large span10" name="username" id="username" type="text" placeholder="type username"/>
+                            <input required class="form-control" name="username" id="username" type="text"
+                                   placeholder="type username"/>
                         </div>
                         <div class="clearfix"></div>
 
                         <div class="input-prepend" title="Password">
                             <span class="add-on"><i class="halflings-icon lock"></i></span>
-                            <input required class="input-large span10" name="password" id="password" type="password" placeholder="type password"/>
+                            <input required class="form-control" name="password" id="password" type="password"
+                                   placeholder="type password"/>
                         </div>
                         <div class="clearfix"></div>
-
 
 
                         <div class="button-login">
@@ -37,7 +47,6 @@
                 </form>
 
             </div><!--/span-->
-        </div><!--/row-->
 
 
     </div><!--/.fluid-container-->
