@@ -9,10 +9,11 @@ var router = express.Router();
 //LOGIN
 
 router.get('/login', function (req, res) {
+  console.log("info:: ", req.app.get('staticPath'))
   if (req.session && req.session.user) {
     res.redirect('/');
   } else {
-    res.render('login');
+    res.render('login', {staticPath: req.app.get('staticPath')});
   }
 });
 

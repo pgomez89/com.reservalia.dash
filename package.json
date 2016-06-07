@@ -2,12 +2,12 @@
   "name": "pruebas-react-redux-disponibilidad",
   "version": "0.1.0",
   "scripts": {
-    "start": "DEBUG=true node server.js",
+    "start": "DEBUG=true NODE_ENV=development node server.js",
+    "startProd": "DEBUG=true NODE_ENV=production node server.js",
     "build": "webpack -p --config webpack.production.js",
     "build-dev": "webpack -p"
   },
   "dependencies": {
-    "babel-core": "^6.3.15",
     "body-parser": "^1.15.0",
     "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.3",
@@ -24,7 +24,6 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.4.0",
     "redux": "^3.5.2",
-    "redux-devtools": "^2.1.5",
     "redux-thunk": "^1.0.0",
     "underscore": "^1.8.3",
     "whatwg-fetch": "^0.11.0"
@@ -46,7 +45,6 @@
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
-    "html-webpack-plugin": "^2.19.0",
     "path": "^0.12.7",
     "style-loader": "^0.13.1",
     "webpack": "^1.0.0",
