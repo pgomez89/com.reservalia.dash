@@ -9,10 +9,53 @@
 }
 
 .buscador-fecha {
-  margin-top:40px;
+  margin-top:50px;
   margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #c9c9c9;
 }
 
 .form-control{
   margin-right:15px;
+}
+
+.navbar-reservalia {
+  background: #000000;
+  color: #ffffff;
+  border:none;
+}
+
+.navbar-reservalia a{
+  color: #ffffff;
+}
+
+.navbar-brand {
+  font-size: 36px;
+  color: #ffffff!important;
+}
+
+.table-dispo {
+  border: 1px solid #dddddd;
+}
+
+.login-box {
+  width: 400px;
+  margin: 100px auto;
+  padding:30px;
+  background: #fafafa;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#f5f5f5',GradientType=0 );
+  color: #000;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.15);
+  box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.15);
+}
+
+.login-box input {
+  margin-bottom: 10px;
+}
+
+.head-sort {
+  cursor: pointer;
 }
