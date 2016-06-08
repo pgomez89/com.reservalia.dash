@@ -5,6 +5,21 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+var enviroment;
+
+if( !process.env.NODE_ENV ){
+  var fs = require('fs');
+  fs.readFile('/etc/cluster.context', 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(data);
+    enviroment = data;
+  });
+}else{
+  enviroment = process.env.NODE_ENV
+}
+
 //rutas
 var routes = require('./routes/routes');
 
@@ -20,10 +35,12 @@ var serverHost = '0.0.0.0';
 
 var mongoUrl = "mongodb://mongo.aws/specialdom";
 
-var isProdEnv = process.env.NODE_ENV !== 'development';
+var isDevelopmentEnv = enviroment === 'development';
+var isRcEnv = enviroment === 'rc';
+var isProdEnv = enviroment !== 'prod';
 
-var isRcEnv = process.env.NODE_ENV !== 'rc';
 
+var isDevelopmentEnv =
 if( isProdEnv ){
   mongoUrl = "mongodb://reservalia-db-00:27017/specialdom,reservalia-db-01:27017/specialdom,reservalia-db-02:27017/specialdom"
 
@@ -83,6 +100,6 @@ app.listen(serverPort, serverHost, function (err, result) {
   if (err) {
     console.log(err);
   }
-  console.log( 'NODE_ENV: ', process.env.NODE_ENV );
+  console.log( 'NODE_ENV: ', enviroment );
   console.log( 'Listening at ', serverHost,':', serverPort );
 });

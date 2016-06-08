@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "DEBUG=true NODE_ENV=development node server.js",
-    "startProd": "DEBUG=true NODE_ENV=production node server.js",
+    "startProd": "DEBUG=true node server.js",
     "build": "webpack -p --config webpack.production.js",
     "build-dev": "webpack -p"
   },
