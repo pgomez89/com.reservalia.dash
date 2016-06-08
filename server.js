@@ -40,7 +40,7 @@ function startServer(){
     }
 
     if ( isRcEnv ){
-      mongoUrl = "reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
+      mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
       isDevelopment = false;
       indexPath= '/dist/';
       serverPort = '9290';
