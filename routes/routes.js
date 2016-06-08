@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var mongodb = require('mongojs')("mongodb://mongo.aws/specialdom", ["users"]);
+var mongodb = require('mongojs');
 var util = require('../lib/util');
 var dispo = require('../lib/apiAnalytics');
 
@@ -31,9 +31,11 @@ router.post('/auth', function (req, res) {
     res.redirect('/');
   } else {
     user.password = util.encrypt(user.password);
-    mongodb.users.findOne({_id: user.username, password: user.password}, function (err, user) {
+    mongodb( req.app.get('mongoUrl'), ["users"])
+      .users.findOne({_id: user.username, password: user.password}, function (err, user) {
       if (err) {
         res.redirect('/login');
+        console.log(" Db error: ", err, err.stack );
       } else {
         if (user === null) {
           res.redirect('/login');
