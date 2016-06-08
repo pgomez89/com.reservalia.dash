@@ -37,10 +37,10 @@ var mongoUrl = "mongodb://mongo.aws/specialdom";
 
 var isDevelopmentEnv = enviroment === 'development';
 var isRcEnv = enviroment === 'rc';
-var isProdEnv = enviroment !== 'prod';
+var isProdEnv = enviroment === 'prod';
 
 if( isProdEnv ){
-  mongoUrl = "mongodb://reservalia-db-00:27017/specialdom,reservalia-db-01:27017/specialdom,reservalia-db-02:27017/specialdom"
+  mongoUrl = "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017/specialdom"
   config = require('./webpack.production');
   isDevelopment = false;
   indexPath= '/dist/';
@@ -49,7 +49,7 @@ if( isProdEnv ){
 }
 
 if ( isRcEnv ){
-  mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it";
+  mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
 }
 var compiler = webpack(config);
 

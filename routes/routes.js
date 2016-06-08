@@ -56,4 +56,9 @@ router.get('/disponibilidad/:startDate/:endDate', function (req, res) {
     });
 });
 
+
+router.get('/health-check', function (req, res) {
+   res.send({status: 'ok'});
+});
+
 module.exports = router;
