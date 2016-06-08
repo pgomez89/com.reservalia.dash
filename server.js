@@ -14,20 +14,29 @@ var webpack = require('webpack');
 var config = require('./webpack.config');
 var isDevelopment = true;
 var indexPath = '';
-
 var mongoHost = "mongo.aws";
+var serverPort = '3000';
+var serverHost = '0.0.0.0';
 
-var mongoUrl = 'specialdom';
-if( process.env.NODE_ENV !== 'development' ){
-  mongoHost = "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017"
+var mongoUrl = "mongodb://mongo.aws/specialdom";
 
-  console.log( 'NODE_ENV: ', process.env.NODE_ENV )
+var isProdEnv = process.env.NODE_ENV !== 'development';
+
+var isRcEnv = process.env.NODE_ENV !== 'rc';
+
+if( isProdEnv ){
+  mongoUrl = "mongodb://reservalia-db-00:27017/specialdom,reservalia-db-01:27017/specialdom,reservalia-db-02:27017/specialdom"
+
   config = require('./webpack.production');
   isDevelopment = false;
   indexPath= '/dist/';
-  mongoUrl = mongoHost+'/specialdom'
+
+  serverPort = '9290';
 }
 
+if ( isRcEnv ){
+  mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it";
+}
 var compiler = webpack(config);
 
 // Setup server
@@ -35,11 +44,11 @@ var app = express();
 app.use(cookieParser());
 app.use(session({
   store: new MongoStore({
-    url: mongoHost+"/monitor",
+    url: mongoUrl,
     autoRemove: 'interval',
     autoRemoveInterval: 10
   }),
-  secret: "anitalavalatina",
+  secret: "s3cr3t",
   resave: false,
   saveUninitialized: true
 }));
@@ -70,10 +79,10 @@ app.get('/', function (req, res) {
 
 app.use('/', routes);
 
-app.listen(3020, 'localhost', function (err, result) {
+app.listen(serverPort, serverHost, function (err, result) {
   if (err) {
     console.log(err);
   }
-
-  console.log('Listening at localhost:3020');
+  console.log( 'NODE_ENV: ', process.env.NODE_ENV );
+  console.log( 'Listening at ', serverHost,':', serverPort );
 });
