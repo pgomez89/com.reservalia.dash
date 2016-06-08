@@ -30,17 +30,17 @@ function startServer(){
     var isRcEnv = enviroment === 'rc';
     var isProdEnv = enviroment === 'prod';
     var config = isDevelopmentEnv ? require('./webpack.config') : require('./webpack.production');
+    var publicPath= isDevelopmentEnv ? '/static/' : 'dist';
 
     if( isProdEnv ){
       mongoUrl = "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017/specialdom"
-      mongoUrl = "mongodb://mongo.aws/specialdom";
       isDevelopment = false;
       indexPath= '/dist/';
       serverPort = '9290';
     }
 
     if ( isRcEnv ){
-      mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
+      mongoUrl = "mongodb://10.254.169.43:27017, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
       isDevelopment = false;
       indexPath= '/dist/';
       serverPort = '9290';
@@ -99,6 +99,7 @@ function startServer(){
       }
       console.log( 'NODE_ENV: ', enviroment );
       console.log( 'Listening at ', serverHost,':', serverPort );
+      console.log("Mongo url ", mongoUrl);
     });
 
 }
@@ -116,7 +117,7 @@ if( !process.env.NODE_ENV ){
     startServer();
   });
 }else{
-  enviroment = 'prod' || process.env.NODE_ENV;
+  enviroment = process.env.NODE_ENV;
   startServer();
 }
 
