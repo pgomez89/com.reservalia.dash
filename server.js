@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 
 var enviroment;
 
+
 function startServer(){
 
       //rutas
@@ -17,11 +18,10 @@ function startServer(){
     //webpack
     var webpack = require('webpack');
 
-    var config = require('./webpack.config');
     var isDevelopment = true;
     var indexPath = '';
     var mongoHost = "mongo.aws";
-    var serverPort = '3000';
+    var serverPort = '3010';
     var serverHost = '0.0.0.0';
 
     var mongoUrl = "mongodb://mongo.aws/specialdom";
@@ -29,10 +29,11 @@ function startServer(){
     var isDevelopmentEnv = enviroment === 'development';
     var isRcEnv = enviroment === 'rc';
     var isProdEnv = enviroment === 'prod';
+    var config = isDevelopmentEnv ? require('./webpack.config') : require('./webpack.production');
 
     if( isProdEnv ){
       mongoUrl = "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017/specialdom"
-      config = require('./webpack.production');
+      mongoUrl = "mongodb://mongo.aws/specialdom";
       isDevelopment = false;
       indexPath= '/dist/';
       serverPort = '9290';
@@ -40,7 +41,6 @@ function startServer(){
 
     if ( isRcEnv ){
       mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
-      config = require('./webpack.production');
       isDevelopment = false;
       indexPath= '/dist/';
       serverPort = '9290';
@@ -68,22 +68,28 @@ function startServer(){
     app.set('isDevelopment', isDevelopment );
 
 
-    app.use(require('webpack-dev-middleware')(compiler, {
-      noInfo: true,
-      publicPath: config.output.publicPath,
-      historyApiFallback: true
-    }));
+    if( isDevelopment ){
+      app.use(require('webpack-dev-middleware')(compiler, {
+        noInfo: true,
+        publicPath: config.output.publicPath,
+        historyApiFallback: true
+      }));
 
-    app.use(require('webpack-hot-middleware')(compiler));
+       app.use(require('webpack-hot-middleware')(compiler));
+    }else{
+      app.use('/dist', express.static(__dirname + '/dist'));
+    }
 
 
     app.get('/', function (req, res) {
       if (req.session && req.session.user) {
-        res.sendFile(path.join(__dirname,  indexPath + 'index.html'));
+        res.render(path.join(__dirname, 'index'), { staticPath: config.output.publicPath });
       } else {
         res.redirect('/login');
       }
     });
+
+
 
     app.use('/', routes);
 
@@ -99,8 +105,7 @@ function startServer(){
 
 
 
-
-if( !process.env.NODE_ENV ){
+if( false && !process.env.NODE_ENV ){
   var fs = require('fs');
   fs.readFile('/etc/cluster.context', 'utf8', function (err,data) {
     if (err) {
@@ -111,6 +116,7 @@ if( !process.env.NODE_ENV ){
     startServer();
   });
 }else{
-  enviroment = process.env.NODE_ENV;
+  enviroment = 'prod' || process.env.NODE_ENV;
   startServer();
 }
+
