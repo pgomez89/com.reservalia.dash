@@ -39,11 +39,8 @@ var isDevelopmentEnv = enviroment === 'development';
 var isRcEnv = enviroment === 'rc';
 var isProdEnv = enviroment !== 'prod';
 
-
-var isDevelopmentEnv =
 if( isProdEnv ){
   mongoUrl = "mongodb://reservalia-db-00:27017/specialdom,reservalia-db-01:27017/specialdom,reservalia-db-02:27017/specialdom"
-
   config = require('./webpack.production');
   isDevelopment = false;
   indexPath= '/dist/';
