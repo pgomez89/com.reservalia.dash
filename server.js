@@ -105,7 +105,7 @@ function startServer(){
 
 
 
-if( false && !process.env.NODE_ENV ){
+if( !process.env.NODE_ENV ){
   var fs = require('fs');
   fs.readFile('/etc/cluster.context', 'utf8', function (err,data) {
     if (err) {
