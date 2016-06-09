@@ -1,124 +1,47 @@
+import path from 'path';
+import bodyParser from 'body-parser';
+import express from 'express';
+import http from 'http';
+import socketIO from 'socket.io';
+import config from 'config';
 
+import * as api from './server/api/http';
+import * as eventService from './server/api/service/event';
+import * as uni from './server/app.js';
 
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const app = express();
+const httpServer = http.createServer(app);
+const port = config.get('express.port') || 3000;
 
-var enviroment;
+var io = socketIO(httpServer);
 
+app.set('views', path.join(__dirname, 'server', 'views'));
+app.set('view engine', 'ejs');
 
-function startServer(){
+/**
+ * Server middleware
+ */
+app.use(require('serve-static')(path.join(__dirname, config.get('buildDirectory'))));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 
-      //rutas
-    var routes = require('./routes/routes');
+/**
+ * API Endpoints
+ */
+app.get('/api/0/events', api.getEvents);
+app.post('/api/0/events', api.addEvent);
+app.post('/api/0/events/:id', api.editEvent);
+app.delete('/api/0/events/:id', api.deleteEvent);
 
-    //webpack
-    var webpack = require('webpack');
+app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'images', 'favicon.ico')));
 
-    var isDevelopment = true;
-    var indexPath = '';
-    var mongoHost = "mongo.aws";
-    var serverPort = '3010';
-    var serverHost = '0.0.0.0';
+/**
+ * Universal Application endpoint
+ */
+app.get('*', uni.handleRender);
 
-    var mongoUrl = "mongodb://mongo.aws/specialdom";
+eventService.liveUpdates(io);
 
-    var isDevelopmentEnv = enviroment === 'development';
-    var isRcEnv = enviroment === 'rc';
-    var isProdEnv = enviroment === 'prod';
-    var config = isDevelopmentEnv ? require('./webpack.config') : require('./webpack.production');
-    var publicPath= isDevelopmentEnv ? '/static/' : 'dist';
-
-    if( isProdEnv ){
-      mongoUrl = "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017/specialdom"
-      isDevelopment = false;
-      indexPath= '/dist/';
-      serverPort = '9290';
-    }
-
-    if ( isRcEnv ){
-      mongoUrl = "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom";
-      isDevelopment = false;
-      indexPath= '/dist/';
-      serverPort = '9290';
-    }
-    var compiler = webpack(config);
-
-    // Setup server
-    var app = express();
-    app.use(cookieParser());
-    app.use(session({
-      store: new MongoStore({
-        url: mongoUrl,
-        autoRemove: 'interval',
-        autoRemoveInterval: 10
-      }),
-      secret: "s3cr3t",
-      resave: false,
-      saveUninitialized: true
-    }));
-
-    // parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.set('view engine', 'hbs');
-    app.set('staticPath', config.output.publicPath);
-    app.set('isDevelopment', isDevelopment );
-    app.set('mongoUrl', mongoUrl );
-
-
-    if( isDevelopment ){
-      app.use(require('webpack-dev-middleware')(compiler, {
-        noInfo: true,
-        publicPath: config.output.publicPath,
-        historyApiFallback: true
-      }));
-
-       app.use(require('webpack-hot-middleware')(compiler));
-    }else{
-      app.use('/dist', express.static(__dirname + '/dist'));
-    }
-
-
-    app.get('/', function (req, res) {
-      if (req.session && req.session.user) {
-        res.render(path.join(__dirname, 'index'), { staticPath: config.output.publicPath });
-      } else {
-        res.redirect('/login');
-      }
-    });
-
-
-
-    app.use('/', routes);
-
-    app.listen(serverPort, serverHost, function (err, result) {
-      if (err) {
-        console.log(err);
-      }
-      console.log( 'NODE_ENV: ', enviroment );
-      console.log( 'Listening at ', serverHost,':', serverPort );
-      console.log("Mongo url ", mongoUrl);
-    });
-
-}
-
-
-
-if( !process.env.NODE_ENV ){
-  var fs = require('fs');
-  fs.readFile('/etc/cluster.context', 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log(data);
-    enviroment = data;
-    startServer();
-  });
-}else{
-  enviroment = process.env.NODE_ENV;
-  startServer();
-}
-
+httpServer.listen(port);
