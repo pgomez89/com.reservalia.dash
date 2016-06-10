@@ -1,14 +1,13 @@
 ## Reservalia Monitor
 
 ### Main Features
-
  - Universal (Isomorphic) Javascript
  - Asyncronous Redux actions example
 
 ### Setup
 
  - Clone the repo `git clone git@github.com:despegar/com.reservalia.monitor.git`
- - Make sure you are using Node v6.0.0 (I recommend using [n](https://github.com/tj/n) for Node version management)
+ - Make sure you are using Node v6.0.0 (I recommend using [nvm](https://github.com/creationix/nvm) for Node version management)
  - Run `npm install`
  - If your local environment is not reflected by `config/default.json`, then add a file at `config/local.json` to provide local customisation.
 
@@ -41,6 +40,21 @@ You will need to roll out your own deployment script for a server, but before yo
 | [Superagent](https://github.com/visionmedia/superagent) | Universal http requests | 1.8.0 |
 | [Stylus](http://stylus-lang.com/) | Expressive, dynamic, robust CSS | 0.54.0 |
 
+### Generators 
+#### Presentational React Components
 
+```bash
 
+$ redux g component componentA
 
+```
+this looks like:
+
+```bash
+
+/universal/components/  # Presentational React Components
+├── component_a
+│   ├── index.js     # componet code
+│   └── index.scss   # css here
+
+```
