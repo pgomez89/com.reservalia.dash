@@ -2,19 +2,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import EventTicker from '../components/EventTicker';
+import Header from '../components/Header';
 
 import * as PulseActions from '../actions/PulseActions';
 
-class OtherEvents extends Component {
+class MonitorApp extends Component {
   static propTypes = {
-    userId: React.PropTypes.string,
-    events: React.PropTypes.array
+    isWorking: React.PropTypes.bool,
+    error: React.PropTypes.any,
   };
 
   render() {
+    let actions = { 
+      editEvent: this.props.editEvent, 
+      deleteEvent: this.props.deleteEvent
+    };
+
     return (
-      <EventTicker events={this.props.events} userId={this.props.userId} length={3} />
+      <div className="Pulse-Container">
+        <Header/>
+      </div>
     );
   }
 }
@@ -24,8 +31,8 @@ class OtherEvents extends Component {
  */
 export default connect(
   state => ({
-    events: state.pulseApp.events,
-    userId: state.pulseApp.userId
+    isWorking: state.pulseApp.isWorking,
+    error: state.pulseApp.error
   }), 
   dispatch => bindActionCreators(PulseActions, dispatch)
-)(OtherEvents);
+)(MonitorApp);

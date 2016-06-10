@@ -5,12 +5,10 @@ export default class Header extends Component {
   render() {
     return (
       <div>
-        <header className='Pulse-header'>
-          <h1>Pulse</h1>
-          <div className='Pulse-links'>
-            <IndexLink to='/' activeClassName='active'>All Events</IndexLink>  
-            <Link to='/my-events' activeClassName='active'>My Events</Link>
-            <Link to='/other-events' activeClassName='active'>Other Events</Link>
+        <header className='Monitor-header'>
+          <h1>Monitor</h1>
+          <div className='Monitor-links'>
+            <IndexLink to='/' activeClassName='active'>Monitor</IndexLink>  
           </div>
         </header>
       </div>
