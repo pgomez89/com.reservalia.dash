@@ -52,6 +52,9 @@ test/conponents/
 
 ```
 
+#### Containner React Components
+
+
 ```bash
 
 $ redux g containner app
@@ -71,6 +74,9 @@ test/containers/
 └── app_test.js
 
 ```
+
+#### Redux reducers
+
 
 ```bash
 
