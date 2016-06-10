@@ -36,6 +36,13 @@ You will need to roll out your own deployment script for a server, but before yo
 $ npm i -g redux-cli
 
 ```
+##### For help
+
+```bash
+
+redux help g
+
+```
 
 #### Presentational React Components
 
