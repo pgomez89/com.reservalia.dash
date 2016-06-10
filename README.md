@@ -45,6 +45,53 @@ this looks like:
 │   ├── index.js     # component code
 │   └── index.scss   # css here
 
+...
+
+test/conponents/
+└── component_a_test.js
+
+```
+
+```bash
+
+$ redux g containner app
+
+```
+this looks like:
+
+```bash
+
+universal/containers/
+├── app
+│   └── index.js
+
+...
+
+test/containers/
+└── app_test.js
+
+```
+
+```bash
+
+$ redux g reducer reducerA
+
+```
+this looks like:
+
+```bash
+
+universal/reducers/
+├── index.js
+└── reducer_a
+    └── index.js
+
+...
+
+test/reducers
+└── reducer_a_test.js
+
+
 ```
 
 ### Tech Used
