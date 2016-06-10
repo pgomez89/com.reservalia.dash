@@ -29,6 +29,14 @@ You will need to roll out your own deployment script for a server, but before yo
 
 ### Generators
 
+> Need [redux-cli] (https://github.com/SpencerCDixon/redux-cli)
+
+```bash
+
+$ npm i -g redux-cli
+
+```
+
 #### Presentational React Components
 
 ```bash
@@ -53,6 +61,13 @@ test/conponents/
 ```
 
 #### Containner React Components
+
+
+```bash
+
+$ redux g containner app
+
+```
 
 
 ```bash
