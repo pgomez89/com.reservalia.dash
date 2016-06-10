@@ -1,7 +1,7 @@
 {
-  "name": "3ree",
+  "name": "com.reservalia.monitor",
   "version": "1.0.0",
-  "description": "An example universal JS application written with the 3REE stack, React + Redux + RethinkDB + Express.",
+  "description": "A monitor for reservalia.",
   "main": "server.babel.js",
   "scripts": {
     "build:prod": "NODE_ENV=production webpack",
@@ -14,7 +14,6 @@
   "keywords": [
     "react",
     "reservalia",
-    "rethinkdb",
     "redux",
     "webpack"
   ],
@@ -42,7 +41,6 @@
     "redux": "3.5.x",
     "redux-logger": "2.6.x",
     "redux-thunk": "2.1.x",
-    "rethinkdb": "2.3.x",
     "serve-static": "1.10.x",
     "socket.io": "1.4.x",
     "socket.io-client": "1.4.x",
