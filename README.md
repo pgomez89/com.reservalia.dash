@@ -27,20 +27,8 @@ You will need to roll out your own deployment script for a server, but before yo
  - Run `npm run start:prod` to run on your server
  - Go to your URL
 
-### Tech Used
+### Generators
 
-| **Tech** | **Description** | **Version** |
-| ---------|-----------------|-------------|
-| [React](https://facebook.github.io/react/) | View layer | 15.0.2 |
-| [React Router](https://github.com/reactjs/react-router) | Universal routing | 2.4.0 |
-| [Redux](http://redux.js.org/) | State management | 3.5.0 |
-| [Express](http://expressjs.com/) | Node.js server framework | 4.13.0 |
-| [Socket.io]() | Used for realtime communication between clients and server | 1.4.0 |
-| [Webpack](https://webpack.github.io/) | Module bundling + build for client | 1.13.0 |
-| [Superagent](https://github.com/visionmedia/superagent) | Universal http requests | 1.8.0 |
-| [Stylus](http://stylus-lang.com/) | Expressive, dynamic, robust CSS | 0.54.0 |
-
-### Generators 
 #### Presentational React Components
 
 ```bash
@@ -54,7 +42,21 @@ this looks like:
 
 /universal/components/  # Presentational React Components
 ├── component_a
-│   ├── index.js     # componet code
+│   ├── index.js     # component code
 │   └── index.scss   # css here
 
 ```
+
+### Tech Used
+
+| **Tech** | **Description** | **Version** |
+| ---------|-----------------|-------------|
+| [React](https://facebook.github.io/react/) | View layer | 15.0.2 |
+| [React Router](https://github.com/reactjs/react-router) | Universal routing | 2.4.0 |
+| [Redux](http://redux.js.org/) | State management | 3.5.0 |
+| [Express](http://expressjs.com/) | Node.js server framework | 4.13.0 |
+| [Socket.io]() | Used for realtime communication between clients and server | 1.4.0 |
+| [Webpack](https://webpack.github.io/) | Module bundling + build for client | 1.13.0 |
+| [Superagent](https://github.com/visionmedia/superagent) | Universal http requests | 1.8.0 |
+| [Stylus](http://stylus-lang.com/) | Expressive, dynamic, robust CSS | 0.54.0 |
+
