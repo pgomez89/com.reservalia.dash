@@ -14,7 +14,7 @@ module.exports = {
   },
   fileMapTokens() {
     return {
-      __containner__: (options) => {
+      __container__: (options) => {
         return options.settings.getSetting('smartPath');
       }
     };
