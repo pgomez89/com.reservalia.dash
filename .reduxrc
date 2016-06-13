@@ -3,6 +3,6 @@
     "testBase": "test",
     "smartPath": "containers",
     "dumbPath": "components",
-    "fileCasing": "snake",
+    "fileCasing": "pascal",
     "reducers": "reducers"
 }
