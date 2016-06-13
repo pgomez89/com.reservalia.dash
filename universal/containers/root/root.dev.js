@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import NavBar from '../../components/nav_bar';
+import NavBar from '../../containers/NavBar';
 
 import DevTools from '../devTools';
 
