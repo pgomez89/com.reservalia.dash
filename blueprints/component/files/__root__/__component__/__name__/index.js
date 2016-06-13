@@ -5,7 +5,7 @@ const propTypes = {
 
 class <%= pascalEntityName %> extends Component {
   render() {
-    return (<div> <h1> <%= pascalEntityName %> Presentational React Component </h1></div>);
+    return (<div className="<%= pascalEntityName %>"> <h1> <%= pascalEntityName %> Presentational React Component </h1></div>);
   }
 }
 

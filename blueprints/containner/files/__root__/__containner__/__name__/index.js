@@ -8,7 +8,7 @@ const propTypes = {
 class <%= pascalEntityName %> extends Component {
   render() {
     return (
-      <div></div>
+      <div className="<%= pascalEntityName %>"></div>
     );
   }
 }
