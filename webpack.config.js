@@ -64,6 +64,11 @@ if (isDev) {
       test: /\.styl?$/,
       loaders: [ 'style-loader', 'css-loader', 'stylus-loader' ],
       include: __dirname
+    },
+    {
+      test: /\.scss$/,
+      loaders: [ "style", "css", "sass"],
+      include: __dirname
     }
   ];
 }
