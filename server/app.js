@@ -13,5 +13,5 @@ export function handleRender(req, res) {
     const devTools = (isDev) ? <DevTools /> : null;
 
     // Send the rendered page back to the client with the initial state
-    res.render('index', {isProd: (!isDev)});
+    NavBarSideBar.render('index', {isProd: (!isDev)});
 }
