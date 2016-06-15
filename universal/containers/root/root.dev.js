@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
+import { Router } from 'react-router';
 import './index.scss';
 
 //import components
-import NavBar from '../../components/NavBar';
-import Table from '../../components/Table';
-import SearchBoxDate from '../../components/SearchBoxDate';
+import MonitorApp from '../MonitorApp';
 
 import DevTools from '../devTools';
 
 class Root extends Component {
     render() {
+        const { routing, history } = this.props;
+
         return (
-            <div id="wrapper">
-                <NavBar />
-                <div id="page-wrapper">
-                    <SearchBoxDate />
-                    <Table />
-                </div>
+            <div>
+                <Router history={history}>
+                    {routing}
+                </Router>
+                <DevTools />
             </div>
         )
     }

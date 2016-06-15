@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import { Link } from 'react-router';
 import css from './index.scss';
 
 const propTypes = {
@@ -12,7 +12,13 @@ class NavBarSideBar extends Component {
     return (
         <ul className="NavBarSideBar nav navbar-nav side-nav">
             <li className="active">
-                <a href="tables.html"><i className="fa fa-fw fa-table"></i> Disponibilidad</a>
+                <Link to="/"><i className="fa fa-fw fa-dashboard"></i> Dashboard</Link>
+            </li>
+            <li className="active">
+                <Link to="/availability"><i className="fa fa-fw fa-table"></i> Disponibilidad</Link>
+            </li>
+            <li className="active">
+                <Link to="/sales"><i className="fa fa-fw fa-table"></i> Ventas</Link>
             </li>
         </ul>
     );
