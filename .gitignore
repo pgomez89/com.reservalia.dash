@@ -1,7 +1,7 @@
-.DS_Store
-node_modules/
-test/
-.idea/
-key/
-dist/
-npm-debug.log
+node_modules
+dist
+build
+config/local.json
+rethinkdb_data/
+.idea
+key
