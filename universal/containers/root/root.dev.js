@@ -5,8 +5,6 @@ import './index.scss';
 //import components
 import MonitorApp from '../MonitorApp';
 
-import DevTools from '../devTools';
-
 class Root extends Component {
     render() {
         const { routing, history } = this.props;
@@ -16,7 +14,6 @@ class Root extends Component {
                 <Router history={history}>
                     {routing}
                 </Router>
-                <DevTools />
             </div>
         )
     }

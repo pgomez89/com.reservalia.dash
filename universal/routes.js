@@ -7,13 +7,11 @@ import { Route, IndexRoute } from 'react-router';
 import MonitorApp from './containers/MonitorApp';
 import Dashboard from './containers/Dashboard';
 import AvailabilityBox from './containers/AvailabilityBox';
-import SalesBox from './containers/SalesBox';
 
 export default (
   <Route path='/' component={MonitorApp}>
-    <IndexRoute components={Dashboard} />
+    <IndexRoute components={{dashboard:Dashboard}} />
     <Route path='availability' components={{availability: AvailabilityBox}} />
-    <Route path='sales' components={{sales: SalesBox}} />
   </Route>
 );
 

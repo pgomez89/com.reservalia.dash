@@ -8,7 +8,7 @@ class SearchBoxDate extends Component {
     render() {
         return (
             <div className="SearchBoxDate">
-                <div className="col-lg-12 buscador-fecha">
+                <div className="buscador-fecha">
                     <form className="form-inline">
                         <div className="form-group">
                             <label className="label-margin">From</label>

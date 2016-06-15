@@ -12,6 +12,12 @@ body {
   background-color: #fff;
 }
 
+.tool-bar {
+  margin: 10px 0;
+  background: #dddddd;
+  padding: 10px 0;
+}
+
 @media (min-width: 768px) {
   body {
     margin-top: 50px;
@@ -26,5 +32,4 @@ body {
   }
 
 }
-
 

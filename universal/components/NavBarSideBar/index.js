@@ -17,9 +17,6 @@ class NavBarSideBar extends Component {
             <li className="active">
                 <Link to="/availability"><i className="fa fa-fw fa-table"></i> Disponibilidad</Link>
             </li>
-            <li className="active">
-                <Link to="/sales"><i className="fa fa-fw fa-table"></i> Ventas</Link>
-            </li>
         </ul>
     );
   }

@@ -7,8 +7,15 @@ const propTypes = {
 
 class Filter extends Component {
   render() {
-    return (<div className={css.Filter}>
-              <h1> Filter Presentational React Component </h1>
+    return (<div className="Filter">
+        <div className="filter">
+            <form className="form-inline">
+                <div className="form-group">
+                    <label className="label-margin">Filtrar</label>
+                    <input className="form-control" type="text"/>
+                </div>
+            </form>
+        </div>
             </div>);
   }
 }

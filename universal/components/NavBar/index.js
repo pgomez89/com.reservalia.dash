@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import css from './index.scss';
 
 //import components
@@ -22,7 +23,7 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="index.html">SB Admin</a>
+                        <Link className="navbar-brand" to="/">SB Admin</Link>
                     </div>
 
                     <div className="collapse navbar-collapse navbar-ex1-collapse">

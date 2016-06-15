@@ -12,8 +12,8 @@ class MonitorApp extends Component {
     return (
         <div className="MonitorApp" id="wrapper">
           <NavBar />
+            {this.props.dashboard}
             {this.props.availability}
-            {this.props.sales}
         </div>
     );
   }
