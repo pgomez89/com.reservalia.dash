@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import css from './index.scss';
 
 //import components
-import NavBarSideBar from '../NavBarSideBar';
 import NavBarDropDown from '../NavBarDropDown';
 
 const propTypes = {};
@@ -14,7 +13,7 @@ class NavBar extends Component {
     render() {
         return (
             <div className="NavBar">
-                <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <nav className="navbar navbar-fixed-top" role="navigation">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle" data-toggle="collapse"
                                 data-target=".navbar-ex1-collapse">
@@ -27,10 +26,17 @@ class NavBar extends Component {
                     </div>
 
                     <div className="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul className="nav navbar-left top-nav">
+                            <li>
+                                <Link to="/"><i className="fa fa-fw fa-dashboard"></i> Dashboard</Link>
+                            </li>
+                            <li>
+                                <Link to="/availability"><i className="fa fa-fw fa-table"></i> Disponibilidad</Link>
+                            </li>
+                        </ul>
                         <ul className="nav navbar-right top-nav">
                             <NavBarDropDown />
                         </ul>
-                        <NavBarSideBar />
                     </div>
                 </nav>
             </div>
