@@ -7,16 +7,24 @@ import TableRow from '../TableRow';
 
 const propTypes = {};
 
+/**
+ * TableBody recibe como props el array de objetos que recibe Table.
+ */
+
 class TableBody extends Component {
     render() {
         return (
             <tbody className="TableBody">
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
+            {
+                this.props.data.map((elem) => {
+                    let keys = Object.keys(elem);
+                    let info = [];
+                    for (var i = 0; i < keys.length; i++) {
+                        info.push(elem[keys[i]]);
+                    }
+                    return <TableRow key={elem.id} info={info}/>
+                })
+            }
             </tbody>
         );
     }

@@ -1,18 +1,17 @@
-.NavBar .navbar{
-background: #84a8fb;
-  border-color: #84a8fb;
+.NavBar {
+
 }
 
 .top-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
   line-height: 20px;
-  color: #ffffff;
+  color: #999;
 }
 
 .top-nav > li > a:hover, .top-nav > li > a:focus, .top-nav > .open > a, .top-nav > .open > a:hover, .top-nav > .open > a:focus {
   color: #fff;
-  background-color: #5C8FE0;
+  background-color: #999;
   border: none;
 }
 
@@ -31,8 +30,4 @@ background: #84a8fb;
 .top-nav > li {
   position: relative;
   display: inline-block;
-}
-
-.navbar-brand {
-  color: #ffffff;
 }

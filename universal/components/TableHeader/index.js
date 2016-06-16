@@ -4,18 +4,18 @@ import css from './index.scss';
 
 const propTypes = {};
 
+/**
+ * TableHeader recibe un array con todas las keys.
+ */
+
 class TableHeader extends Component {
     render() {
         return (
             <thead className="TableHeader">
             <tr>
-                <th>#</th>
-                <th>Table heading</th>
-                <th>Table heading</th>
-                <th>Table heading</th>
-                <th>Table heading</th>
-                <th>Table heading</th>
-                <th>Table heading</th>
+                {
+                    this.props.header.map(title =><th key={title}>{title}</th>)
+                }
             </tr>
             </thead>
         );

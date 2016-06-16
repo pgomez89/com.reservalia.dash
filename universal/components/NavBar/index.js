@@ -13,7 +13,7 @@ class NavBar extends Component {
     render() {
         return (
             <div className="NavBar">
-                <nav className="navbar navbar-fixed-top" role="navigation">
+                <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle" data-toggle="collapse"
                                 data-target=".navbar-ex1-collapse">
