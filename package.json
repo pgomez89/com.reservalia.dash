@@ -92,6 +92,7 @@
     "stylus": "0.54.x",
     "stylus-loader": "2.0.x",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "1.14.x"
+    "webpack-dev-server": "1.14.x",
+    "webpack-manifest-plugin": "^1.0.1"
   }
 }
