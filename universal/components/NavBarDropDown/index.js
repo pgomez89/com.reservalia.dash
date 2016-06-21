@@ -6,7 +6,7 @@ import css from './index.scss';
 const propTypes = {};
 
 /*
- * Cargar botones dinamicamente
+ * NavBarDropDown recibe como prop el nombre del user
  * */
 class NavBarDropDown extends Component {
     render() {

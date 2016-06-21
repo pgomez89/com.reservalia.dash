@@ -7,9 +7,15 @@ import NavBarDropDown from '../NavBarDropDown';
 
 const propTypes = {};
 /*
- * Cargar dinamicamente en el nav dropdown o botones depende que corresponda
+ * NavBar recien un objecto con toda la info para armar la barra de navegación.
+ * linkNav es un array de objetos. Cada uno tiene las siguientes keys:
+ *  1) name: nombre del link.
+ *  2) route: ruta del link.
+ *  3) icon: icono del link.
+ * 1) y 2) tienen que estar si o si.
+ * brandNav es el nombre de la aplicación
+ * userNav nombre del usuario logeado.
  * */
-
 
 class NavBar extends Component {
     render() {

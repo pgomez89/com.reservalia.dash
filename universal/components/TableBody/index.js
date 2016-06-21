@@ -16,14 +16,16 @@ class TableBody extends Component {
         return (
             <tbody className="TableBody">
             {
-                this.props.data.map((elem) => {
-                    let keys = Object.keys(elem);
-                    let info = [];
-                    for (var i = 0; i < keys.length; i++) {
-                        info.push(elem[keys[i]]);
+                this.props.data.map(
+                    (elem) => {
+                        let keys = Object.keys(elem);
+                        let info = [];
+                        for (var i = 0; i < keys.length; i++) {
+                            info.push(elem[keys[i]]);
+                        }
+                        return <TableRow key={elem.id} info={info}/>
                     }
-                    return <TableRow key={elem.id} info={info}/>
-                })
+                )
             }
             </tbody>
         );
