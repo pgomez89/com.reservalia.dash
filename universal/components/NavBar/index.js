@@ -7,13 +7,21 @@ import NavBarDropDown from '../NavBarDropDown';
 
 const propTypes = {};
 /*
- * Cargar dinamicamente en el nav dropdown o botones depende que corresponda
+ * NavBar recien un objecto con toda la info para armar la barra de navegación.
+ * linkNav es un array de objetos. Cada uno tiene las siguientes keys:
+ *  1) name: nombre del link.
+ *  2) route: ruta del link.
+ *  3) icon: icono del link.
+ * 1) y 2) tienen que estar si o si.
+ * brandNav es el nombre de la aplicación
+ * userNav nombre del usuario logeado.
  * */
+
 class NavBar extends Component {
     render() {
         return (
             <div className="NavBar">
-                <nav className="navbar navbar-fixed-top" role="navigation">
+                <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle" data-toggle="collapse"
                                 data-target=".navbar-ex1-collapse">
@@ -22,20 +30,24 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <Link className="navbar-brand" to="/">SB Admin</Link>
+                        <Link className="navbar-brand" to="/">{this.props.data.brandNav}</Link>
                     </div>
 
                     <div className="collapse navbar-collapse navbar-ex1-collapse">
                         <ul className="nav navbar-left top-nav">
-                            <li>
-                                <Link to="/"><i className="fa fa-fw fa-dashboard"></i> Dashboard</Link>
-                            </li>
-                            <li>
-                                <Link to="/availability"><i className="fa fa-fw fa-table"></i> Disponibilidad</Link>
-                            </li>
+                            {
+                                this.props.data.linkNav.map(link => {
+                                    return (
+                                        <li key={link.name.toLowerCase()}>
+                                            <Link to={link.route}><i
+                                                className={"fa fa-fw fa-"+link.icon}></i> {link.name}</Link>
+                                        </li>
+                                    )
+                                })
+                            }
                         </ul>
                         <ul className="nav navbar-right top-nav">
-                            <NavBarDropDown />
+                            <NavBarDropDown user={this.props.data.userNav}/>
                         </ul>
                     </div>
                 </nav>
