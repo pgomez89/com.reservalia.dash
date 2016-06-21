@@ -9,6 +9,8 @@ const propTypes = {};
 /*
  * Cargar dinamicamente en el nav dropdown o botones depende que corresponda
  * */
+
+
 class NavBar extends Component {
     render() {
         return (
@@ -22,20 +24,24 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <Link className="navbar-brand" to="/">SB Admin</Link>
+                        <Link className="navbar-brand" to="/">{this.props.data.brandNav}</Link>
                     </div>
 
                     <div className="collapse navbar-collapse navbar-ex1-collapse">
                         <ul className="nav navbar-left top-nav">
-                            <li>
-                                <Link to="/"><i className="fa fa-fw fa-dashboard"></i> Dashboard</Link>
-                            </li>
-                            <li>
-                                <Link to="/availability"><i className="fa fa-fw fa-table"></i> Disponibilidad</Link>
-                            </li>
+                            {
+                                this.props.data.linkNav.map(link => {
+                                    return (
+                                        <li key={link.name.toLowerCase()}>
+                                            <Link to={link.route}><i
+                                                className={"fa fa-fw fa-"+link.icon}></i> {link.name}</Link>
+                                        </li>
+                                    )
+                                })
+                            }
                         </ul>
                         <ul className="nav navbar-right top-nav">
-                            <NavBarDropDown />
+                            <NavBarDropDown user={this.props.data.userNav}/>
                         </ul>
                     </div>
                 </nav>
