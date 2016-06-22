@@ -88,6 +88,7 @@
     "redux-devtools-log-monitor": "1.0.x",
     "redux-mock-store": "1.0.x",
     "sass-loader": "^3.2.0",
+    "segmentize": "^0.4.1",
     "sinon": "1.17.x",
     "style-loader": "0.13.x",
     "stylus": "0.54.x",

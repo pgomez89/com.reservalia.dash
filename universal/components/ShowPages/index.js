@@ -4,14 +4,14 @@ import css from './index.scss';
 
 const propTypes = {};
 
-class Filter extends Component {
+class ShowPages extends Component {
     render() {
         return (
-            <div className="Filter">
-                <div className="filter">
+            <div className="ShowPages">
+                <div className="show-pages">
                     <form className="form-inline">
                         <div className="form-group">
-                            <label className="label-margin">Search: </label>
+                            <label className="label-margin">Show: </label>
                             <input className="form-control" type="text"/>
                         </div>
                     </form>
@@ -21,5 +21,5 @@ class Filter extends Component {
     }
 }
 
-Filter.propTypes = propTypes;
-export default Filter;
+ShowPages.propTypes = propTypes;
+export default ShowPages;
