@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //import actions
-import { chargeFilter, changePageNumber } from '../../actions/AvailabilityActions';
+import { chargeFilter, changePageNumber, selectShowRows } from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -21,12 +21,16 @@ class AvailabilityBox extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handlePageNumber = this.handlePageNumber.bind(this);
+        this.handleShowRows = this.handleShowRows.bind(this);
     }
     handleChange(e) {
         this.props.chargeFilter(e.target.value);
     }
     handlePageNumber(e) {
         this.props.changePageNumber(e.target.value);
+    }
+    handleShowRows(e) {
+        this.props.selectShowRows(parseInt(e.target.value));
     }
     render() {
         const { visibleData, filter, pagination } = this.props.availability;
@@ -42,7 +46,7 @@ class AvailabilityBox extends Component {
                 </div>
                 <div className="row tool-bar">
                     <div className="col-lg-7">
-                        <ShowPages />
+                        <ShowPages selectCantRows={this.handleShowRows}/>
                     </div>
                     <div className="col-lg-5">
                         <Filter filter={filter} chargeInput={this.handleChange}/>
@@ -64,7 +68,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators ({
         chargeFilter,
-        changePageNumber
+        changePageNumber,
+        selectShowRows
     }, dispatch);
 };
 

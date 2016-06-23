@@ -13,3 +13,10 @@ export const changePageNumber = numberPage => {
         numberPage
     }
 };
+
+export const selectShowRows = cantRows => {
+    return {
+        type:types.SELECT_SHOW_ROWS,
+        cantRows
+    }
+};

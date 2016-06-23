@@ -1,4 +1,8 @@
-import { CHANGE_FILTER , CHANGE_PAGE_NUMBER} from '../constants/ActionTypes';
+import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS} from '../constants/ActionTypes';
+
+let itemsPerPage = 10;
+let items =100;
+let pages = Math.ceil(items / itemsPerPage);
 
 const initialState = {
     data: [
@@ -2228,9 +2232,9 @@ const initialState = {
         }
     ],
     pagination: {
-        items: 79,//cantidad de item de this.state.data
-        itemsForPage: 10,//se obtiene de ShowPages
-        pages: 5,//se obtiene de la division de item/itemsForPage
+        items,//cantidad de item de this.state.data
+        itemsPerPage,//se obtiene de ShowPages
+        pages,//se obtiene de la division de item/itemsPerPage
         actualPage: 1
     },
     filter: ''
@@ -2243,27 +2247,33 @@ export default function availability(state = initialState, action) {
         case CHANGE_FILTER:
             return {
                 ...state,
-                visibleData: getVisibleData(state.data, action.text, state.pagination.actualPage, state.pagination.itemsForPage),
-                pagination: {...state.pagination, actualPage: 1},
+                visibleData: getVisibleData(state.data, action.text, state.pagination.actualPage, state.pagination.itemsPerPage),
+                pagination: {...state.pagination,pages: Math.ceil(state.pagination.items/action.cantRows), actualPage: 1},
                 filter: action.text
             };
         case CHANGE_PAGE_NUMBER:
             return {
                 ...state,
-                visibleData: getVisibleData(state.data, state.filter, action.numberPage, state.pagination.itemsForPage ),
+                visibleData: getVisibleData(state.data, state.filter, action.numberPage, state.pagination.itemsPerPage ),
                 pagination: {...state.pagination, actualPage: action.numberPage}
+            };
+        case SELECT_SHOW_ROWS:
+            return {
+                ...state,
+                visibleData: getVisibleData(state.data, state.filter, state.pagination.actualPage, action.cantRows ),
+                pagination: {...state.pagination, itemsPerPage: action.cantRows, pages: Math.ceil(state.pagination.items/action.cantRows)}
             };
         default:
             return state;
     }
 }
 
-const getVisibleData = (data, filter, actualPage, itemsForPage) => {
+const getVisibleData = (data, filter, actualPage, itemsPerPage) => {
     filter = filter.toLowerCase();
 
     var result = data.filter(obj => {
         return obj.id.includes(filter) || obj.host.includes(filter) ? true : false;
-    }).slice(itemsForPage * (actualPage - 1), itemsForPage + (itemsForPage * (actualPage - 1)));
+    }).slice(itemsPerPage * (actualPage - 1), itemsPerPage + (itemsPerPage * (actualPage - 1)));
 
     return result.length ? result : [{result: 'No matching records found'}];
 };
