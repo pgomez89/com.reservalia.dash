@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+//import actions
+import { chargeFilter, changePageNumber } from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -14,10 +18,19 @@ const propTypes = {};
 class AvailabilityBox extends Component {
     constructor() {
         super();
-    }
 
+        this.handleChange = this.handleChange.bind(this);
+        this.handlePageNumber = this.handlePageNumber.bind(this);
+    }
+    handleChange(e) {
+        this.props.chargeFilter(e.target.value);
+    }
+    handlePageNumber(e) {
+        this.props.changePageNumber(e.target.value);
+    }
     render() {
-        const { visibleData } = this.props.availability;
+        const { visibleData, filter, pagination } = this.props.availability;
+
         return (
             <div className="AvailabilityBox" id="page-wrapper">
                 <h1>Disponibilidad</h1>
@@ -32,11 +45,11 @@ class AvailabilityBox extends Component {
                         <ShowPages />
                     </div>
                     <div className="col-lg-5">
-                        <Filter />
+                        <Filter filter={filter} chargeInput={this.handleChange}/>
                     </div>
                 </div>
                 <Table data={ visibleData }/>
-                <Pagination />
+                <Pagination pages={pagination.pages} clickNumberPage={this.handlePageNumber}/>
             </div>
         );
     }
@@ -48,7 +61,15 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators ({
+        chargeFilter,
+        changePageNumber
+    }, dispatch);
+};
+
 AvailabilityBox.propTypes = propTypes;
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(AvailabilityBox);

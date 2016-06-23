@@ -14,7 +14,12 @@ class TableHeader extends Component {
             <thead className="TableHeader">
             <tr>
                 {
-                    this.props.header.map(title =><th key={title}>{title}</th>)
+                    this.props.header.map(title => <th key={title}>{title
+                            .replace(/([A-Z])/g, ' $1')
+                            .replace(/^./, function (str) {
+                                    return str.toUpperCase();
+                                }
+                            )}</th>)
                 }
             </tr>
             </thead>
