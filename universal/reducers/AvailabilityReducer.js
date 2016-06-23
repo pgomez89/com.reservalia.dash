@@ -2240,15 +2240,13 @@ const initialState = {
     filter: ''
 };
 
-
-
 export default function availability(state = initialState, action) {
     switch (action.type) {
         case CHANGE_FILTER:
             return {
                 ...state,
                 visibleData: getVisibleData(state.data, action.text, state.pagination.actualPage, state.pagination.itemsPerPage),
-                pagination: {...state.pagination,pages: Math.ceil(state.pagination.items/action.cantRows), actualPage: 1},
+                pagination: {...state.pagination, actualPage: 1},
                 filter: action.text
             };
         case CHANGE_PAGE_NUMBER:
