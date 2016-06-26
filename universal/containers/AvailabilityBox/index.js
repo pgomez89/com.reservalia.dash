@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //import actions
-import { chargeFilter, changePageNumber, selectShowRows } from '../../actions/AvailabilityActions';
+import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability, changeNextPage,changePreviousPage } from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -22,16 +22,34 @@ class AvailabilityBox extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handlePageNumber = this.handlePageNumber.bind(this);
         this.handleShowRows = this.handleShowRows.bind(this);
+        this.handleNextPage = this.handleNextPage.bind(this);
+        this.handlePreviousPage = this.handlePreviousPage.bind(this);
     }
+
+    componentDidMount() {
+        this.props.fetchAvailability();
+    }
+
     handleChange(e) {
         this.props.chargeFilter(e.target.value);
     }
+
     handlePageNumber(e) {
         this.props.changePageNumber(e.target.value);
     }
+
+    handleNextPage() {
+        this.props.changeNextPage();
+    }
+
+    handlePreviousPage() {
+        this.props.changePreviousPage();
+    }
+
     handleShowRows(e) {
         this.props.selectShowRows(parseInt(e.target.value));
     }
+
     render() {
         const { visibleData, filter, pagination } = this.props.availability;
 
@@ -53,7 +71,9 @@ class AvailabilityBox extends Component {
                     </div>
                 </div>
                 <Table data={ visibleData }/>
-                <Pagination pages={pagination.pages} clickNumberPage={this.handlePageNumber}/>
+                <Pagination pages={pagination.pages} actualPage={pagination.actualPage}
+                            clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
+                            clickPreviousPage={this.handlePreviousPage}/>
             </div>
         );
     }
@@ -66,10 +86,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators ({
+    return bindActionCreators({
         chargeFilter,
         changePageNumber,
-        selectShowRows
+        selectShowRows,
+        fetchAvailability,
+        changeNextPage,
+        changePreviousPage
     }, dispatch);
 };
 
