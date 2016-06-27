@@ -57,19 +57,28 @@ export default function availability(state = initialState, action) {
             return {
                 ...state,
                 visibleData: action.payload.visibleData,
-                pagination: {...state.pagination, actualPage: action.payload.numberPage}
+                pagination: {
+                    ...state.pagination,
+                    actualPage: action.payload.numberPage
+                }
             };
         case CHANGE_NEXT_PAGE:
             return {
                 ...state,
                 visibleData: action.payload.visibleData,
-                pagination: {...state.pagination, actualPage: action.payload.nextPage}
+                pagination: {
+                    ...state.pagination,
+                    actualPage: action.payload.nextPage
+                }
             };
         case CHANGE_PREVIOUS_PAGE:
             return {
                 ...state,
                 visibleData: action.payload.visibleData,
-                pagination: {...state.pagination, actualPage: action.payload.previousPage}
+                pagination: {
+                    ...state.pagination,
+                    actualPage: action.payload.previousPage
+                }
             };
         case SELECT_SHOW_ROWS://Seleccionar cantidad de páginas a mostrar.
             return {
