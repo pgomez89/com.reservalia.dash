@@ -6,28 +6,31 @@ import AvailabilityBox from '../../containers/AvailabilityBox';
 
 const propTypes = {};
 
-const dataNav = {
-    userNav: 'admin',
-    brandNav: 'Monitor Reservalia',
-    linkNav: [
-        {
-            name: 'Dashboard',
-            route: '/',
-            icon: 'dashboard'
-        },
-        {
-            name: 'Disponibilidad',
-            route: '/availability',
-            icon: 'table'
-        }
-    ]
-};
-
 class MonitorApp extends Component {
+    constructor(){
+        super();
+        this.state = {
+            userNav: 'admin',
+            brandNav: 'Monitor Reservalia',
+            linkNav: [
+                {
+                    name: 'Dashboard',
+                    route: '/',
+                    icon: 'dashboard'
+                },
+                {
+                    name: 'Disponibilidad',
+                    route: '/availability',
+                    icon: 'table'
+                }
+            ]
+        }
+    }
+
     render() {
         return (
             <div className="MonitorApp" id="wrapper">
-                <NavBar data={dataNav}/>
+                <NavBar data={this.state}/>
                 {this.props.children}
             </div>
         );

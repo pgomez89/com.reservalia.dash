@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import reducers from './';
+import availability from './AvailabilityReducer';
+import monitor from './MonitorReducer'
 
-const rootReducer = combineReducers({...reducers});
+const rootReducer = combineReducers({
+    monitor,
+    availability
+});
 
 export default rootReducer;

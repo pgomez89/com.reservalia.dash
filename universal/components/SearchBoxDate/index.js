@@ -11,11 +11,11 @@ class SearchBoxDate extends Component {
                 <div className="buscador-fecha">
                     <form className="form-inline">
                         <div className="form-group">
-                            <label className="label-margin">From</label>
+                            <label className="label-margin">From: </label>
                             <input className="form-control" type="text"/>
                         </div>
                         <div className="form-group">
-                            <label className="label-margin">To</label>
+                            <label className="label-margin">To: </label>
                             <input className="form-control" type="text"/>
                         </div>
                         <button className="btn btn-default">

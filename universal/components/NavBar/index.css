@@ -1,3 +1,6 @@
+.navbar {
+  border: none; }
+
 .top-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -25,21 +28,7 @@
   display: inline-block; }
 
 @media (min-width: 768px) {
-  .side-nav {
-    position: fixed;
-    top: 51px;
-    left: 225px;
-    width: 225px;
-    margin-left: -225px;
-    border: none;
-    border-radius: 0;
-    overflow-y: auto;
-    background-color: #222;
-    bottom: 0;
-    overflow-x: hidden;
-    padding-bottom: 40px; }
-
-  .side-nav > li > a {
-    width: 225px; } }
+  .dropdown {
+    margin-right: 15px; } }
 
 /*# sourceMappingURL=index.css.map */
