@@ -5,6 +5,7 @@ import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
 const initialState = {
     data: [{}],
     isFetching: false,
+    headers: ["Id", "Host", "Total", "Sin Disponibilidad"],
     visibleData: [{}],
     pagination: {
         items: 0,
