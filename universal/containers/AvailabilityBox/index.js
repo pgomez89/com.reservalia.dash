@@ -11,6 +11,7 @@ import SearchBoxDate from '../../components/SearchBoxDate';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import ShowPages from '../../components/ShowPages';
+import Loading from '../../components/Loading';
 
 const propTypes = {};
 
@@ -51,7 +52,18 @@ class AvailabilityBox extends Component {
     }
 
     render() {
-        const { visibleData, filter, pagination } = this.props.availability;
+        const { visibleData, filter, pagination, isFetching } = this.props.availability;
+        var visibleBox = [];
+
+        if (isFetching) {
+            visibleBox.push(<Loading />);
+        } else {
+            visibleBox.push(<Table key="table" data={ visibleData }/>);
+            visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
+                                        clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
+                                        clickPreviousPage={this.handlePreviousPage}/>);
+        }
+
 
         return (
             <div className="AvailabilityBox" id="page-wrapper">
@@ -70,10 +82,7 @@ class AvailabilityBox extends Component {
                         <Filter filter={filter} chargeInput={this.handleChange}/>
                     </div>
                 </div>
-                <Table data={ visibleData }/>
-                <Pagination pages={pagination.pages} actualPage={pagination.actualPage}
-                            clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
-                            clickPreviousPage={this.handlePreviousPage}/>
+                {visibleBox}
             </div>
         );
     }

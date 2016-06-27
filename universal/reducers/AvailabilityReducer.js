@@ -62,7 +62,7 @@ export default function availability(state = initialState, action) {
                     actualPage: action.payload.numberPage
                 }
             };
-        case CHANGE_NEXT_PAGE:
+        case CHANGE_NEXT_PAGE://Seleccionar pagina siguiente con las flechas
             return {
                 ...state,
                 visibleData: action.payload.visibleData,
@@ -71,7 +71,7 @@ export default function availability(state = initialState, action) {
                     actualPage: action.payload.nextPage
                 }
             };
-        case CHANGE_PREVIOUS_PAGE:
+        case CHANGE_PREVIOUS_PAGE://Seleccionar pagina anterior con las flechas
             return {
                 ...state,
                 visibleData: action.payload.visibleData,

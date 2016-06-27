@@ -14,6 +14,7 @@ const propTypes = {};
 
 class Table extends Component {
     render() {
+
         return (
             <div className="Table">
                 <table id="table_id" className="table table-striped table-hover table-bordered">

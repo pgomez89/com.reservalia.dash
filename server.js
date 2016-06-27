@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
  */
 app.use(require('serve-static')(path.join(__dirname, config.get('buildDirectory'))));
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 app.use(bodyParser.json());
 
@@ -30,6 +30,7 @@ app.use(bodyParser.json());
  */
 
 app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'images', 'favicon.ico')));
+app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, 'images', 'loading.gif')));
 
 /**
  * Universal Application endpoint
