@@ -4,49 +4,55 @@ export const chargeFilter = text => {
     return (dispatch, getState) => {
 
         var data = getState().appReducers.availability.data;
-        var actualPage = getState().appReducers.availability.pagination.actualPage;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
-
-        var visibleData = getVisibleData(data, text, actualPage, itemsPerPage);
-        var items;
-        var pages;
+        var pagination = getState().appReducers.availability.pagination;
 
         if (text) {
-            items = visibleData.length;
-            pages = getCantPages(items, itemsPerPage);
+            var filterData = getFilterDataAvailability(data, text);
+            pagination.visibleData = getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
+            pagination.items = filterData.length;
+            pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
         } else {
-            items = data.length;
-            pages = getCantPages(items, itemsPerPage);
+            pagination.visibleData = getPaginationData(data, 1, pagination.itemsPerPage);
+            pagination.items = data.length;
+            pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
         }
 
         dispatch({
             type: types.CHANGE_FILTER,
             payload: {
                 text,
-                visibleData,
-                pages
+                pagination
             }
         });
     };
 };
 
 export const changePageNumber = numberPage => {
-    return {
-        type: types.CHANGE_PAGE_NUMBER,
-        numberPage
+    return (dispatch, getState) => {
+        var data = getState().appReducers.availability.data;
+        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
+        var filtro = getState().appReducers.availability.filtro;
+
+        var visibleData = getVisibleData(data, filtro, numberPage, itemsPerPage);
+
+        dispatch({
+            type: types.CHANGE_PAGE_NUMBER,
+            payload: {
+                numberPage,
+                visibleData
+            }
+        })
     }
 };
 
 export const changeNextPage = () => {
     return (dispatch, getState) => {
         var data = getState().appReducers.availability.data;
-        var actualPage = getState().appReducers.availability.pagination.actualPage;
-        var pages = getState().appReducers.availability.pagination.pages;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
+        var pagination = getState().appReducers.availability.pagination;
         var filtro = getState().appReducers.availability.filtro;
 
-        var nextPage = actualPage != pages ? actualPage + 1 : actualPage;
-        var visibleData = getVisibleData(data, filtro, nextPage, itemsPerPage);
+        var nextPage = pagination.actualPage != pagination.pages ? pagination.actualPage + 1 : pagination.actualPage;
+        var visibleData = getVisibleData(data, filtro, nextPage, pagination.itemsPerPage);
         dispatch({
             type: types.CHANGE_NEXT_PAGE,
             payload: {
@@ -60,12 +66,12 @@ export const changeNextPage = () => {
 export const changePreviousPage = () => {
     return (dispatch, getState) => {
         var data = getState().appReducers.availability.data;
-        var actualPage = getState().appReducers.availability.pagination.actualPage;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
+        var pagination = getState().appReducers.availability.pagination;
         var filtro = getState().appReducers.availability.filtro;
 
-        var previousPage = actualPage != 1 ? actualPage - 1 : actualPage;
-        var visibleData = getVisibleData(data, filtro, previousPage, itemsPerPage);
+        var previousPage = pagination.actualPage != 1 ? pagination.actualPage - 1 : pagination.actualPage;
+        var visibleData = getVisibleData(data, filtro, previousPage, pagination.itemsPerPage);
+
         dispatch({
             type: types.CHANGE_PREVIOUS_PAGE,
             payload: {
@@ -99,7 +105,7 @@ export const selectShowRows = cantRows => {
     };
 };
 
-export const fetchAvailability = () => {
+export const fetchAvailability = (isFirstGet) => {
     return (dispatch, getState) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
@@ -107,15 +113,30 @@ export const fetchAvailability = () => {
 
         get('http://www.mocky.io/v2/576c49dc1100002915666804')
             .then(data => {
-                var items = data.length;
-                var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
-                var pages = getCantPages(items, itemsPerPage);
+
+                var pagination = getState().appReducers.availability.pagination;
+                var visibleData;
+
+                pagination.items = data.length;
+
+                if (isFirstGet) {
+                    pagination.actualPage = 1;
+                    pagination.itemsPerPage = 10;
+                    visibleData = getVisibleData(data, '', pagination.actualPage, pagination.itemsPerPage);
+                    pagination.pages = getCantPages(pagination.items, 10);
+                } else {
+                    var filtro = getState().appReducers.availability.filtro;
+
+                    pagination.pages = getCantPages(pagination.items, 10);
+                    visibleData = getVisibleData(data, filtro, actualPage, itemsPerPage)
+                }
+
                 dispatch({
                     type: types.LOAD_DATA_SUCCEEDED,
                     payload: {
                         data,
-                        items,
-                        pages
+                        visibleData,
+                        pagination
                     }
                 });
             })
@@ -143,14 +164,20 @@ export const get = url => {
     });
 };
 
-const getVisibleData = (data, filtro, actualPage, itemsPerPage) => {
-
+const getFilterDataAvailability = (data, filtro) => {
     if (filtro) {
-        filtro = filtro.toLowerCase();
+        filtro = filtro ? filtro.toLowerCase() : filtro;
+        return data.filter(obj => obj.id.includes(filtro) || obj.host.includes(filtro) ? true : false);
+    } else {
+        return data;
     }
+};
 
-    var result = data.filter(obj => obj.id.includes(filtro) || obj.host.includes(filtro) ? true : false)
-        .slice(itemsPerPage * (actualPage - 1), itemsPerPage + (itemsPerPage * (actualPage - 1)));
+const getPaginationData = (data, actualPage, itemsPerPage) => data.slice(itemsPerPage * (actualPage - 1), itemsPerPage + (itemsPerPage * (actualPage - 1)));
+
+const getVisibleData = (data, filtro, actualPage, itemsPerPage) => {
+    let result = getFilterDataAvailability(data, filtro);
+    result = getPaginationData(result, actualPage, itemsPerPage);
 
     return result.length ? result : [{result: 'No matching records found'}];
 };

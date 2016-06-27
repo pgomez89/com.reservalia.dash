@@ -27,8 +27,13 @@ export default function availability(state = initialState, action) {
                 ...state,
                 data: action.payload.data,
                 isFetching: false,
-                visibleData: getVisibleData(action.payload.data, state.filtro, state.pagination.actualPage, state.pagination.itemsPerPage),
-                pagination: {...state.pagination, items: action.payload.items, pages: action.payload.pages}
+                visibleData: action.payload.visibleData,
+                pagination: {
+                    items: action.payload.pagination.items,
+                    itemsPerPage: action.payload.pagination.itemsPerPage,
+                    pages: action.payload.pagination.pages,
+                    actualPage: action.payload.pagination.actualPage
+                }
             };
         case LOAD_DATA_FAILED://Fallar promise, mostrar error
             return {
@@ -39,15 +44,20 @@ export default function availability(state = initialState, action) {
         case CHANGE_FILTER://Cargar filtro, filtra por Id y host.
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
-                pagination: {...state.pagination, pages: action.payload.pages, actualPage: 1},
+                visibleData: action.payload.pagination.visibleData,
+                pagination: {
+                    ...state.pagination,
+                    items: action.payload.pagination.items,
+                    pages: action.payload.pagination.pages,
+                    actualPage: 1
+                },
                 filtro: action.payload.text
             };
         case CHANGE_PAGE_NUMBER://Seleccionar pagina de la tabla, funciona solamente para la selección del número de página.
             return {
                 ...state,
-                visibleData: getVisibleData(state.data, state.filtro, action.numberPage, state.pagination.itemsPerPage),
-                pagination: {...state.pagination, actualPage: action.numberPage}
+                visibleData: action.payload.visibleData,
+                pagination: {...state.pagination, actualPage: action.payload.numberPage}
             };
         case CHANGE_NEXT_PAGE:
             return {
@@ -76,17 +86,3 @@ export default function availability(state = initialState, action) {
             return state;
     }
 }
-
-const getVisibleData = (data, filter, actualPage, itemsPerPage) => {
-    filter = filter.toLowerCase();
-
-    var result = data.filter(obj => {
-        return obj.id.includes(filter) || obj.host.includes(filter) ? true : false;
-    }).slice(itemsPerPage * (actualPage - 1), itemsPerPage + (itemsPerPage * (actualPage - 1)));
-
-    return result.length ? result : [{result: 'No matching records found'}];
-};
-
-const getCantPages = (cantRows, itemsPerPage) => {
-    return Math.ceil(cantRows / itemsPerPage);
-};

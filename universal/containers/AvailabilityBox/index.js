@@ -27,7 +27,7 @@ class AvailabilityBox extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAvailability();
+        this.props.fetchAvailability(true);
     }
 
     handleChange(e) {
