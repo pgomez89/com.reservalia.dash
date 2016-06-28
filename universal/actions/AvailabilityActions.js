@@ -8,6 +8,7 @@ export const chargeFilter = text => {
         var pagination = getState().appReducers.availability.pagination;
         var visibleData;
 
+
         if (text) {
             var filterData = getFilterDataAvailability(data, text);
             visibleData = getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
@@ -129,6 +130,10 @@ export const fetchAvailability = (isFirstGet) => {
 
                 pagination.items = data.length;
 
+                for (let i = 0; i < data.length; i++) {
+                    data[i].percentAvailability = calPercentage(data[i].sinDisponibilidad, data[i].total);
+                }
+
                 if (isFirstGet) {
                     pagination.actualPage = 1;
                     pagination.itemsPerPage = 10;
@@ -193,3 +198,5 @@ const getVisibleData = (data, filterText, actualPage, itemsPerPage) => {
 };
 
 const getCantPages = (cantRows, itemsPerPage) => Math.ceil(cantRows / itemsPerPage);
+
+const calPercentage = (numerator, nominator) => Math.round((numerator / nominator) * 100).toFixed(2);
