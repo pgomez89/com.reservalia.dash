@@ -14,5 +14,3 @@ export default (
     <Route path='availability' components={AvailabilityBox} />
   </Route>
 );
-
-

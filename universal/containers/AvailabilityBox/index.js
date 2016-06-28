@@ -52,7 +52,7 @@ class AvailabilityBox extends Component {
     }
 
     render() {
-        const { visibleData, filter, pagination, isFetching, headers } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
@@ -79,7 +79,7 @@ class AvailabilityBox extends Component {
                         <ShowPages selectCantRows={this.handleShowRows}/>
                     </div>
                     <div className="col-lg-5">
-                        <Filter filter={filter} chargeInput={this.handleChange}/>
+                        <Filter filterText={filterText} chargeInput={this.handleChange}/>
                     </div>
                 </div>
                 {visibleBox}
