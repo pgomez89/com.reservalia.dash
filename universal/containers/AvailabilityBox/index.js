@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //import actions
-import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability, changeNextPage,changePreviousPage } from '../../actions/AvailabilityActions';
+import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability, changeNextPage, changePreviousPage, sortRows } from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -17,14 +17,15 @@ const propTypes = {};
 
 
 class AvailabilityBox extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.handleChange = this.handleChange.bind(this);
         this.handlePageNumber = this.handlePageNumber.bind(this);
         this.handleShowRows = this.handleShowRows.bind(this);
         this.handleNextPage = this.handleNextPage.bind(this);
         this.handlePreviousPage = this.handlePreviousPage.bind(this);
+        this.handleSortRows = this.handleSortRows.bind(this);
     }
 
     componentDidMount() {
@@ -51,14 +52,18 @@ class AvailabilityBox extends Component {
         this.props.selectShowRows(parseInt(e.target.value));
     }
 
+    handleSortRows(e) {
+        this.props.sortRows(e.target.value);
+    }
+
     render() {
-        const { visibleData, filterText, pagination, isFetching, headers } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers,  } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
-            visibleBox.push(<Loading key="loading" />);
+            visibleBox.push(<Loading key="loading"/>);
         } else {
-            visibleBox.push(<Table key="table" headers={headers} data={ visibleData }/>);
+            visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}/>);
             visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
                                         clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
                                         clickPreviousPage={this.handlePreviousPage}/>);
@@ -101,7 +106,8 @@ const mapDispatchToProps = dispatch => {
         selectShowRows,
         fetchAvailability,
         changeNextPage,
-        changePreviousPage
+        changePreviousPage,
+        sortRows
     }, dispatch);
 };
 

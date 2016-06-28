@@ -116,7 +116,35 @@ export const selectShowRows = cantRows => {
     };
 };
 
-export const fetchAvailability = (isFirstGet) => {
+export const sortRows = colSort => {
+    return (dispatch, getState) => {
+        var data = getState().appReducers.availability.data;
+        var sort = getState().appReducers.availability.sort;
+        var filtro = getState().appReducers.availability.filterText;
+        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
+
+        if (colSort == sort.colSort) {
+            sort.order = sort.order == 'desc' ? 'asc' : 'desc';
+        } else {
+            sort.order = 'desc';
+        }
+
+        sort.colSort = colSort;
+
+        var sortData = getDataSort(data, sort.order, colSort);
+        sortData = getVisibleData(sortData, filtro, 1, itemsPerPage);
+
+        dispatch({
+            type: types.SORT_ROWS,
+            payload: {
+                sortData,
+                sort
+            }
+        });
+    }
+};
+
+export const fetchAvailability = isFirstGet => {
     return (dispatch, getState) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
@@ -200,3 +228,11 @@ const getVisibleData = (data, filterText, actualPage, itemsPerPage) => {
 const getCantPages = (cantRows, itemsPerPage) => Math.ceil(cantRows / itemsPerPage);
 
 const calPercentage = (numerator, nominator) => Math.round((numerator / nominator) * 100).toFixed(2);
+
+const getDataSort = (data, order, colSort) => {
+    if (order == 'desc') {
+        return data.sort((a, b) => b[colSort] - a[colSort]);
+    } else {
+        return data.sort((a, b) => a[colSort] - b[colSort]);
+    }
+};
