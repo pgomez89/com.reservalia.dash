@@ -14,11 +14,10 @@ const propTypes = {};
 
 class Table extends Component {
     render() {
-
         return (
             <div className="Table">
                 <table id="table_id" className="table table-striped table-hover table-bordered">
-                    <TableHeader header={Object.keys(this.props.data[0])}/>
+                    <TableHeader header={this.props.headers}/>
                     <TableBody data={this.props.data}/>
                 </table>
             </div>

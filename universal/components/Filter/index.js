@@ -14,7 +14,7 @@ class Filter extends Component {
                     <form className="form-inline">
                         <div className="form-group">
                             <label className="label-margin">Search: </label>
-                            <input className="form-control" type="text" value={this.props.filter} onChange={this.props.chargeInput} />
+                            <input className="form-control" type="text" value={this.props.filterText} onChange={this.props.chargeInput} />
                         </div>
                     </form>
                 </div>

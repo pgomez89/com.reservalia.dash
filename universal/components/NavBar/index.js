@@ -39,8 +39,7 @@ class NavBar extends Component {
                 this.props.data.linkNav.map(link => {
                   return (
                     <li key={link.name.toLowerCase()}>
-                      <Link to={link.route}><i
-                        className={"fa fa-fw fa-"+link.icon}></i> {link.name}</Link>
+                      <Link to={link.route}>{link.name}</Link>
                     </li>
                   )
                 })

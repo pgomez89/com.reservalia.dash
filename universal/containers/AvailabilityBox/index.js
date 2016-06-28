@@ -52,13 +52,13 @@ class AvailabilityBox extends Component {
     }
 
     render() {
-        const { visibleData, filter, pagination, isFetching } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
-            visibleBox.push(<Loading />);
+            visibleBox.push(<Loading key="loading" />);
         } else {
-            visibleBox.push(<Table key="table" data={ visibleData }/>);
+            visibleBox.push(<Table key="table" headers={headers} data={ visibleData }/>);
             visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
                                         clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
                                         clickPreviousPage={this.handlePreviousPage}/>);
@@ -79,7 +79,7 @@ class AvailabilityBox extends Component {
                         <ShowPages selectCantRows={this.handleShowRows}/>
                     </div>
                     <div className="col-lg-5">
-                        <Filter filter={filter} chargeInput={this.handleChange}/>
+                        <Filter filterText={filterText} chargeInput={this.handleChange}/>
                     </div>
                 </div>
                 {visibleBox}

@@ -5,6 +5,7 @@ import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
 const initialState = {
     data: [{}],
     isFetching: false,
+    headers: ["Id", "Host", "Total", "Sin Disponibilidad"],
     visibleData: [{}],
     pagination: {
         items: 0,
@@ -12,7 +13,7 @@ const initialState = {
         pages: 0,
         actualPage: 1
     },
-    filtro: ''
+    filterText: ''
 };
 
 export default function availability(state = initialState, action) {
@@ -44,14 +45,14 @@ export default function availability(state = initialState, action) {
         case CHANGE_FILTER://Cargar filtro, filtra por Id y host.
             return {
                 ...state,
-                visibleData: action.payload.pagination.visibleData,
+                visibleData: action.payload.visibleData,
                 pagination: {
                     ...state.pagination,
                     items: action.payload.pagination.items,
                     pages: action.payload.pagination.pages,
                     actualPage: 1
                 },
-                filtro: action.payload.text
+                filterText: action.payload.text
             };
         case CHANGE_PAGE_NUMBER://Seleccionar pagina de la tabla, funciona solamente para la selección del número de página.
             return {
@@ -87,8 +88,8 @@ export default function availability(state = initialState, action) {
                 pagination: {
                     ...state.pagination,
                     itemsPerPage: action.payload.cantRows,
-                    pages: action.payload.pages,
-                    actualPage: action.payload.actualPage
+                    pages: action.payload.pagination.pages,
+                    actualPage: 1
                 }
             };
         default:

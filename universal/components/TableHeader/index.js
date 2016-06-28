@@ -10,17 +10,16 @@ const propTypes = {};
 
 class TableHeader extends Component {
     render() {
+        var {header} = this.props;
+        var listHeaders = [];
+
+        for (let i = 0; i < header.length; i++){
+            listHeaders.push(<th key={i}>{header[i]}</th>);
+        }
         return (
             <thead className="TableHeader">
             <tr>
-                {
-                    this.props.header.map(title => <th key={title}>{title
-                            .replace(/([A-Z])/g, ' $1')
-                            .replace(/^./, function (str) {
-                                    return str.toUpperCase();
-                                }
-                            )}</th>)
-                }
+                { listHeaders }
             </tr>
             </thead>
         );
