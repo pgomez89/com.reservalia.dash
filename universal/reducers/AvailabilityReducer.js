@@ -1,11 +1,11 @@
 import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     LOAD_DATA_ATTEMPTED, LOAD_DATA_SUCCEEDED, LOAD_DATA_FAILED,
-    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE } from '../constants/ActionTypes';
+    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS } from '../constants/ActionTypes';
 
 const initialState = {
     data: [{}],
     isFetching: false,
-    headers: ["Id", "Host", "Sin Disponibilidad", "Total","%"],
+    headers: ["Id", "Host", "Sin Disponibilidad", "Total", "%"],
     visibleData: [{}],
     pagination: {
         items: 0,
@@ -13,7 +13,11 @@ const initialState = {
         pages: 0,
         actualPage: 1
     },
-    filterText: ''
+    filterText: '',
+    sort: {
+        order: 'desc',
+        colSort: 'sinDisponibilidad'
+    }
 };
 
 export default function availability(state = initialState, action) {
@@ -90,6 +94,20 @@ export default function availability(state = initialState, action) {
                     itemsPerPage: action.payload.cantRows,
                     pages: action.payload.pagination.pages,
                     actualPage: 1
+                }
+            };
+        case SORT_ROWS:
+            return {
+                ...state,
+                data: action.payload.sortData,
+                visibleData: action.payload.visibleData,
+                pagination: {
+                    ...state.pagination,
+                    actualPage: 1
+                },
+                sort: {
+                    order: action.payload.sort.order,
+                    colSort: action.payload.colSort
                 }
             };
         default:

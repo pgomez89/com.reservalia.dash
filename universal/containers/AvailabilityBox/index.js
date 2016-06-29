@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //import actions
-import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability, changeNextPage,changePreviousPage } from '../../actions/AvailabilityActions';
+import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability, changeNextPage, changePreviousPage, sortRows } from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -17,48 +17,64 @@ const propTypes = {};
 
 
 class AvailabilityBox extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.handleChange = this.handleChange.bind(this);
         this.handlePageNumber = this.handlePageNumber.bind(this);
         this.handleShowRows = this.handleShowRows.bind(this);
         this.handleNextPage = this.handleNextPage.bind(this);
         this.handlePreviousPage = this.handlePreviousPage.bind(this);
+        this.handleSortRows = this.handleSortRows.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchAvailability(true);
+        const {filterText,sort,pagination} = this.props.availability;
+        this.props.fetchAvailability(true, filterText, sort, pagination);
     }
 
     handleChange(e) {
-        this.props.chargeFilter(e.target.value);
+        const {data, pagination} = this.props.availability;
+        this.props.chargeFilter(e.target.value, data, pagination);
     }
 
     handlePageNumber(e) {
-        this.props.changePageNumber(e.target.value);
+        const {data, filterText} = this.props.availability;
+        const {itemsPerPage} = this.props.availability.pagination;
+
+        this.props.changePageNumber(e.target.value, data, filterText, itemsPerPage);
     }
 
     handleNextPage() {
-        this.props.changeNextPage();
+        const {data, filterText, pagination} = this.props.availability;
+        this.props.changeNextPage(data, filterText, pagination);
     }
 
     handlePreviousPage() {
-        this.props.changePreviousPage();
+        const {data, filterText, pagination} = this.props.availability;
+        this.props.changePreviousPage(data, filterText, pagination);
     }
 
     handleShowRows(e) {
-        this.props.selectShowRows(parseInt(e.target.value));
+        const {data, filterText, pagination} = this.props.availability;
+        this.props.selectShowRows(parseInt(e.target.value), data, filterText, pagination);
+    }
+
+    handleSortRows(e) {
+        const {data, filterText, sort} = this.props.availability;
+        const {itemsPerPage} = this.props.availability.pagination;
+        this.props.sortRows(e.target.value, data, filterText, sort, itemsPerPage);
     }
 
     render() {
-        const { visibleData, filterText, pagination, isFetching, headers } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers, sort  } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
-            visibleBox.push(<Loading key="loading" />);
+            visibleBox.push(<Loading key="loading"/>);
         } else {
-            visibleBox.push(<Table key="table" headers={headers} data={ visibleData }/>);
+            visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}
+                                   sort={sort}/>);
             visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
                                         clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
                                         clickPreviousPage={this.handlePreviousPage}/>);
@@ -101,7 +117,8 @@ const mapDispatchToProps = dispatch => {
         selectShowRows,
         fetchAvailability,
         changeNextPage,
-        changePreviousPage
+        changePreviousPage,
+        sortRows
     }, dispatch);
 };
 
