@@ -1,13 +1,9 @@
 import * as types from '../constants/ActionTypes';
 
 
-export const chargeFilter = text => {
-    return (dispatch, getState) => {
-
-        var data = getState().appReducers.availability.data;
-        var pagination = getState().appReducers.availability.pagination;
+export const chargeFilter = (text, data, pagination) => {
+    return dispatch => {
         var visibleData;
-
 
         if (text) {
             var filterData = getFilterDataAvailability(data, text);
@@ -31,12 +27,8 @@ export const chargeFilter = text => {
     };
 };
 
-export const changePageNumber = numberPage => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
-        var filterText = getState().appReducers.availability.filterText;
-
+export const changePageNumber = (numberPage, data, filterText, itemsPerPage) => {
+    return dispatch => {
         var visibleData = getVisibleData(data, filterText, numberPage, itemsPerPage);
 
         dispatch({
@@ -49,14 +41,11 @@ export const changePageNumber = numberPage => {
     }
 };
 
-export const changeNextPage = () => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var pagination = getState().appReducers.availability.pagination;
-        var filterText = getState().appReducers.availability.filterText;
-
+export const changeNextPage = (data, filterText, pagination) => {
+    return dispatch => {
         var nextPage = pagination.actualPage != pagination.pages ? pagination.actualPage + 1 : pagination.actualPage;
         var visibleData = getVisibleData(data, filterText, nextPage, pagination.itemsPerPage);
+
         dispatch({
             type: types.CHANGE_NEXT_PAGE,
             payload: {
@@ -67,12 +56,8 @@ export const changeNextPage = () => {
     }
 };
 
-export const changePreviousPage = () => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var pagination = getState().appReducers.availability.pagination;
-        var filterText = getState().appReducers.availability.filterText;
-
+export const changePreviousPage = (data, filterText, pagination) => {
+    return dispatch => {
         var previousPage = pagination.actualPage != 1 ? pagination.actualPage - 1 : pagination.actualPage;
         var visibleData = getVisibleData(data, filterText, previousPage, pagination.itemsPerPage);
 
@@ -87,11 +72,8 @@ export const changePreviousPage = () => {
 };
 
 
-export const selectShowRows = cantRows => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var pagination = getState().appReducers.availability.pagination;
-        var filterText = getState().appReducers.availability.filterText;
+export const selectShowRows = (cantRows, data, filterText, pagination) => {
+    return dispatch => {
         var visibleData;
 
         if (filterText) {
@@ -116,62 +98,55 @@ export const selectShowRows = cantRows => {
     };
 };
 
-export const sortRows = colSort => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var sort = getState().appReducers.availability.sort;
-        var filtro = getState().appReducers.availability.filterText;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
-
+export const sortRows = (colSort, data, filterText, sort, itemsPerPage) => {
+    return dispatch => {
         if (colSort == sort.colSort) {
             sort.order = sort.order == 'desc' ? 'asc' : 'desc';
         } else {
             sort.order = 'desc';
         }
 
-        sort.colSort = colSort;
-
         var sortData = getDataSort(data, sort.order, colSort);
-        sortData = getVisibleData(sortData, filtro, 1, itemsPerPage);
+        var visibleData = getVisibleData(sortData, filterText, 1, itemsPerPage);
 
         dispatch({
             type: types.SORT_ROWS,
             payload: {
                 sortData,
-                sort
+                visibleData,
+                sort,
+                colSort
             }
         });
     }
 };
 
-export const fetchAvailability = isFirstGet => {
-    return (dispatch, getState) => {
+export const fetchAvailability = (isFirstGet, filterText, sort, pagination) => {
+    return (dispatch) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
         });
 
-        get('http://www.mocky.io/v2/576c49dc1100002915666804')
+        get('http://www.mocky.io/v2/5773f0d20f0000d20d597b2c')
             .then(data => {
-
-                var pagination = getState().appReducers.availability.pagination;
                 var visibleData;
 
                 pagination.items = data.length;
 
-                for (let i = 0; i < data.length; i++) {
+                for (let i = 0; i < pagination.items; i++) {
                     data[i].percentAvailability = calPercentage(data[i].sinDisponibilidad, data[i].total);
                 }
+
+                data = getDataSort(data, sort.order, sort.colSort);
 
                 if (isFirstGet) {
                     pagination.actualPage = 1;
                     pagination.itemsPerPage = 10;
+                    pagination.pages = getCantPages(pagination.items, 10);
                     visibleData = getVisibleData(data, '', pagination.actualPage, pagination.itemsPerPage);
-                    pagination.pages = getCantPages(pagination.items, 10);
                 } else {
-                    var filterText = getState().appReducers.availability.filterText;
-
-                    pagination.pages = getCantPages(pagination.items, 10);
-                    visibleData = getVisibleData(data, filterText, actualPage, itemsPerPage)
+                    pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+                    visibleData = getVisibleData(data, filterText, 1, pagination.itemsPerPage)
                 }
 
                 dispatch({
@@ -193,7 +168,7 @@ export const fetchAvailability = isFirstGet => {
 };
 
 
-/* ======================= */
+/* ================================================================= */
 
 import fetch from 'isomorphic-fetch';
 
@@ -210,7 +185,7 @@ export const get = url => {
 const getFilterDataAvailability = (data, filterText) => {
     if (filterText) {
         filterText = filterText ? filterText.toLowerCase() : filterText;
-        return data.filter(obj => obj.id.includes(filterText) || obj.host.includes(filterText) ? true : false);
+        return data.filter(obj => obj.id.toString().includes(filterText) || obj.host.includes(filterText) ? true : false);
     } else {
         return data;
     }
@@ -227,12 +202,28 @@ const getVisibleData = (data, filterText, actualPage, itemsPerPage) => {
 
 const getCantPages = (cantRows, itemsPerPage) => Math.ceil(cantRows / itemsPerPage);
 
-const calPercentage = (numerator, nominator) => Math.round((numerator / nominator) * 100).toFixed(2);
+const calPercentage = (numerator, nominator) => Math.round((numerator / nominator) * 100);
 
 const getDataSort = (data, order, colSort) => {
-    if (order == 'desc') {
-        return data.sort((a, b) => b[colSort] - a[colSort]);
+    if (typeof data[0][colSort] == 'string') {
+        if (order == 'desc') {
+            return data.sort(function (a, b) {
+                if (a[colSort] > b[colSort]) return -1;
+                if (a[colSort] < b[colSort]) return 1;
+                return 0;
+            });
+        } else {
+            return data.sort(function (a, b) {
+                if (a[colSort] < b[colSort]) return -1;
+                if (a[colSort] > b[colSort]) return 1;
+                return 0;
+            });
+        }
     } else {
-        return data.sort((a, b) => a[colSort] - b[colSort]);
+        if (order == 'desc') {
+            return data.sort((a, b) => b[colSort] - a[colSort]);
+        } else {
+            return data.sort((a, b) => a[colSort] - b[colSort]);
+        }
     }
 };

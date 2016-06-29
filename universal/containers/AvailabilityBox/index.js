@@ -29,41 +29,52 @@ class AvailabilityBox extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAvailability(true);
+        const {filterText,sort,pagination} = this.props.availability;
+        this.props.fetchAvailability(true, filterText, sort, pagination);
     }
 
     handleChange(e) {
-        this.props.chargeFilter(e.target.value);
+        const {data, pagination} = this.props.availability;
+        this.props.chargeFilter(e.target.value, data, pagination);
     }
 
     handlePageNumber(e) {
-        this.props.changePageNumber(e.target.value);
+        const {data, filterText} = this.props.availability;
+        const {itemsPerPage} = this.props.availability.pagination;
+
+        this.props.changePageNumber(e.target.value, data, filterText, itemsPerPage);
     }
 
     handleNextPage() {
-        this.props.changeNextPage();
+        const {data, filterText, pagination} = this.props.availability;
+        this.props.changeNextPage(data, filterText, pagination);
     }
 
     handlePreviousPage() {
-        this.props.changePreviousPage();
+        const {data, filterText, pagination} = this.props.availability;
+        this.props.changePreviousPage(data, filterText, pagination);
     }
 
     handleShowRows(e) {
-        this.props.selectShowRows(parseInt(e.target.value));
+        const {data, filterText, pagination} = this.props.availability;
+        this.props.selectShowRows(parseInt(e.target.value), data, filterText, pagination);
     }
 
     handleSortRows(e) {
-        this.props.sortRows(e.target.value);
+        const {data, filterText, sort} = this.props.availability;
+        const {itemsPerPage} = this.props.availability.pagination;
+        this.props.sortRows(e.target.value, data, filterText, sort, itemsPerPage);
     }
 
     render() {
-        const { visibleData, filterText, pagination, isFetching, headers,  } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers, sort  } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
             visibleBox.push(<Loading key="loading"/>);
         } else {
-            visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}/>);
+            visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}
+                                   sort={sort}/>);
             visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
                                         clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
                                         clickPreviousPage={this.handlePreviousPage}/>);

@@ -19,7 +19,7 @@ class Table extends Component {
         return (
             <div className="Table">
                 <table id="table_id" className="table table-striped table-hover table-bordered">
-                    <TableHeader header={this.props.headers} values={Object.keys(this.props.data[0])} sortRows={this.props.sortRows} />
+                    <TableHeader header={this.props.headers} sort={this.props.sort} values={Object.keys(this.props.data[0])} sortRows={this.props.sortRows} />
                     <TableBody data={this.props.data}/>
                 </table>
             </div>

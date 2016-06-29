@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import css from './index.scss';
 
 const propTypes = {
-    sortRows:React.PropTypes.func
+    sortRows: React.PropTypes.func
 };
 
 /**
@@ -12,11 +12,22 @@ const propTypes = {
 
 class TableHeader extends Component {
     render() {
-        var {header, values} = this.props;
+        var {header, values, sort} = this.props;
         var listHeaders = [];
 
-        for (let i = 0; i < header.length; i++){
-            listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}</th>);
+        for (let i = 0; i < header.length; i++) {
+            if (values[i] == sort.colSort) {
+                if (sort.order == 'desc') {
+                    listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}<span
+                        className="arrowSort active"> ▾</span></th>);
+                } else {
+                    listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}<span
+                        className="arrowSort active"> ▴</span></th>);
+                }
+            } else {
+                listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}<span
+                    className="arrowSort"> ▾▴</span></th>);
+            }
         }
         return (
             <thead className="TableHeader">

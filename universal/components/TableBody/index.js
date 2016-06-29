@@ -13,20 +13,14 @@ const propTypes = {};
 
 class TableBody extends Component {
     render() {
+        var {data} = this.props;
+        var rows = [];
+        for (let i = 0; i < data.length; i++) {
+            rows.push(<TableRow key={i+'-'+i} info={data[i]}/>)
+        }
         return (
             <tbody className="TableBody">
-            {
-                this.props.data.map(
-                    (elem) => {
-                        let keys = Object.keys(elem);
-                        let info = [];
-                        for (var i = 0; i < keys.length; i++) {
-                            info.push(elem[keys[i]]);
-                        }
-                        return <TableRow key={elem.id} info={info}/>
-                    }
-                )
-            }
+             {rows}
             </tbody>
         );
     }

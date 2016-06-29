@@ -99,14 +99,15 @@ export default function availability(state = initialState, action) {
         case SORT_ROWS:
             return {
                 ...state,
-                visibleData: action.payload.sortData,
+                data: action.payload.sortData,
+                visibleData: action.payload.visibleData,
                 pagination: {
                     ...state.pagination,
                     actualPage: 1
                 },
                 sort: {
                     order: action.payload.sort.order,
-                    colSort: action.payload.sort.colSort
+                    colSort: action.payload.colSort
                 }
             };
         default:
