@@ -1,7 +1,12 @@
-.TableHeader .active{
-  color: #CF5446;
-}
-
 .TableHeader th {
   cursor: pointer;
+}
+
+.TableHeader .arrowSort {
+  float: right;
+  color: #aaaaaa;
+}
+
+.TableHeader .active{
+  color: #CF5446;
 }

@@ -4,6 +4,11 @@
   cursor: pointer;
 }
 
-.pagination li {
+.pagination li a {
   cursor: pointer;
+  color: #000;
+}
+
+.pagination li a:hover {
+  color: #CF5446;
 }
