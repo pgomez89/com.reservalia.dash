@@ -10,14 +10,13 @@ class Filter extends Component {
     render() {
         return (
             <div className="Filter">
-                <div className="filter">
-                    <form className="form-inline">
-                        <div className="form-group">
-                            <label className="label-margin">Search: </label>
-                            <input className="form-control" type="text" value={this.props.filterText} onChange={this.props.chargeInput} />
-                        </div>
-                    </form>
-                </div>
+                <form>
+                    <div className="form-group">
+                        <label className="label-margin">Search: </label>
+                        <input className="form-control" type="text" value={this.props.filterText}
+                               onChange={this.props.chargeInput}/>
+                    </div>
+                </form>
             </div>
         );
     }

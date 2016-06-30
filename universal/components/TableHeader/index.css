@@ -1,4 +1,7 @@
 .TableHeader .active {
   color: #CF5446; }
 
+.TableHeader th {
+  cursor: pointer; }
+
 /*# sourceMappingURL=index.css.map */

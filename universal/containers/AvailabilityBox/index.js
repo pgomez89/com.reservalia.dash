@@ -12,6 +12,7 @@ import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import ShowPages from '../../components/ShowPages';
 import Loading from '../../components/Loading';
+import SideToolBarAvailability from '../../components/SideToolBarAvailability';
 
 const propTypes = {};
 
@@ -82,23 +83,20 @@ class AvailabilityBox extends Component {
 
 
         return (
-            <div className="AvailabilityBox" id="page-wrapper">
-                <h1>Disponibilidad</h1>
-                <hr />
-                <div className="row tool-bar">
-                    <div className="col-lg-12">
-                        <SearchBoxDate />
+            <div className="container-fluid">
+                <div className="AvailabilityBox" id="page-wrapper">
+                    <h1>Availability</h1>
+                    <hr />
+                    <div className="row">
+                        <div className="col-lg-3">
+                                <SideToolBarAvailability filterText={filterText} selectCantRows={this.handleShowRows}
+                                                         chargeInput={this.handleChange}/>
+                        </div>
+                        <div className="col-lg-9">
+                            {visibleBox}
+                        </div>
                     </div>
                 </div>
-                <div className="row tool-bar">
-                    <div className="col-lg-7">
-                        <ShowPages selectCantRows={this.handleShowRows}/>
-                    </div>
-                    <div className="col-lg-5">
-                        <Filter filterText={filterText} chargeInput={this.handleChange}/>
-                    </div>
-                </div>
-                {visibleBox}
             </div>
         );
     }

@@ -184,8 +184,10 @@ export const get = url => {
 
 const getFilterDataAvailability = (data, filterText) => {
     if (filterText) {
-        filterText = filterText ? filterText.toLowerCase() : filterText;
-        return data.filter(obj => obj.id.toString().includes(filterText) || obj.host.includes(filterText) ? true : false);
+        var dataFilter = data.filter(obj => obj.id.toString().includes(filterText) || obj.host.includes(filterText) ? true : false);
+        console.log(dataFilter);
+
+        return dataFilter.length ? dataFilter : [{}];
     } else {
         return data;
     }
@@ -197,7 +199,7 @@ const getVisibleData = (data, filterText, actualPage, itemsPerPage) => {
     let result = getFilterDataAvailability(data, filterText);
     result = getPaginationData(result, actualPage, itemsPerPage);
 
-    return result.length ? result : [{result: 'No matching records found'}];
+    return result;
 };
 
 const getCantPages = (cantRows, itemsPerPage) => Math.ceil(cantRows / itemsPerPage);

@@ -1,5 +1,9 @@
 .pagination .activePage a {
   font-weight: bold;
-  color: #CF5446; }
+  color: #CF5446;
+  cursor: pointer; }
+
+.pagination li {
+  cursor: pointer; }
 
 /*# sourceMappingURL=index.css.map */

@@ -9,9 +9,11 @@ const propTypes = {};
 class Dashboard extends Component {
     render() {
         return (
-            <div className="Dashboard" id="page-wrapper">
-                <h1>Dashboard</h1>
-                <hr />
+            <div className="container-fluid">
+                <div className="Dashboard" id="page-wrapper">
+                    <h1>Dashboard</h1>
+                    <hr />
+                </div>
             </div>
         );
     }

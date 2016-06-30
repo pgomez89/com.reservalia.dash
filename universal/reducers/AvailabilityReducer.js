@@ -5,7 +5,7 @@ import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
 const initialState = {
     data: [{}],
     isFetching: false,
-    headers: ["Id", "Host", "Sin Disponibilidad", "Total", "%"],
+    headers: ["Id", "Host", "Unavailable", "Total", "%"],
     visibleData: [{}],
     pagination: {
         items: 0,
@@ -17,6 +17,10 @@ const initialState = {
     sort: {
         order: 'desc',
         colSort: 'sinDisponibilidad'
+    },
+    error: {
+        title:'',
+        message:''
     }
 };
 
