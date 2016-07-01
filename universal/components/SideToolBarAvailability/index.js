@@ -11,6 +11,8 @@ import Filter from '../Filter';
 const propTypes = {
     selectCantRows: React.PropTypes.func,
     chargeInput: React.PropTypes.func,
+    changeStartDate : React.PropTypes.func,
+    changeEndDate : React.PropTypes.func,
     filterText: React.PropTypes.string
 };
 
@@ -28,7 +30,7 @@ class SideToolBarAvailability extends Component {
                     <hr/>
                 </div>
                 <div className="col-lg-12">
-                    <SearchBoxDate />
+                    <SearchBoxDate startDate={this.props.startDate} endDate={this.props.endDate} changeStartDate={this.props.changeStartDate} changeEndDate={this.props.changeEndDate}/>
                 </div>
             </div>
         );

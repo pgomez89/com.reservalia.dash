@@ -1,6 +1,5 @@
 import * as types from '../constants/ActionTypes';
 
-
 export const chargeFilter = (text, data, pagination) => {
     return dispatch => {
         var visibleData;
@@ -127,6 +126,20 @@ export const sortRows = (colSort, data, filterText, sort, itemsPerPage) => {
                 colSort
             }
         });
+    }
+};
+
+export const selectStartDate = (startDate) => {
+    return {
+        type: types.SELECT_START_DATE,
+        startDate
+    }
+};
+
+export const selectEndDate = (endDate) => {
+    return {
+        type: types.SELECT_END_DATE,
+        endDate
     }
 };
 

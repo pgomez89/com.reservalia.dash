@@ -1,9 +1,14 @@
 import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     LOAD_DATA_ATTEMPTED, LOAD_DATA_SUCCEEDED, LOAD_DATA_FAILED,
-    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_ERROR } from '../constants/ActionTypes';
+    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_ERROR,
+    SELECT_START_DATE, SELECT_END_DATE } from '../constants/ActionTypes';
+
+import moment from 'moment';
 
 const initialState = {
     data: [{}],
+    startDate: moment().subtract(30, 'days'),
+    endDate: moment(),
     isFetching: false,
     isErrorFetch: false,
     headers: ["Id", "Host", "Unavailable", "Total", "%"],
@@ -117,7 +122,7 @@ export default function availability(state = initialState, action) {
                     actualPage: 1
                 }
             };
-        case SORT_ROWS:
+        case SORT_ROWS://Ordenar tabla
             return {
                 ...state,
                 data: action.payload.sortData,
@@ -130,6 +135,16 @@ export default function availability(state = initialState, action) {
                     order: action.payload.sort.order,
                     colSort: action.payload.colSort
                 }
+            };
+        case SELECT_START_DATE:
+            return {
+                ...state,
+                startDate: action.startDate
+            };
+        case SELECT_END_DATE:
+            return {
+                ...state,
+                endDate: action.endDate
             };
         default:
             return state;

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //import actions
-import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability, changeNextPage, changePreviousPage, sortRows } from '../../actions/AvailabilityActions';
+import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability,
+    changeNextPage, changePreviousPage, sortRows, selectStartDate, selectEndDate } from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -28,6 +29,8 @@ class AvailabilityBox extends Component {
         this.handleNextPage = this.handleNextPage.bind(this);
         this.handlePreviousPage = this.handlePreviousPage.bind(this);
         this.handleSortRows = this.handleSortRows.bind(this);
+        this.handleChangeStart = this.handleChangeStart.bind(this);
+        this.handleChangeEnd = this.handleChangeEnd.bind(this);
     }
 
     componentDidMount() {
@@ -68,14 +71,23 @@ class AvailabilityBox extends Component {
         this.props.sortRows(e.target.value, data, filterText, sort, itemsPerPage);
     }
 
+    handleChangeStart(date) {
+        this.props.selectStartDate(date);
+    }
+
+    handleChangeEnd(date) {
+        this.props.selectEndDate(date);
+    }
+
+
     render() {
-        const { visibleData, filterText, pagination, isFetching, headers, sort, isErrorFilter, isErrorFetch  } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers, sort, isErrorFilter, isErrorFetch, startDate, endDate  } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
             visibleBox.push(<Loading key="loading"/>);
         } else {
-            if(isErrorFetch){
+            if (isErrorFetch) {
                 visibleBox.push(<ErrorBox/>);
             } else {
                 visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}
@@ -96,8 +108,10 @@ class AvailabilityBox extends Component {
                     </div>
                     <div className="row">
                         <div className="col-lg-2">
-                                <SideToolBarAvailability filterText={filterText} selectCantRows={this.handleShowRows}
-                                                         chargeInput={this.handleChange}/>
+                            <SideToolBarAvailability filterText={filterText} startDate={startDate} endDate={endDate} selectCantRows={this.handleShowRows}
+                                                     chargeInput={this.handleChange}
+                                                     changeStartDate={this.handleChangeStart}
+                                                     changeEndDate={this.handleChangeEnd}/>
                         </div>
                         <div className="col-lg-10">
                             {visibleBox}
@@ -123,7 +137,9 @@ const mapDispatchToProps = dispatch => {
         fetchAvailability,
         changeNextPage,
         changePreviousPage,
-        sortRows
+        sortRows,
+        selectStartDate,
+        selectEndDate
     }, dispatch);
 };
 

@@ -5,6 +5,8 @@ import http from 'http';
 import socketIO from 'socket.io';
 import config from 'config';
 
+var dispo = require('./apiAnalytics');
+
 import * as uni from './server/app.js';
 
 const app = express();
@@ -36,5 +38,13 @@ app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, 'images'
  * Universal Application endpoint
  */
 app.get('*', uni.handleRender);
+
+/*app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
+    dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
+        .then(data => {
+            console.log(data);
+            res.send(data);
+        });
+});*/
 
 httpServer.listen(port);

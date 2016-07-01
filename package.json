@@ -29,6 +29,7 @@
     "config": "1.19.x",
     "ejs": "2.3.x",
     "express": "4.13.x",
+    "googleapis": "^9.0.0",
     "history": "1.13.x",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.13.1",

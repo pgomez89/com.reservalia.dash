@@ -6,7 +6,10 @@ import * as styleDatePicker from 'react-datepicker/dist/react-datepicker.css';
 //import components
 import DatePicker from 'react-datepicker';
 
-const propTypes = {};
+const propTypes = {
+    changeStartDate: React.PropTypes.func,
+    changeEndDate: React.PropTypes.func
+};
 
 class SearchBoxDate extends Component {
     render() {
@@ -15,11 +18,21 @@ class SearchBoxDate extends Component {
                 <form>
                     <div className="form-group">
                         <label className="label-margin">From: </label>
-                        <DatePicker className="form-control"/>
+                        <DatePicker className="form-control"
+                                    dateFormat="DD/MM/YYYY"
+                                    selected={this.props.startDate}
+                                    startDate={this.props.startDate}
+                                    endDate={this.props.endDate}
+                                    onChange={this.props.changeStartDate}/>
                     </div>
                     <div className="form-group">
                         <label className="label-margin">To: </label>
-                        <DatePicker className="form-control"/>
+                        <DatePicker className="form-control"
+                                    dateFormat="DD/MM/YYYY"
+                                    selected={this.props.endDate}
+                                    startDate={this.props.startDate}
+                                    endDate={this.props.endDate}
+                                    onChange={this.props.changeEndDate}/>
                     </div>
                     <button className="btn btn-default btn-block btn-warning">
                         Search
