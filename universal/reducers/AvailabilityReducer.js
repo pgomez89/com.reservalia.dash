@@ -41,7 +41,13 @@ export default function availability(state = initialState, action) {
                     itemsPerPage: action.payload.pagination.itemsPerPage,
                     pages: action.payload.pagination.pages,
                     actualPage: action.payload.pagination.actualPage
-                }
+                },
+                filterText: '',
+                sort: {
+                    order: 'desc',
+                    colSort: 'sinDisponibilidad'
+                },
+                isErrorFilter: false
             };
         case LOAD_DATA_FAILED://Fallar promise, mostrar error
             return {

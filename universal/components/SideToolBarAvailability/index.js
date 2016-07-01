@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import css from './index.scss';
+require('react-datepicker/dist/react-datepicker.css');
 
 //import components
 import SearchBoxDate from '../SearchBoxDate';
@@ -14,6 +15,7 @@ const propTypes = {
 };
 
 class SideToolBarAvailability extends Component {
+
     render() {
         return (
             <div className="SideToolBarAvailability row">

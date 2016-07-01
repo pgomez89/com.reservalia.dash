@@ -32,7 +32,7 @@
     "history": "1.13.x",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.13.1",
-    "moment": "2.11.x",
+    "moment": "^2.11.2",
     "nib": "^1.1.x",
     "node-uuid": "1.4.x",
     "react": "15.0.x",
