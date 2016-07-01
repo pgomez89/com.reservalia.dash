@@ -1,10 +1,11 @@
 import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     LOAD_DATA_ATTEMPTED, LOAD_DATA_SUCCEEDED, LOAD_DATA_FAILED,
-    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS } from '../constants/ActionTypes';
+    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_ERROR } from '../constants/ActionTypes';
 
 const initialState = {
     data: [{}],
     isFetching: false,
+    isErrorFetch: false,
     headers: ["Id", "Host", "Unavailable", "Total", "%"],
     visibleData: [{}],
     pagination: {
@@ -18,10 +19,7 @@ const initialState = {
         order: 'desc',
         colSort: 'sinDisponibilidad'
     },
-    error: {
-        title:'',
-        message:''
-    }
+    isErrorFilter: false
 };
 
 export default function availability(state = initialState, action) {
@@ -36,19 +34,26 @@ export default function availability(state = initialState, action) {
                 ...state,
                 data: action.payload.data,
                 isFetching: false,
+                isErrorFetch: false,
                 visibleData: action.payload.visibleData,
                 pagination: {
                     items: action.payload.pagination.items,
                     itemsPerPage: action.payload.pagination.itemsPerPage,
                     pages: action.payload.pagination.pages,
                     actualPage: action.payload.pagination.actualPage
-                }
+                },
+                filterText: '',
+                sort: {
+                    order: 'desc',
+                    colSort: 'sinDisponibilidad'
+                },
+                isErrorFilter: false
             };
         case LOAD_DATA_FAILED://Fallar promise, mostrar error
             return {
                 ...state,
-                data: [{id: 5555, error: action.error}],
-                isFetching: false
+                isFetching: false,
+                isErrorFetch: true
             };
         case CHANGE_FILTER://Cargar filtro, filtra por Id y host.
             return {
@@ -60,7 +65,19 @@ export default function availability(state = initialState, action) {
                     pages: action.payload.pagination.pages,
                     actualPage: 1
                 },
-                filterText: action.payload.text
+                filterText: action.payload.text,
+                isErrorFilter: false
+            };
+        case CHANGE_FILTER_ERROR:
+            return {
+                ...state,
+                visibleData: [{}],
+                pagination: {
+                    ...state.pagination,
+                    pages: 0
+                },
+                filterText: action.text,
+                isErrorFilter: true
             };
         case CHANGE_PAGE_NUMBER://Seleccionar pagina de la tabla, funciona solamente para la selección del número de página.
             return {

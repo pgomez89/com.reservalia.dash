@@ -13,6 +13,7 @@ import Pagination from '../../components/Pagination';
 import ShowPages from '../../components/ShowPages';
 import Loading from '../../components/Loading';
 import SideToolBarAvailability from '../../components/SideToolBarAvailability';
+import ErrorBox from '../../components/ErrorBox';
 
 const propTypes = {};
 
@@ -68,31 +69,37 @@ class AvailabilityBox extends Component {
     }
 
     render() {
-        const { visibleData, filterText, pagination, isFetching, headers, sort  } = this.props.availability;
+        const { visibleData, filterText, pagination, isFetching, headers, sort, isErrorFilter, isErrorFetch  } = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
             visibleBox.push(<Loading key="loading"/>);
         } else {
-            visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}
-                                   sort={sort}/>);
-            visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
-                                        clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
-                                        clickPreviousPage={this.handlePreviousPage}/>);
+            if(isErrorFetch){
+                visibleBox.push(<ErrorBox/>);
+            } else {
+                visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}
+                                       sort={sort} isErrorFilter={isErrorFilter}/>);
+                visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
+                                            clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
+                                            clickPreviousPage={this.handlePreviousPage}/>);
+            }
         }
 
 
         return (
             <div className="container-fluid">
                 <div className="AvailabilityBox" id="page-wrapper">
-                    <h1>Availability</h1>
-                    <hr />
                     <div className="row">
-                        <div className="col-lg-3">
+                        <h1>Availability</h1>
+                        <hr />
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-2">
                                 <SideToolBarAvailability filterText={filterText} selectCantRows={this.handleShowRows}
                                                          chargeInput={this.handleChange}/>
                         </div>
-                        <div className="col-lg-9">
+                        <div className="col-lg-10">
                             {visibleBox}
                         </div>
                     </div>

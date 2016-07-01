@@ -4,26 +4,35 @@ import * as types from '../constants/ActionTypes';
 export const chargeFilter = (text, data, pagination) => {
     return dispatch => {
         var visibleData;
+        var filterData = getFilterDataAvailability(data, text);
 
-        if (text) {
-            var filterData = getFilterDataAvailability(data, text);
-            visibleData = getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
-            pagination.items = filterData.length;
-            pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+        if (filterData) {
+            if (text) {
+                visibleData = getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
+                pagination.items = filterData.length;
+                pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+            } else {
+                visibleData = getPaginationData(data, 1, pagination.itemsPerPage);
+                pagination.items = data.length;
+                pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+            }
+
+            dispatch({
+                type: types.CHANGE_FILTER,
+                payload: {
+                    text,
+                    visibleData,
+                    pagination
+                }
+            });
         } else {
-            visibleData = getPaginationData(data, 1, pagination.itemsPerPage);
-            pagination.items = data.length;
-            pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+            dispatch({
+                type: types.CHANGE_FILTER_ERROR,
+                text
+            });
         }
 
-        dispatch({
-            type: types.CHANGE_FILTER,
-            payload: {
-                text,
-                visibleData,
-                pagination
-            }
-        });
+
     };
 };
 
@@ -159,9 +168,9 @@ export const fetchAvailability = (isFirstGet, filterText, sort, pagination) => {
                 });
             })
             .catch(err => {
+                console.error(err);
                 dispatch({
-                    type: types.LOAD_DATA_FAILED,
-                    error: err
+                    type: types.LOAD_DATA_FAILED
                 })
             })
     }
@@ -185,9 +194,7 @@ export const get = url => {
 const getFilterDataAvailability = (data, filterText) => {
     if (filterText) {
         var dataFilter = data.filter(obj => obj.id.toString().includes(filterText) || obj.host.includes(filterText) ? true : false);
-        console.log(dataFilter);
-
-        return dataFilter.length ? dataFilter : [{}];
+        return dataFilter.length ? dataFilter : false;
     } else {
         return data;
     }
