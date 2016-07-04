@@ -3,18 +3,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 //import actions
-import {
-    chargeFilter,
-    changePageNumber,
-    selectShowRows,
-    fetchAvailability,
-    changeNextPage,
-    changePreviousPage,
-    sortRows,
-    selectStartDate,
-    selectEndDate,
-    resetStateAvailability
-} from '../../actions/AvailabilityActions';
+import {chargeFilter, changePageNumber, selectShowRows, fetchAvailability,
+    changeNextPage, changePreviousPage, sortRows, selectStartDate,
+    selectEndDate, resetStateAvailability} from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -23,7 +14,6 @@ import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import ShowPages from '../../components/ShowPages';
 import Loading from '../../components/Loading';
-import SideToolBarAvailability from '../../components/SideToolBarAvailability';
 import ErrorBox from '../../components/ErrorBox';
 
 const propTypes = {};
@@ -124,16 +114,23 @@ class AvailabilityBox extends Component {
                         <h1>Availability</h1>
                         <hr/>
                     </div>
-                    <div className="row">
-                        <div className="col-lg-2">
-                            <SideToolBarAvailability filterText={filterText} startDate={startDate} endDate={endDate}
-                                                     selectCantRows={this.handleShowRows}
-                                                     chargeInput={this.handleChange}
-                                                     changeStartDate={this.handleChangeStart}
-                                                     changeEndDate={this.handleChangeEnd}
-                                                     submitAvailability={this.handleSubmit}/>
+                    <div className="row navbar-tool">
+                        <div className="col-lg-12">
+                            <SearchBoxDate submitAvailability={this.handleSubmit} startDate={startDate}
+                                           endDate={endDate} changeStartDate={this.handleChangeStart}
+                                           changeEndDate={this.handleChangeEnd}/>
                         </div>
-                        <div className="col-lg-10">
+                    </div>
+                    <div className="row navbar-tool">
+                        <div className="col-lg-6">
+                            <ShowPages selectCantRows={this.handleShowRows}/>
+                        </div>
+                        <div className="col-lg-6">
+                            <Filter filterText={filterText} chargeInput={this.handleChange}/>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-12">
                             {visibleBox}
                         </div>
                     </div>

@@ -10,7 +10,7 @@ class ShowPages extends Component {
     render() {
         return (
             <div className="ShowPages">
-                <form>
+                <form className="form-inline">
                     <label className="label-margin">Show rows: </label>
                     <select className="form-control" onChange={this.props.selectCantRows}>
                         <option value="10">10</option>

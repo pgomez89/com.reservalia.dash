@@ -16,7 +16,7 @@ class SearchBoxDate extends Component {
     render() {
         return (
             <div className="SearchBoxDate">
-                <form>
+                <form className="form-inline">
                     <div className="form-group">
                         <label className="label-margin">From: </label>
                         <DatePicker className="form-control"
@@ -35,7 +35,7 @@ class SearchBoxDate extends Component {
                                     endDate={this.props.endDate}
                                     onChange={this.props.changeEndDate}/>
                     </div>
-                    <button className="btn btn-default btn-block btn-warning" onClick={this.props.submitAvailability}>
+                    <button className="btn btn-default btn-warning" onClick={this.props.submitAvailability}>
                         Search
                     </button>
                 </form>
