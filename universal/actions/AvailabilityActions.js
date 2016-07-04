@@ -30,8 +30,6 @@ export const chargeFilter = (text, data, pagination) => {
                 text
             });
         }
-
-
     };
 };
 
@@ -165,6 +163,7 @@ export const fetchAvailability = (isFirstGet, pagination, startDate, endDate) =>
                 if (isFirstGet) pagination.itemsPerPage = 10;
                 var visibleData = getVisibleData(data, '', 1, pagination.itemsPerPage);
                 pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+
                 dispatch({
                     type: types.LOAD_DATA_SUCCEEDED,
                     payload: {
@@ -175,9 +174,9 @@ export const fetchAvailability = (isFirstGet, pagination, startDate, endDate) =>
                 });
             })
             .catch(err => {
-                console.error(err);
                 dispatch({
-                    type: types.LOAD_DATA_FAILED
+                    type: types.LOAD_DATA_FAILED,
+                    err
                 })
             })
     }
