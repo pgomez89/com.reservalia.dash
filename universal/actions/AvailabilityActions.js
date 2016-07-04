@@ -30,8 +30,6 @@ export const chargeFilter = (text, data, pagination) => {
                 text
             });
         }
-
-
     };
 };
 
@@ -143,33 +141,28 @@ export const selectEndDate = (endDate) => {
     }
 };
 
-export const fetchAvailability = (isFirstGet, filterText, sort, pagination) => {
+export const resetStateAvailability = () => {
+    return {
+        type: types.RESET_STATE
+    }
+};
+
+export const fetchAvailability = (isFirstGet, pagination, startDate, endDate) => {
     return (dispatch) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
         });
 
-        get('http://www.mocky.io/v2/5773f0d20f0000d20d597b2c')
+        get('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
-                var visibleData;
-
                 pagination.items = data.length;
-
                 for (let i = 0; i < pagination.items; i++) {
                     data[i].percentAvailability = calPercentage(data[i].sinDisponibilidad, data[i].total);
                 }
-
-                data = getDataSort(data, sort.order, sort.colSort);
-
-                if (isFirstGet) {
-                    pagination.actualPage = 1;
-                    pagination.itemsPerPage = 10;
-                    pagination.pages = getCantPages(pagination.items, 10);
-                    visibleData = getVisibleData(data, '', pagination.actualPage, pagination.itemsPerPage);
-                } else {
-                    pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
-                    visibleData = getVisibleData(data, filterText, 1, pagination.itemsPerPage)
-                }
+                data = getDataSort(data, 'desc', 'sinDisponibilidad');
+                if (isFirstGet) pagination.itemsPerPage = 10;
+                var visibleData = getVisibleData(data, '', 1, pagination.itemsPerPage);
+                pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
 
                 dispatch({
                     type: types.LOAD_DATA_SUCCEEDED,
@@ -181,9 +174,9 @@ export const fetchAvailability = (isFirstGet, filterText, sort, pagination) => {
                 });
             })
             .catch(err => {
-                console.error(err);
                 dispatch({
-                    type: types.LOAD_DATA_FAILED
+                    type: types.LOAD_DATA_FAILED,
+                    err
                 })
             })
     }

@@ -13,6 +13,7 @@ const propTypes = {
     chargeInput: React.PropTypes.func,
     changeStartDate : React.PropTypes.func,
     changeEndDate : React.PropTypes.func,
+    submitAvailability: React.PropTypes.func,
     filterText: React.PropTypes.string
 };
 
@@ -30,7 +31,7 @@ class SideToolBarAvailability extends Component {
                     <hr/>
                 </div>
                 <div className="col-lg-12">
-                    <SearchBoxDate startDate={this.props.startDate} endDate={this.props.endDate} changeStartDate={this.props.changeStartDate} changeEndDate={this.props.changeEndDate}/>
+                    <SearchBoxDate submitAvailability={this.props.submitAvailability} startDate={this.props.startDate} endDate={this.props.endDate} changeStartDate={this.props.changeStartDate} changeEndDate={this.props.changeEndDate}/>
                 </div>
             </div>
         );

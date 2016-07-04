@@ -1,7 +1,8 @@
+o
 import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     LOAD_DATA_ATTEMPTED, LOAD_DATA_SUCCEEDED, LOAD_DATA_FAILED,
     CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_ERROR,
-    SELECT_START_DATE, SELECT_END_DATE } from '../constants/ActionTypes';
+    SELECT_START_DATE, SELECT_END_DATE, RESET_STATE } from '../constants/ActionTypes';
 
 import moment from 'moment';
 
@@ -45,7 +46,7 @@ export default function availability(state = initialState, action) {
                     items: action.payload.pagination.items,
                     itemsPerPage: action.payload.pagination.itemsPerPage,
                     pages: action.payload.pagination.pages,
-                    actualPage: action.payload.pagination.actualPage
+                    actualPage: 1
                 },
                 filterText: '',
                 sort: {
@@ -145,6 +146,28 @@ export default function availability(state = initialState, action) {
             return {
                 ...state,
                 endDate: action.endDate
+            };
+        case RESET_STATE:
+            return {
+                ...state,
+                data: [{}],
+                startDate: moment().subtract(30, 'days'),
+                endDate: moment(),
+                isFetching: false,
+                isErrorFetch: false,
+                visibleData: [{}],
+                pagination: {
+                    items: 0,
+                    itemsPerPage: 10,
+                    pages: 0,
+                    actualPage: 1
+                },
+                filterText: '',
+                sort: {
+                    order: 'desc',
+                    colSort: 'sinDisponibilidad'
+                },
+                isErrorFilter: false
             };
         default:
             return state;
