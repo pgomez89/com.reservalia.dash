@@ -149,7 +149,7 @@ export const resetStateAvailability = () => {
     }
 };
 
-export const fetchAvailability = (isFirstGet, sort, pagination, startDate, endDate) => {
+export const fetchAvailability = (isFirstGet, pagination, startDate, endDate) => {
     return (dispatch) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
@@ -157,23 +157,14 @@ export const fetchAvailability = (isFirstGet, sort, pagination, startDate, endDa
 
         get('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
-                var visibleData = [];
                 pagination.items = data.length;
-
                 for (let i = 0; i < pagination.items; i++) {
                     data[i].percentAvailability = calPercentage(data[i].sinDisponibilidad, data[i].total);
                 }
-
-                data = getDataSort(data, sort.order, sort.colSort);
-
-                if (isFirstGet) {
-                    pagination.itemsPerPage = 10;
-                }
-
+                data = getDataSort(data, 'desc', 'sinDisponibilidad');
+                if (isFirstGet) pagination.itemsPerPage = 10;
+                var visibleData = getVisibleData(data, '', 1, pagination.itemsPerPage);
                 pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
-                visibleData = getVisibleData(data, '', 1, pagination.itemsPerPage);
-
-
                 dispatch({
                     type: types.LOAD_DATA_SUCCEEDED,
                     payload: {

@@ -44,8 +44,8 @@ class AvailabilityBox extends Component {
     }
 
     componentDidMount() {
-        const { sort, pagination, startDate, endDate} = this.props.availability;
-        this.props.fetchAvailability(true, sort, pagination, startDate, endDate);
+        const { pagination, startDate, endDate} = this.props.availability;
+        this.props.fetchAvailability(true, pagination, startDate, endDate);
     }
 
     componentWillUnmount() {
@@ -95,8 +95,8 @@ class AvailabilityBox extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const { sort, pagination, startDate, endDate} = this.props.availability;
-        this.props.fetchAvailability(false, sort, pagination, startDate, endDate);
+        const { pagination, startDate, endDate} = this.props.availability;
+        this.props.fetchAvailability(false, pagination, startDate, endDate);
     }
 
     render() {
