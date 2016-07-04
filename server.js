@@ -40,7 +40,7 @@ app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, 'images'
 app.get('/', uni.handleRender);
 app.get('/availability', uni.handleRender);
 
-app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
+app.get('/availability/:startDate/:endDate', function (req, res) {
     dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
         .then(data => {
             res.send(data);

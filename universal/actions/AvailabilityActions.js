@@ -145,20 +145,19 @@ export const selectEndDate = (endDate) => {
 
 export const resetStateAvailability = () => {
     return {
-        type:types.RESET_STATE
+        type: types.RESET_STATE
     }
 };
 
-export const fetchAvailability = (isFirstGet, filterText, sort, pagination, startDate, endDate) => {
+export const fetchAvailability = (isFirstGet, sort, pagination, startDate, endDate) => {
     return (dispatch) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
         });
 
-        get('/disponibilidad/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
+        get('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
-                var visibleData;
-
+                var visibleData = [];
                 pagination.items = data.length;
 
                 for (let i = 0; i < pagination.items; i++) {
@@ -168,14 +167,12 @@ export const fetchAvailability = (isFirstGet, filterText, sort, pagination, star
                 data = getDataSort(data, sort.order, sort.colSort);
 
                 if (isFirstGet) {
-                    pagination.actualPage = 1;
                     pagination.itemsPerPage = 10;
-                    pagination.pages = getCantPages(pagination.items, 10);
-                    visibleData = getVisibleData(data, '', pagination.actualPage, pagination.itemsPerPage);
-                } else {
-                    pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
-                    visibleData = getVisibleData(data, filterText, 1, pagination.itemsPerPage)
                 }
+
+                pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
+                visibleData = getVisibleData(data, '', 1, pagination.itemsPerPage);
+
 
                 dispatch({
                     type: types.LOAD_DATA_SUCCEEDED,

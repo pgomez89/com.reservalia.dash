@@ -32,7 +32,17 @@ export default function availability(state = initialState, action) {
         case LOAD_DATA_ATTEMPTED://Esperar que se resuelva la promise.
             return {
                 ...state,
-                isFetching: true
+                isFetching: true,
+                pagination:{
+                    ...state.pagination,
+                    actualPage: 1
+                },
+                filterText: '',
+                sort: {
+                    order: 'desc',
+                    colSort: 'sinDisponibilidad'
+                },
+                isErrorFilter: false
             };
         case LOAD_DATA_SUCCEEDED://Resolver promise exitosamente, setear valores necesario
             return {
@@ -42,17 +52,11 @@ export default function availability(state = initialState, action) {
                 isErrorFetch: false,
                 visibleData: action.payload.visibleData,
                 pagination: {
+                    ...state.pagination,
                     items: action.payload.pagination.items,
                     itemsPerPage: action.payload.pagination.itemsPerPage,
-                    pages: action.payload.pagination.pages,
-                    actualPage: action.payload.pagination.actualPage
-                },
-                filterText: '',
-                sort: {
-                    order: 'desc',
-                    colSort: 'sinDisponibilidad'
-                },
-                isErrorFilter: false
+                    pages: action.payload.pagination.pages
+                }
             };
         case LOAD_DATA_FAILED://Fallar promise, mostrar error
             return {

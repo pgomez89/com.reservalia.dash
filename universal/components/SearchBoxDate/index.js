@@ -8,7 +8,8 @@ import DatePicker from 'react-datepicker';
 
 const propTypes = {
     changeStartDate: React.PropTypes.func,
-    changeEndDate: React.PropTypes.func
+    changeEndDate: React.PropTypes.func,
+    submitAvailability: React.PropTypes.func
 };
 
 class SearchBoxDate extends Component {
@@ -34,7 +35,7 @@ class SearchBoxDate extends Component {
                                     endDate={this.props.endDate}
                                     onChange={this.props.changeEndDate}/>
                     </div>
-                    <button className="btn btn-default btn-block btn-warning">
+                    <button className="btn btn-default btn-block btn-warning" onClick={this.props.submitAvailability}>
                         Search
                     </button>
                 </form>

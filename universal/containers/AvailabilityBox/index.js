@@ -1,10 +1,20 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 //import actions
-import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability,
-    changeNextPage, changePreviousPage, sortRows, selectStartDate, selectEndDate, resetStateAvailability} from '../../actions/AvailabilityActions';
+import {
+    chargeFilter,
+    changePageNumber,
+    selectShowRows,
+    fetchAvailability,
+    changeNextPage,
+    changePreviousPage,
+    sortRows,
+    selectStartDate,
+    selectEndDate,
+    resetStateAvailability
+} from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -18,7 +28,6 @@ import ErrorBox from '../../components/ErrorBox';
 
 const propTypes = {};
 
-
 class AvailabilityBox extends Component {
     constructor(props) {
         super(props);
@@ -31,14 +40,15 @@ class AvailabilityBox extends Component {
         this.handleSortRows = this.handleSortRows.bind(this);
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        const {filterText,sort,pagination, startDate, endDate} = this.props.availability;
-        this.props.fetchAvailability(true, filterText, sort, pagination, startDate, endDate);
+        const { sort, pagination, startDate, endDate} = this.props.availability;
+        this.props.fetchAvailability(true, sort, pagination, startDate, endDate);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.resetStateAvailability();
     }
 
@@ -83,8 +93,14 @@ class AvailabilityBox extends Component {
         this.props.selectEndDate(date);
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        const { sort, pagination, startDate, endDate} = this.props.availability;
+        this.props.fetchAvailability(false, sort, pagination, startDate, endDate);
+    }
+
     render() {
-        const { visibleData, filterText, pagination, isFetching, headers, sort, isErrorFilter, isErrorFetch, startDate, endDate  } = this.props.availability;
+        const {visibleData,filterText,pagination,isFetching,headers,sort,isErrorFilter,isErrorFetch,startDate,endDate} = this.props.availability;
         var visibleBox = [];
 
         if (isFetching) {
@@ -93,7 +109,7 @@ class AvailabilityBox extends Component {
             if (isErrorFetch) {
                 visibleBox.push(<ErrorBox/>);
             } else {
-                visibleBox.push(<Table key="table" headers={headers} data={ visibleData } sortRows={this.handleSortRows}
+                visibleBox.push(<Table key="table" headers={headers} data={visibleData} sortRows={this.handleSortRows}
                                        sort={sort} isErrorFilter={isErrorFilter}/>);
                 visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
                                             clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
@@ -101,13 +117,12 @@ class AvailabilityBox extends Component {
             }
         }
 
-
         return (
             <div className="container-fluid">
                 <div className="AvailabilityBox" id="page-wrapper">
                     <div className="row">
                         <h1>Availability</h1>
-                        <hr />
+                        <hr/>
                     </div>
                     <div className="row">
                         <div className="col-lg-2">
@@ -115,7 +130,8 @@ class AvailabilityBox extends Component {
                                                      selectCantRows={this.handleShowRows}
                                                      chargeInput={this.handleChange}
                                                      changeStartDate={this.handleChangeStart}
-                                                     changeEndDate={this.handleChangeEnd}/>
+                                                     changeEndDate={this.handleChangeEnd}
+                                                     submitAvailability={this.handleSubmit}/>
                         </div>
                         <div className="col-lg-10">
                             {visibleBox}
@@ -128,9 +144,7 @@ class AvailabilityBox extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        availability: state.appReducers.availability
-    };
+    return {availability: state.appReducers.availability};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -149,7 +163,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 AvailabilityBox.propTypes = propTypes;
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AvailabilityBox);
+export default connect(mapStateToProps, mapDispatchToProps)(AvailabilityBox);
