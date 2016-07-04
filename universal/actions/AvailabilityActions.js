@@ -143,13 +143,19 @@ export const selectEndDate = (endDate) => {
     }
 };
 
-export const fetchAvailability = (isFirstGet, filterText, sort, pagination) => {
+export const resetStateAvailability = () => {
+    return {
+        type:types.RESET_STATE
+    }
+};
+
+export const fetchAvailability = (isFirstGet, filterText, sort, pagination, startDate, endDate) => {
     return (dispatch) => {
         dispatch({
             type: types.LOAD_DATA_ATTEMPTED
         });
 
-        get('http://www.mocky.io/v2/5773f0d20f0000d20d597b2c')
+        get('/disponibilidad/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
                 var visibleData;
 

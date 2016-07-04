@@ -50,20 +50,17 @@ module.exports = {
         var arrayComplete = [];
 
         arrayA.map((elem)=> {
-            var obj = {id: elem[0], host: elem[1], sinDisponibilidad: elem[2]};
+            var obj = {id: parseInt(elem[0]), host: elem[1], sinDisponibilidad: parseInt(elem[2])};
             arrayComplete.push(obj)
         });
 
         arrayB.map((elem)=> {
             for (let i = 0; i < arrayComplete.length; i++) {
                 if (elem[0] == arrayComplete[i].host) {
-                    arrayComplete[i].total = elem[1];
+                    arrayComplete[i].total = parseInt(elem[1]);
                 }
             }
         });
-
-        console.log(arrayComplete);
-
         return arrayComplete;
     },
     getInfoAvailability: function (starDate, endDate) {

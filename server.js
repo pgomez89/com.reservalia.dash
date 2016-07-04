@@ -37,14 +37,14 @@ app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, 'images'
 /**
  * Universal Application endpoint
  */
-app.get('*', uni.handleRender);
+app.get('/', uni.handleRender);
+app.get('/availability', uni.handleRender);
 
-/*app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
+app.get('/disponibilidad/:startDate/:endDate', function (req, res) {
     dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
         .then(data => {
-            console.log(data);
             res.send(data);
         });
-});*/
+});
 
 httpServer.listen(port);

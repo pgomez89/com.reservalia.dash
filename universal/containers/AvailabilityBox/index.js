@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 //import actions
 import { chargeFilter, changePageNumber, selectShowRows, fetchAvailability,
-    changeNextPage, changePreviousPage, sortRows, selectStartDate, selectEndDate } from '../../actions/AvailabilityActions';
+    changeNextPage, changePreviousPage, sortRows, selectStartDate, selectEndDate, resetStateAvailability} from '../../actions/AvailabilityActions';
 
 //import components
 import Table from '../../components/Table';
@@ -34,8 +34,12 @@ class AvailabilityBox extends Component {
     }
 
     componentDidMount() {
-        const {filterText,sort,pagination} = this.props.availability;
-        this.props.fetchAvailability(true, filterText, sort, pagination);
+        const {filterText,sort,pagination, startDate, endDate} = this.props.availability;
+        this.props.fetchAvailability(true, filterText, sort, pagination, startDate, endDate);
+    }
+
+    componentWillUnmount(){
+        this.props.resetStateAvailability();
     }
 
     handleChange(e) {
@@ -79,7 +83,6 @@ class AvailabilityBox extends Component {
         this.props.selectEndDate(date);
     }
 
-
     render() {
         const { visibleData, filterText, pagination, isFetching, headers, sort, isErrorFilter, isErrorFetch, startDate, endDate  } = this.props.availability;
         var visibleBox = [];
@@ -108,7 +111,8 @@ class AvailabilityBox extends Component {
                     </div>
                     <div className="row">
                         <div className="col-lg-2">
-                            <SideToolBarAvailability filterText={filterText} startDate={startDate} endDate={endDate} selectCantRows={this.handleShowRows}
+                            <SideToolBarAvailability filterText={filterText} startDate={startDate} endDate={endDate}
+                                                     selectCantRows={this.handleShowRows}
                                                      chargeInput={this.handleChange}
                                                      changeStartDate={this.handleChangeStart}
                                                      changeEndDate={this.handleChangeEnd}/>
@@ -139,7 +143,8 @@ const mapDispatchToProps = dispatch => {
         changePreviousPage,
         sortRows,
         selectStartDate,
-        selectEndDate
+        selectEndDate,
+        resetStateAvailability
     }, dispatch);
 };
 

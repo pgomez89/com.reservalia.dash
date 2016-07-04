@@ -8,6 +8,7 @@ export const SORT_ROWS = 'SORT_ROWS';
 export const CHANGE_FILTER_ERROR = 'CHANGE_FILTER_ERROR';
 export const SELECT_START_DATE = 'SELECT_START_DATE';
 export const SELECT_END_DATE = 'SELECT_END_DATE';
+export const RESET_STATE = 'RESET_STATE';
 
 //fetch
 export const LOAD_DATA_ATTEMPTED = 'LOAD_DATA_ATTEMPTED';
