@@ -1,7 +1,10 @@
+'use strict';
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var nib = require('nib');
+var ManifestPlugin = require('webpack-manifest-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = require('config');
 
@@ -15,14 +18,20 @@ var defineEnvPlugin = new webpack.DefinePlugin({
 var entryScripts = [ appEntry ];
 var output = {
   path: path.join(__dirname, [ '/', config.get('buildDirectory') ].join('')),
-  filename: 'bundle.js'
+  filename: 'bundle-[hash].js',
+  publicPath: '/'
 };
+
+let extractCSS = new ExtractTextPlugin('bundle-[hash].css');
 
 var plugins = [
   defineEnvPlugin,
-  new ExtractTextPlugin('style.css'),
-  new webpack.NoErrorsPlugin()
+  extractCSS,
+  new webpack.NoErrorsPlugin(),
+  new ManifestPlugin()
 ];
+
+
 
 var moduleLoaders = [
   {
@@ -32,13 +41,14 @@ var moduleLoaders = [
     include: __dirname
   }, {
     test: /\.css?$/,
-    loaders: [ ExtractTextPlugin.extract('style-loader', 'css-loader'), 'raw' ],
+    loaders: [ extractCSS.extract('style-loader', 'css-loader'), 'raw' ],
     include: __dirname
   }, {
     test: /\.styl?$/,
-    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader'),
+    loader: extractCSS.extract('style-loader', 'css-loader!stylus-loader'),
     include: __dirname
-  }
+  },
+   {test: /\.scss$/i, loader: extractCSS.extract(['css','sass']), include: __dirname},
 ];
 
 if (isDev) {
@@ -67,10 +77,24 @@ if (isDev) {
     },
     {
       test: /\.scss$/,
-      loaders: [ "style", "css", "sass"],
+      loaders: [ 'style', 'css', 'sass'],
       include: __dirname
-    }
+    },
+    { test: /\.ejs$/, loader: 'ejs-compiled' }
   ];
+
+   plugins.push( new HtmlWebpackPlugin({
+    template: path.join( __dirname, '/server/views/templates/layout.dev.ejs' ),
+    filename: path.join( __dirname, '/server/views/layout.dev.ejs' ),
+
+  }) );
+}else{
+  moduleLoaders.push({ test: /\.ejs$/, loader: 'ejs-compiled' });
+  plugins.push( new HtmlWebpackPlugin({
+    template: path.join( __dirname, '/server/views/templates/layout.prod.ejs' ),
+    filename: path.join( __dirname, '/server/views/layout.prod.ejs' ),
+
+  }) );
 }
 
 module.exports = {

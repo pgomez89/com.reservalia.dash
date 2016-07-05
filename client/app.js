@@ -1,10 +1,3 @@
-import ReactDOM from 'react-dom';
-import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import {ReactDom, React, RootContainer} from '../universal/universalApp';
 
-import routes from '../universal/routes';
-
-import Root from '../universal/containers/root';
-
-
-ReactDOM.render(<Root routing={routes} history={browserHistory}/>, document.getElementById('app'));
+ReactDom.render( <RootContainer/>, document.getElementById('app') );

@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import Table from '../../components/Table';
 import SearchBoxDate from '../../components/SearchBoxDate';
 import Filter from '../../components/Filter';
+import css from './index.scss';
 
 const propTypes = {};
 
