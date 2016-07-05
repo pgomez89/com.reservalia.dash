@@ -5,7 +5,9 @@ import css from './index.scss';
 //import components
 import TableRow from '../TableRow';
 
-const propTypes = {};
+const propTypes = {
+    data: React.PropTypes.array
+};
 
 /**
  * TableBody recibe como props el array de objetos que recibe Table.
@@ -13,8 +15,8 @@ const propTypes = {};
 
 class TableBody extends Component {
     render() {
-        var {data} = this.props;
-        var rows = [];
+        const { data } = this.props;
+        let rows = [];
         for (let i = 0; i < data.length; i++) {
             rows.push(<TableRow key={i+'-'+i} info={data[i]}/>)
         }

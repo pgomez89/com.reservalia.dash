@@ -125,7 +125,7 @@ export const sortRows = colSort => {
         let data = getState().appReducers.availability.data;
         let filterText = getState().appReducers.availability.filterText;
         let sort = getState().appReducers.availability.sort;
-        let itemsPerPage = getState().appReducers.availability.itemsPerPage;
+        let itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
 
         if (colSort == sort.colSort) {
             sort.order = sort.order == 'desc' ? 'asc' : 'desc';

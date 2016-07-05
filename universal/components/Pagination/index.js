@@ -1,40 +1,41 @@
 import React, { Component, PropTypes } from 'react';
 
+//import styles
 import css from './index.scss';
 
 const propTypes = {
     clickNumberPage: React.PropTypes.func,
     clickPreviousPage: React.PropTypes.func,
-    clickNextPage: React.PropTypes.func
+    clickNextPage: React.PropTypes.func,
+    pages: React.PropTypes.number,
+    actualPage: React.PropTypes.number
 };
-
-/*
- * Pagination recibe un array de numeros con la cantidad de paginas
- **/
 
 class Pagination extends Component {
     render() {
-        var pages = [];
-        for (let i = 1; i <= this.props.pages; i++) {
-            if (i == this.props.actualPage) {
-                pages.push(<li className="activePage" key={'page-'+i}><a value={i}
-                                                                         onClick={this.props.clickNumberPage}>{i}</a>
+        const {pages, actualPage, clickNumberPage, clickPreviousPage, clickNextPage} = this.props;
+        let btnPages = [];
+
+        for (let i = 1; i <= pages; i++) {
+            if (i == actualPage) {
+                btnPages.push(<li className="activePage" key={'page-'+i}><a value={i} onClick={clickNumberPage}>{i}</a>
                 </li>)
             } else {
-                pages.push(<li key={'page-'+i}><a value={i} onClick={this.props.clickNumberPage}>{i}</a></li>)
+                btnPages.push(<li key={'page-'+i}><a value={i} onClick={clickNumberPage}>{i}</a></li>)
             }
         }
+
         return (
             <nav>
                 <ul className="pagination">
                     <li>
-                        <a onClick={this.props.clickPreviousPage}>
+                        <a onClick={clickPreviousPage}>
                             <span>&laquo;</span>
                         </a>
                     </li>
-                    {pages}
+                    {btnPages}
                     <li>
-                        <a onClick={this.props.clickNextPage}>
+                        <a onClick={clickNextPage}>
                             <span>&raquo;</span>
                         </a>
                     </li>

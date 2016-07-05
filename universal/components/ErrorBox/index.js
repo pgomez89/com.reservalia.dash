@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+//import styles
 import css from './index.scss';
 
 const propTypes = {};
