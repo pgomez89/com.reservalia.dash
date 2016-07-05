@@ -10,9 +10,7 @@ import AvailabilityBox from './containers/AvailabilityBox';
 
 export default (
   <Route path='/' component={MonitorApp}>
-    <IndexRoute components={{dashboard:Dashboard}} />
-    <Route path='availability' components={{availability: AvailabilityBox}} />
+    <IndexRoute components={Dashboard} />
+    <Route path='availability' components={AvailabilityBox} />
   </Route>
 );
-
-

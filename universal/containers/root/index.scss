@@ -12,19 +12,15 @@ body {
   background-color: #fff;
 }
 
-.tool-bar {
-  margin: 10px 0;
-  background: #dddddd;
-  padding: 10px 0;
+.navbar-tool {
+  background: #999999;
+  margin-bottom:10px;
+  padding:10px 0;
 }
 
 @media (min-width: 768px) {
   body {
     margin-top: 50px;
-  }
-
-  #wrapper {
-    padding-left: 225px;
   }
 
   #page-wrapper {

@@ -1,0 +1,14 @@
+.pagination .activePage a {
+  font-weight: bold;
+  color: #CF5446;
+  cursor: pointer;
+}
+
+.pagination li a {
+  cursor: pointer;
+  color: #000;
+}
+
+.pagination li a:hover {
+  color: #CF5446;
+}

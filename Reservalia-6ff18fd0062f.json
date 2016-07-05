@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "reservalia-1287",
+  "private_key_id": "6ff18fd0062fdef074ed1f0e7b2be4d7f6ed2e06",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDRag8WXiSRfEBv\nHWHwR09l/Bjws48DS89Dfc7HWcLdBsWAr74Y/dYeFmhyUjFPak41KAlBwgfO4c8g\nN7xFDixWrX1z0aTkne/fMnY1JC5x/DebCNTxmVPQdTvOxTWBfOKwr8QrP4LtUtQL\nnH/NCJzXew+VQ1GVBF9kG5UrtnRx3eJT0I1gU4TU8lPFc6mCk87H3jhZZVeAnxF1\nOA6AyMg3BJvAWihQJmVxrroDyXN7kB/M4w5tGRMHdEW2DvSIiMRAv4o3FBgOPbOd\nYa3AKe1Lo070BWpIS4fJFgUrRXZAJRVObqrIFq1S4U40mjXvrcaeHncad5j1KGr9\nSstV+YbDAgMBAAECggEBAIpBv1xBI1t58QBrIbIFIoJugfjIU28Vqe0hLlenB2Pt\niI+Bd7wAOlD68lInua54vNGTcSkc9RK9OoZGxeHBjbxcJitFCdx1+VwecLR9Arz2\ni6+rkQtA83j5LVdCFCU9UlzcbmMvNz2AJcbUt/uh6ArLkGo3W7FKhcAOBdoqR460\ngCSfMNIaGaXtLqtthkQaD/4KLYGYT3P3cTFfoF5cXNDIFWWq7jo/CWuy63RAih3s\n2OQZrwshkVhDKW9UksPiefbUJq4Ym6Kkf7+Q7CMPw41DpdD5/sOx8OCxwQXdrBYu\nYieMhCSQYT6JTJsNdFw16GT/JOyWeoXld0JwmTTIHsECgYEA/eM0QW3WjFoG6Gpe\nKv2Tl6Qj8aGxaEHH4y0/LE0+nqTtdkJyURHIfKEJif0gOJgc43pE6kxch1IRS60Z\nhWI2HgJKNLRD7NsyXmJobAbhpAE9hZREs8xUO5WDPO/k5RN0WxRsTpVKRJndWTKD\n8wGYyu44Nf62t+jsPfz9vZxkrjkCgYEA0ygfx2hOX3PlyIDavnr23dhui9lAS0hc\naoHnH5qgXcu2gOGcRkGH2S3RbNqL/OpFr0nquxdid+mdkJYR5Hw5h0HCVfKF5Kd1\ncGw4NhR4RDI9KCF8yqlmw2TOxDX9LhuQnC60W3tnb/KIlsQp0DuHYhkrqBs8foWq\n7Y1OecccXNsCgYBsPQT2MAGb7HWteEuVQG4/4/Z++VRNAl5Zd9zK4lOkBuRF2qYp\n8c7rcyxB6+xktFT8lg/zY4K/HjnJbY7H0ssHmCpStdePjxO2MXYbOAPSi8TSwhdY\nH/B5RpCg1hVbpCOjAN370qHLBV3cvTCL1U5ylYTZYDI9zcuJ0eXLhHVX4QKBgAMz\nC3A5C1704ZltImNad50a52nlC81YNlZCy561+BITwRsoz/ZcjdNjl1W/5fkaD549\nT3owO4S3nHSRYYoFu9Vp0Kj+uLqjMutWKG/hVYUrAbQ29a4YbP8u6tccPk7Rihpj\ntsXgE8wlb55hMIUAMefxm7C7YOpF2jYpOvQraSmbAoGBANcIbrGXZ1eVNzwCbUDD\nhYj09lddgt4K6RYcXHAK4XTqMPjESOGAirtjBJx+refIBrt56caC4SAxNt4TKAlq\nZFiugbURxSbeeW63Mke94x5eCBMwjQm29ACK6jC7rmYoMzCgy4/aq094FU4j3sbn\n8/cGsN/F+f7Uk0u6sE2hRqxH\n-----END PRIVATE KEY-----\n",
+  "client_email": "reservalia-analytics@reservalia-1287.iam.gserviceaccount.com",
+  "client_id": "107171854413878439354",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/reservalia-analytics%40reservalia-1287.iam.gserviceaccount.com"
+}

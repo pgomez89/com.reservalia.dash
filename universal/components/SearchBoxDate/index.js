@@ -1,28 +1,44 @@
 import React, { Component, PropTypes } from 'react';
 
 import css from './index.scss';
+import * as styleDatePicker from 'react-datepicker/dist/react-datepicker.css';
 
-const propTypes = {};
+//import components
+import DatePicker from 'react-datepicker';
+
+const propTypes = {
+    changeStartDate: React.PropTypes.func,
+    changeEndDate: React.PropTypes.func,
+    submitAvailability: React.PropTypes.func
+};
 
 class SearchBoxDate extends Component {
     render() {
         return (
             <div className="SearchBoxDate">
-                <div className="buscador-fecha">
-                    <form className="form-inline">
-                        <div className="form-group">
-                            <label className="label-margin">From</label>
-                            <input className="form-control" type="text"/>
-                        </div>
-                        <div className="form-group">
-                            <label className="label-margin">To</label>
-                            <input className="form-control" type="text"/>
-                        </div>
-                        <button className="btn btn-default">
-                            Buscar
-                        </button>
-                    </form>
-                </div>
+                <form className="form-inline">
+                    <div className="form-group">
+                        <label className="label-margin">From: </label>
+                        <DatePicker className="form-control"
+                                    dateFormat="DD/MM/YYYY"
+                                    selected={this.props.startDate}
+                                    startDate={this.props.startDate}
+                                    endDate={this.props.endDate}
+                                    onChange={this.props.changeStartDate}/>
+                    </div>
+                    <div className="form-group">
+                        <label className="label-margin">To: </label>
+                        <DatePicker className="form-control"
+                                    dateFormat="DD/MM/YYYY"
+                                    selected={this.props.endDate}
+                                    startDate={this.props.startDate}
+                                    endDate={this.props.endDate}
+                                    onChange={this.props.changeEndDate}/>
+                    </div>
+                    <button className="btn btn-default btn-warning" onClick={this.props.submitAvailability}>
+                        Search
+                    </button>
+                </form>
             </div>
         );
     }
@@ -30,3 +46,16 @@ class SearchBoxDate extends Component {
 
 SearchBoxDate.propTypes = propTypes;
 export default SearchBoxDate;
+
+
+/*
+<DatePicker
+    selected={this.state.startDate}
+    startDate={this.state.startDate}
+    endDate={this.state.endDate}
+    onChange={this.handleChangeStart} />
+<DatePicker
+selected={this.state.endDate}
+startDate={this.state.startDate}
+endDate={this.state.endDate}
+onChange={this.handleChangeEnd} />*/

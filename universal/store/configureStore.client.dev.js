@@ -10,30 +10,31 @@ import appReducers from '../reducers';
 const initialState = window.__INITIAL_STATE__;
 
 const rootReducer = combineReducers({
-  routing: routerReducer,
-  appReducers
+    routing: routerReducer,
+    appReducers
 });
 
 
 const loggerMiddleware = createLogger({
-  level: 'info',
-  collapsed: true,
+    level: 'info',
+    collapsed: true
 });
 
 const enhancer = compose(
-  applyMiddleware(thunkMiddleware, loggerMiddleware),
-  DevTools.instrument()
+    applyMiddleware(thunkMiddleware, loggerMiddleware),
+    DevTools.instrument()
 );
 
 const store = createStore(rootReducer, initialState, enhancer);
 
 if (module.hot) {
-  module.hot.accept('../reducers', () =>
-    store.replaceReducer(combineReducers({
-      routing: routerReducer,
-      pulseApp: require('../reducers')
-    }))
-  );
-};
+    module.hot.accept('../reducers', () =>
+        store.replaceReducer(combineReducers({
+            routing: routerReducer,
+            appReducers
+        }))
+    );
+}
+;
 
 export default store;

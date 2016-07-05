@@ -5,6 +5,8 @@ import expressLayouts  from 'express-ejs-layouts';
 import http from 'http';
 import config from 'config';
 
+var dispo = require('./apiAnalytics');
+
 import * as uni from './server/app.js';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var development = (process.env.NODE_ENV === 'development');
@@ -37,7 +39,7 @@ app.use(expressLayouts);
  */
 app.use(require('serve-static')(path.join(__dirname, config.get('buildDirectory'))));
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 app.use(bodyParser.json());
 
@@ -46,11 +48,20 @@ app.use(bodyParser.json());
  */
 
 app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'images', 'favicon.ico')));
+app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, 'images', 'loading.gif')));
 
 /**
  * Universal Application endpoint
  */
-app.get('*', uni.handleRender);
+app.get('/', uni.handleRender);
+app.get('/availability', uni.handleRender);
+
+app.get('/availability/:startDate/:endDate', function (req, res) {
+    dispo.getInfoAvailability(req.params.startDate, req.params.endDate)
+        .then(data => {
+            res.send(data);
+        });
+});
 
 httpServer.listen(expressPort, function () {
   console.log('Example app listening on port %s', expressPort);
