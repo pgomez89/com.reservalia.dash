@@ -47,31 +47,23 @@ class AvailabilityBox extends Component {
     }
 
     handlePageNumber(e) {
-        const {data, filterText} = this.props.availability;
-        const {itemsPerPage} = this.props.availability.pagination;
-
-        this.props.changePageNumber(e.target.value, data, filterText, itemsPerPage);
+        this.props.changePageNumber(e.target.value);
     }
 
     handleNextPage() {
-        const {data, filterText, pagination} = this.props.availability;
-        this.props.changeNextPage(data, filterText, pagination);
+        this.props.changeNextPage();
     }
 
     handlePreviousPage() {
-        const {data, filterText, pagination} = this.props.availability;
-        this.props.changePreviousPage(data, filterText, pagination);
+        this.props.changePreviousPage();
     }
 
     handleShowRows(e) {
-        const {data, filterText, pagination} = this.props.availability;
-        this.props.selectShowRows(parseInt(e.target.value), data, filterText, pagination);
+        this.props.selectShowRows(parseInt(e.target.value);
     }
 
     handleSortRows(e) {
-        const {data, filterText, sort} = this.props.availability;
-        const {itemsPerPage} = this.props.availability.pagination;
-        this.props.sortRows(e.target.value, data, filterText, sort, itemsPerPage);
+        this.props.sortRows(e.target.value);
     }
 
     handleChangeStart(date) {
@@ -84,7 +76,6 @@ class AvailabilityBox extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const { pagination, startDate, endDate} = this.props.availability;
         this.props.fetchAvailability(false, pagination, startDate, endDate);
     }
 
