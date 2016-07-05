@@ -1,20 +1,22 @@
 import * as types from '../constants/ActionTypes';
 
-export const chargeFilter = (text, data, pagination) => {
-    return dispatch => {
+export const chargeFilter = text => {
+    return (dispatch, getState) => {
         var visibleData;
+        var data = getState().appReducers.availability.data;
+        var pagination = getState().appReducers.availability.pagination;
         var filterData = getFilterDataAvailability(data, text);
 
         if (filterData) {
             if (text) {
                 visibleData = getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
                 pagination.items = filterData.length;
-                pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
             } else {
                 visibleData = getPaginationData(data, 1, pagination.itemsPerPage);
                 pagination.items = data.length;
-                pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
             }
+
+            pagination.pages = getCantPages(pagination.items, pagination.itemsPerPage);
 
             dispatch({
                 type: types.CHANGE_FILTER,
@@ -26,7 +28,7 @@ export const chargeFilter = (text, data, pagination) => {
             });
         } else {
             dispatch({
-                type: types.CHANGE_FILTER_ERROR,
+                type: types.CHANGE_FILTER_NO_MATCHING,
                 text
             });
         }

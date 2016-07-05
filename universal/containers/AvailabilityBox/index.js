@@ -43,8 +43,7 @@ class AvailabilityBox extends Component {
     }
 
     handleChange(e) {
-        const {data, pagination} = this.props.availability;
-        this.props.chargeFilter(e.target.value, data, pagination);
+        this.props.chargeFilter(e.target.value);
     }
 
     handlePageNumber(e) {
