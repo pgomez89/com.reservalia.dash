@@ -9,11 +9,14 @@ import DatePicker from 'react-datepicker';
 const propTypes = {
     changeStartDate: React.PropTypes.func,
     changeEndDate: React.PropTypes.func,
-    submitAvailability: React.PropTypes.func
+    submitAvailability: React.PropTypes.func,
+    startDate: React.PropTypes.object,
+    endDate: React.PropTypes.object
 };
 
 class SearchBoxDate extends Component {
     render() {
+        const {startDate, endDate, changeStartDate, changeEndDate, submitAvailability} = this.props;
         return (
             <div className="SearchBoxDate">
                 <form className="form-inline">
@@ -21,21 +24,21 @@ class SearchBoxDate extends Component {
                         <label className="label-margin">From: </label>
                         <DatePicker className="form-control"
                                     dateFormat="DD/MM/YYYY"
-                                    selected={this.props.startDate}
-                                    startDate={this.props.startDate}
-                                    endDate={this.props.endDate}
-                                    onChange={this.props.changeStartDate}/>
+                                    selected={startDate}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    onChange={changeStartDate}/>
                     </div>
                     <div className="form-group">
                         <label className="label-margin">To: </label>
                         <DatePicker className="form-control"
                                     dateFormat="DD/MM/YYYY"
-                                    selected={this.props.endDate}
-                                    startDate={this.props.startDate}
-                                    endDate={this.props.endDate}
-                                    onChange={this.props.changeEndDate}/>
+                                    selected={endDate}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    onChange={changeEndDate}/>
                     </div>
-                    <button className="btn btn-default btn-warning" onClick={this.props.submitAvailability}>
+                    <button className="btn btn-default btn-warning" onClick={submitAvailability}>
                         Search
                     </button>
                 </form>
@@ -46,16 +49,3 @@ class SearchBoxDate extends Component {
 
 SearchBoxDate.propTypes = propTypes;
 export default SearchBoxDate;
-
-
-/*
-<DatePicker
-    selected={this.state.startDate}
-    startDate={this.state.startDate}
-    endDate={this.state.endDate}
-    onChange={this.handleChangeStart} />
-<DatePicker
-selected={this.state.endDate}
-startDate={this.state.startDate}
-endDate={this.state.endDate}
-onChange={this.handleChangeEnd} />*/

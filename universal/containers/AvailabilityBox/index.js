@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 //import actions
 import {chargeFilter, changePageNumber, selectShowRows, fetchAvailability,
@@ -16,12 +16,23 @@ import ShowPages from '../../components/ShowPages';
 import Loading from '../../components/Loading';
 import ErrorBox from '../../components/ErrorBox';
 
-const propTypes = {};
+const propTypes = {
+    data: React.PropTypes.array,
+    visibleData: React.PropTypes.array,
+    headers: React.PropTypes.array,
+    pagination: React.PropTypes.object,
+    sort: React.PropTypes.object,
+    filterText: React.PropTypes.string,
+    startDate: React.PropTypes.string,
+    endDate: React.PropTypes.string,
+    isErrorFilter: React.PropTypes.bool,
+    isErrorFetch: React.PropTypes.bool,
+    isFetching: React.PropTypes.bool
+};
 
 class AvailabilityBox extends Component {
     constructor(props) {
         super(props);
-
         this.handleChange = this.handleChange.bind(this);
         this.handlePageNumber = this.handlePageNumber.bind(this);
         this.handleShowRows = this.handleShowRows.bind(this);
@@ -33,46 +44,28 @@ class AvailabilityBox extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        const { pagination, startDate, endDate} = this.props.availability;
-        this.props.fetchAvailability(true, pagination, startDate, endDate);
-    }
-
-    componentWillUnmount() {
-        this.props.resetStateAvailability();
-    }
-
     handleChange(e) {
-        const {data, pagination} = this.props.availability;
-        this.props.chargeFilter(e.target.value, data, pagination);
+        this.props.chargeFilter(e.target.value);
     }
 
     handlePageNumber(e) {
-        const {data, filterText} = this.props.availability;
-        const {itemsPerPage} = this.props.availability.pagination;
-
-        this.props.changePageNumber(e.target.value, data, filterText, itemsPerPage);
+        this.props.changePageNumber(e.target.value);
     }
 
     handleNextPage() {
-        const {data, filterText, pagination} = this.props.availability;
-        this.props.changeNextPage(data, filterText, pagination);
+        this.props.changeNextPage();
     }
 
     handlePreviousPage() {
-        const {data, filterText, pagination} = this.props.availability;
-        this.props.changePreviousPage(data, filterText, pagination);
+        this.props.changePreviousPage();
     }
 
     handleShowRows(e) {
-        const {data, filterText, pagination} = this.props.availability;
-        this.props.selectShowRows(parseInt(e.target.value), data, filterText, pagination);
+        this.props.selectShowRows(parseInt(e.target.value));
     }
 
     handleSortRows(e) {
-        const {data, filterText, sort} = this.props.availability;
-        const {itemsPerPage} = this.props.availability.pagination;
-        this.props.sortRows(e.target.value, data, filterText, sort, itemsPerPage);
+        this.props.sortRows(e.target.value);
     }
 
     handleChangeStart(date) {
@@ -85,13 +78,20 @@ class AvailabilityBox extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const { pagination, startDate, endDate} = this.props.availability;
-        this.props.fetchAvailability(false, pagination, startDate, endDate);
+        this.props.fetchAvailability(false);
+    }
+
+    componentDidMount() {
+        this.props.fetchAvailability(true);
+    }
+
+    componentWillUnmount() {
+        this.props.resetStateAvailability();
     }
 
     render() {
-        const {visibleData,filterText,pagination,isFetching,headers,sort,isErrorFilter,isErrorFetch,startDate,endDate} = this.props.availability;
-        var visibleBox = [];
+        const {visibleData,filterText,pagination,isFetching,headers,sort, isErrorFilter, isErrorFetch ,startDate , endDate } = this.props.availability;
+        let visibleBox = [];
 
         if (isFetching) {
             visibleBox.push(<Loading key="loading"/>);
@@ -101,6 +101,7 @@ class AvailabilityBox extends Component {
             } else {
                 visibleBox.push(<Table key="table" headers={headers} data={visibleData} sortRows={this.handleSortRows}
                                        sort={sort} isErrorFilter={isErrorFilter}/>);
+
                 visibleBox.push(<Pagination key="pagination" pages={pagination.pages} actualPage={pagination.actualPage}
                                             clickNumberPage={this.handlePageNumber} clickNextPage={this.handleNextPage}
                                             clickPreviousPage={this.handlePreviousPage}/>);

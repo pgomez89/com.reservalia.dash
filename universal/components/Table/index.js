@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+//import styles
 import css from './index.scss';
 
 //import components
@@ -8,27 +9,31 @@ import TableBody from '../TableBody';
 import ErrorBox from '../ErrorBox';
 
 const propTypes = {
-    sortRows: React.PropTypes.func
+    sortRows: React.PropTypes.func,
+    data: React.PropTypes.array,
+    headers: React.PropTypes.array,
+    sort: React.PropTypes.object,
+    isErrorFilter: React.PropTypes.bool
 };
 
 /**
- * El componente Table recibe como props un array de objetos. Necesita que una de las key del objeto sea 'id'.
+ * Una de las key del objeto debe ser 'id'.
  */
 
 class Table extends Component {
     render() {
-        var error = [];
-        if (this.props.isErrorFilter) {
-            error.push(<ErrorBox key="errorFilter" />);
-        }
+        const { headers, sort, data, sortRows } = this.props;
+        let error = [];
+
+        if (this.props.isErrorFilter) error.push(<ErrorBox key="errorFilter"/>);
+
         return (
             <div className="Table">
                 <table id="table_id" className="table table-striped table-hover table-bordered">
-                    <TableHeader header={this.props.headers} sort={this.props.sort}
-                                 values={Object.keys(this.props.data[0])} sortRows={this.props.sortRows}/>
-                    <TableBody data={this.props.data}/>
+                    <TableHeader header={headers} sort={sort} values={Object.keys(data[0])} sortRows={sortRows}/>
+                    <TableBody data={data}/>
                 </table>
-                {error}
+                { error }
             </div>
         );
     }

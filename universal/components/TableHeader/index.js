@@ -3,7 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import css from './index.scss';
 
 const propTypes = {
-    sortRows: React.PropTypes.func
+    sortRows: React.PropTypes.func,
+    header: React.PropTypes.array,
+    values: React.PropTypes.array,
+    sort: React.PropTypes.object
 };
 
 /**
@@ -12,20 +15,20 @@ const propTypes = {
 
 class TableHeader extends Component {
     render() {
-        var {header, values, sort} = this.props;
-        var listHeaders = [];
+        const {header, values, sort, sortRows} = this.props;
+        let listHeaders = [];
 
         for (let i = 0; i < header.length; i++) {
             if (values[i] == sort.colSort) {
                 if (sort.order == 'desc') {
-                    listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}<span
+                    listHeaders.push(<th key={i} onClick={sortRows} value={values[i]}>{header[i]}<span
                         className="arrowSort active"> ▾</span></th>);
                 } else {
-                    listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}<span
+                    listHeaders.push(<th key={i} onClick={sortRows} value={values[i]}>{header[i]}<span
                         className="arrowSort active"> ▴</span></th>);
                 }
             } else {
-                listHeaders.push(<th key={i} onClick={this.props.sortRows} value={values[i]}>{header[i]}<span
+                listHeaders.push(<th key={i} onClick={sortRows} value={values[i]}>{header[i]}<span
                     className="arrowSort"> ▾▴</span></th>);
             }
         }

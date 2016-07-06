@@ -1,6 +1,6 @@
 import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     LOAD_DATA_ATTEMPTED, LOAD_DATA_SUCCEEDED, LOAD_DATA_FAILED,
-    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_ERROR,
+    CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_NO_MATCHING,
     SELECT_START_DATE, SELECT_END_DATE, RESET_STATE } from '../constants/ActionTypes';
 
 import moment from 'moment';
@@ -73,7 +73,7 @@ export default function availability(state = initialState, action) {
                 filterText: action.payload.text,
                 isErrorFilter: false
             };
-        case CHANGE_FILTER_ERROR:
+        case CHANGE_FILTER_NO_MATCHING:
             return {
                 ...state,
                 visibleData: [{}],
