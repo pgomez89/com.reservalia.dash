@@ -23,8 +23,8 @@ const propTypes = {
     pagination: React.PropTypes.object,
     sort: React.PropTypes.object,
     filterText: React.PropTypes.string,
-    startDate: React.PropTypes.object,
-    endDate: React.PropTypes.object,
+    startDate: React.PropTypes.string,
+    endDate: React.PropTypes.string,
     isErrorFilter: React.PropTypes.bool,
     isErrorFetch: React.PropTypes.bool,
     isFetching: React.PropTypes.bool
@@ -90,7 +90,7 @@ class AvailabilityBox extends Component {
     }
 
     render() {
-        const {visibleData , filterText, pagination, isFetching, headers, sort, isErrorFilter, isErrorFetch ,startDate , endDate } = this.props.availability;
+        const {visibleData,filterText,pagination,isFetching,headers,sort, isErrorFilter, isErrorFetch ,startDate , endDate } = this.props.availability;
         let visibleBox = [];
 
         if (isFetching) {
