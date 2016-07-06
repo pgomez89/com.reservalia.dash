@@ -25,7 +25,7 @@ class RootContainer extends Component {
                     <DevTools />
                 </div>
             </Provider>
-        )
+        );
     }
 }
 
