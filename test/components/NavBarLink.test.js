@@ -1,8 +1,8 @@
 import React from 'react'
-import NavBarLink from '../../universal/components/nav_bar_link/index.js';
+import NavBarLink from '../../universal/components/NavBarLink/index.js';
 
-describe('(Component) NavBarLink', () => {
+describe.skip('(Component) NavBarLink', () => {
   it('should exist', () => {
 
   })
-})
+});

@@ -1,8 +1,8 @@
 import React from 'react'
-import SearchBoxDate from '../../universal/components/search_box_date/index.js';
+import SearchBoxDate from '../../universal/components/SearchBoxDate/index.js';
 
-describe('(Component) SearchBoxDate', () => {
+describe.skip('(Component) SearchBoxDate', () => {
   it('should exist', () => {
 
   })
-})
+});

@@ -1,8 +1,8 @@
 import React from 'react'
-import MonitorApp from '../../universal/containers/monitor_app/index.js';
+import MonitorApp from '../../universal/containers/MonitorApp/index.js';
 
-describe('(Component) MonitorApp', () => {
+describe.skip('(Component) MonitorApp', () => {
   it('should exist', () => {
 
   })
-})
+});

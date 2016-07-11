@@ -1,8 +1,11 @@
 import React from 'react'
-import ErrorBox from '../../universal/components/error_box/index.js';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
+import ErrorBox from '../../universal/components/ErrorBox/index.js';
 
-describe('(Component) ErrorBox', () => {
-  it('should exist', () => {
-
-  })
-})
+describe('(Componente) ErrorBox', () => {
+    it('El componente tiene su clase ErrorBox', () => {
+        const wrapper = shallow(<ErrorBox/>);
+        expect(wrapper.is('.ErrorBox')).to.equal(true);
+    });
+});

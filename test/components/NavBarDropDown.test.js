@@ -1,8 +1,8 @@
 import React from 'react'
-import NavBarDropDown from '../../universal/components/nav_bar_drop_down/index.js';
+import NavBarDropDown from '../../universal/components/NavBarDropDown/index.js';
 
-describe('(Component) NavBarDropDown', () => {
+describe.skip('(Component) NavBarDropDown', () => {
   it('should exist', () => {
 
   })
-})
+});

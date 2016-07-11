@@ -1,8 +1,8 @@
 import React from 'react'
-import Table from '../../universal/components/table/index.js';
+import Table from '../../universal/components/Table/index.js';
 
-describe('(Component) Table', () => {
+describe.skip('(Component) Table', () => {
   it('should exist', () => {
 
   })
-})
+});
