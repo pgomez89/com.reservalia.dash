@@ -11,7 +11,6 @@ import * as uni from './server/app.js';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var development = (process.env.NODE_ENV === 'development');
 
-var defaultLayout = development ? 'layout.dev.ejs' : 'layout.prod.ejs';
 const app = express();
 const httpServer = http.createServer(app);
 let expressPort = config.get('express.port');
@@ -30,7 +29,7 @@ if( development ){
 
 app.set('views', path.join(__dirname, 'server', 'views'));
 app.set('view engine', 'ejs');
-app.set('layout', defaultLayout); // defaults to 'layout'
+app.set('layout', 'layout.ejs'); // defaults to 'layout'
 
 app.use(expressLayouts);
 

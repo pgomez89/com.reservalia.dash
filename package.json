@@ -7,8 +7,8 @@
     "build:prod": "NODE_ENV=production webpack",
     "db-setup": "node dbSetup.babel.js",
     "lint": "eslint client server universal test server.js dbSetup.js",
-    "start": "NODE_ENV=development webpack & node server.babel.js & node server.webpack.js",
-    "start:prod": "NODE_ENV=production node server.babel.js",
+    "start:dev": "NODE_ENV=development webpack & node index.js",
+    "start": "NODE_ENV=production node index.js",
     "test": "./node_modules/karma/bin/karma start"
   },
   "keywords": [
@@ -48,6 +48,7 @@
     "redux-thunk": "2.1.x",
     "serve-static": "1.10.x",
     "superagent": "1.8.x",
+    "webpack-dev-middleware": "^1.6.1",
     "xss": "0.2.x"
   },
   "devDependencies": {
@@ -83,6 +84,7 @@
     "nock": "8.0.x",
     "node-libs-browser": "1.0.x",
     "node-sass": "^3.7.0",
+    "nodemon": "^1.9.2",
     "phantomjs-prebuilt": "2.1.x",
     "portfinder": "^1.0.3",
     "raw-loader": "0.5.x",
@@ -99,7 +101,10 @@
     "stylus": "0.54.x",
     "stylus-loader": "2.0.x",
     "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "1.14.x",
-    "webpack-manifest-plugin": "^1.0.1"
+    "webpack-hot-middleware": "^2.12.1",
+    "webpack-manifest-plugin": "^1.0.1",
+    "webpack-shell-plugin": "^0.4.2"
   }
 }

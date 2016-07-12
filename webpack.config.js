@@ -3,8 +3,6 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var nib = require('nib');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = require('config');
 
@@ -18,17 +16,16 @@ var defineEnvPlugin = new webpack.DefinePlugin({
 var entryScripts = [ appEntry ];
 var output = {
   path: path.join(__dirname, [ '/', config.get('buildDirectory') ].join('')),
-  filename: 'bundle-[hash].js',
+  filename: 'monitor.js',
   publicPath: '/'
 };
 
-let extractCSS = new ExtractTextPlugin('bundle-[hash].css');
+let extractCSS = new ExtractTextPlugin('monitor.css');
 
 var plugins = [
   defineEnvPlugin,
   extractCSS,
   new webpack.NoErrorsPlugin(),
-  new ManifestPlugin()
 ];
 
 
@@ -52,7 +49,6 @@ var moduleLoaders = [
 ];
 
 if (isDev) {
-  output.publicPath = 'http://localhost:3001/';
   plugins.push(new webpack.HotModuleReplacementPlugin());
   entryScripts = [
     'webpack-dev-server/client?http://localhost:3001',
@@ -79,22 +75,9 @@ if (isDev) {
       test: /\.scss$/,
       loaders: [ 'style', 'css', 'sass'],
       include: __dirname
-    },
-    { test: /\.ejs$/, loader: 'ejs-compiled' }
+    }
   ];
 
-   plugins.push( new HtmlWebpackPlugin({
-    template: path.join( __dirname, '/server/views/templates/layout.dev.ejs' ),
-    filename: path.join( __dirname, '/server/views/layout.dev.ejs' ),
-
-  }) );
-}else{
-  moduleLoaders.push({ test: /\.ejs$/, loader: 'ejs-compiled' });
-  plugins.push( new HtmlWebpackPlugin({
-    template: path.join( __dirname, '/server/views/templates/layout.prod.ejs' ),
-    filename: path.join( __dirname, '/server/views/layout.prod.ejs' ),
-
-  }) );
 }
 
 module.exports = {

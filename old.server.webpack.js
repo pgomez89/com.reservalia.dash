@@ -7,10 +7,8 @@ var config = require('config');
 var webpackConfig = require('./webpack.config');
 
 var host = 'localhost';
-var expressPort = 3000;
+var appPort = 3000;
 var devServerPort = 3001;
-
-var serverApp = 'http://localhost:' + expressPort;
 
 new WebpackDevServer(webpack(webpackConfig), {
   contentBase: [ config.get('buildDirectory'), '/' ].join(''),
@@ -19,11 +17,13 @@ new WebpackDevServer(webpack(webpackConfig), {
   hot: true,
   noInfo: false,
   publicPath: webpackConfig.output.publicPath,
-  proxy: { '*': serverApp }
+  proxy: {
+    '*': 'http://' + host + ':' + appPort
+  }
 }).listen(devServerPort, host, function (err) {
   if (err) {
     console.log(err);
   }
 
-  console.log('Monitor Dev Server running at ' + host + ':' + devServerPort );
+  console.log('Webpack Dev Server running at ' + host + ':' + devServerPort);
 });
