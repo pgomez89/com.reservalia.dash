@@ -27,7 +27,7 @@ class Pagination extends Component {
 
         return (
             <nav>
-                <ul className="Pagination">
+                <ul className="pagination">
                     <li>
                         <a onClick={clickPreviousPage}>
                             <span>&laquo;</span>
