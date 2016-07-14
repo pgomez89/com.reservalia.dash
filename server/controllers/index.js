@@ -5,7 +5,7 @@ const dispo  = require( '../../apiAnalytics' );
  * Home page.
  */
 exports.indexController = (req, res) => {
-    console.log( "IndexController ---", req.url );
+    console.log( "IndexController for route: ", req.url );
   res.render('index', {
     title: 'Monitor'
   });

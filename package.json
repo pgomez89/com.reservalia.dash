@@ -7,7 +7,7 @@
     "build:prod": "NODE_ENV=production webpack",
     "db-setup": "node dbSetup.babel.js",
     "lint": "eslint client server universal test server.js dbSetup.js",
-    "start:dev": "NODE_ENV=development webpack & node index.js",
+    "start:dev": "NODE_ENV=development webpack & node ./server.webpack.js & nodemon ./index.js",
     "start": "NODE_ENV=production node index.js",
     "test": "./node_modules/karma/bin/karma start"
   },

@@ -11,3 +11,4 @@ export const RootContainer = _rootContainer;
 
 
 
+ReactDom.render( <RootContainer/>, document.getElementById('app') );

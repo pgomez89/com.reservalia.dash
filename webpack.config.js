@@ -1,4 +1,3 @@
-'use strict';
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -6,11 +5,16 @@ var nib = require('nib');
 
 var config = require('config');
 
-var isDev = (process.env.NODE_ENV === 'development');
-var appEntry = './client/app';
+var isDevelopment = (process.env.NODE_ENV === 'development');
+
+
+var appEntry = './universal/universalApp.js';
 
 var defineEnvPlugin = new webpack.DefinePlugin({
-  __DEV__: isDev
+  __DEV__: isDevelopment,
+  'process.env': {
+    'NODE_ENV': JSON.stringify( isDevelopment? 'development' : 'production')
+  }
 });
 
 var entryScripts = [ appEntry ];
@@ -20,12 +24,12 @@ var output = {
   publicPath: '/'
 };
 
-let extractCSS = new ExtractTextPlugin('monitor.css');
+let extractCSS = new ExtractTextPlugin('monitor.css', {allChunks: true});
 
 var plugins = [
   defineEnvPlugin,
   extractCSS,
-  new webpack.NoErrorsPlugin(),
+  new webpack.NoErrorsPlugin()
 ];
 
 
@@ -45,10 +49,10 @@ var moduleLoaders = [
     loader: extractCSS.extract('style-loader', 'css-loader!stylus-loader'),
     include: __dirname
   },
-   {test: /\.scss$/i, loader: extractCSS.extract(['css','sass']), include: __dirname},
+   {test: /\.scss$/i, loader: extractCSS.extract( 'style', 'css!sass'), include: __dirname},
 ];
 
-if (isDev) {
+if (isDevelopment) {
   plugins.push(new webpack.HotModuleReplacementPlugin());
   entryScripts = [
     'webpack-dev-server/client?http://localhost:3001',
@@ -78,6 +82,19 @@ if (isDev) {
     }
   ];
 
+}else{
+
+  plugins = plugins.concat(
+    [ new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+      mangle: false,
+      sourceMap: false,
+      compress: {
+        warnings: false 
+      }
+    })
+    ]
+  );
 }
 
 module.exports = {
