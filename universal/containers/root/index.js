@@ -1,7 +1,33 @@
-/* global __DEV__ */
+import React, { Component } from 'react';
+import { Router, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
+import routing from '../../routes.js';
+import store from '../../store';
+import './index.scss';
 
-if (__DEV__) {
-  module.exports = require('./root.dev');
-} else {
-  module.exports = require('./root.prod');
+//import components
+
+import MonitorApp from '../MonitorApp';
+import DevTools from '../devTools';
+
+const history = syncHistoryWithStore(browserHistory, store);
+
+ 
+class RootContainer extends Component {
+    render() {
+        let devToolsBox = (__DEV__) ? <DevTools /> : undefined;
+        return (
+            <Provider store={store}>
+                <div>
+                    <Router history={history}>
+                        {routing}
+                    </Router>
+                    { devToolsBox }
+                </div>
+            </Provider>
+        )
+    }
 }
+
+export default RootContainer;

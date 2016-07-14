@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
+import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import routing from '../../routes.js';
+import store from '../../store';
 import './index.scss';
 
 //import components
+
 import MonitorApp from '../MonitorApp';
 import DevTools from '../devTools';
 
-class Root extends Component {
-    render() {
-        const { store, routing, history } = this.props;
+const history = syncHistoryWithStore(browserHistory, store);
 
+ 
+class RootContainer extends Component {
+    render() {
         return (
             <Provider store={store}>
                 <div>
@@ -20,8 +25,8 @@ class Root extends Component {
                     <DevTools />
                 </div>
             </Provider>
-        )
+        );
     }
 }
 
-export default Root;
+export default RootContainer;

@@ -11,6 +11,7 @@ import {chargeFilter, changePageNumber, selectShowRows, fetchAvailability,
 import Table from '../../components/Table';
 import SearchBoxDate from '../../components/SearchBoxDate';
 import Filter from '../../components/Filter';
+
 import Pagination from '../../components/Pagination';
 import ShowPages from '../../components/ShowPages';
 import Loading from '../../components/Loading';

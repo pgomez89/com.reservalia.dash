@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-
-export default class Root extends Component {
+import { Router, browserHistory } from 'react-router';
+import routing from '../routes.js';
+export default class RootContainer extends Component {
   render() {
-    const { store, routing, history } = this.props;
     return (
-      <Provider store={store}>
+      <Provider>
         <div>
-          <Router history={history}>
+          <Router history={browserHistory}>
             {routing}
           </Router>
         </div>

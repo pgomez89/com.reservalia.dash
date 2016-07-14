@@ -1,22 +1,37 @@
 import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
+import expressLayouts  from 'express-ejs-layouts';
 import http from 'http';
-import socketIO from 'socket.io';
 import config from 'config';
 
 var dispo = require('./apiAnalytics');
 
 import * as uni from './server/app.js';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var development = (process.env.NODE_ENV === 'development');
 
 const app = express();
 const httpServer = http.createServer(app);
-const port = config.get('express.port') || 3000;
+let expressPort = config.get('express.port');
 
-var io = socketIO(httpServer);
+
+if( development ){
+    var portfinder = require('portfinder');
+    portfinder.basePort = 3000;
+    portfinder.getPort(function (err, port) {
+        if( err ){ 
+            console.log( 'Get port fail: ', err, err.stack);
+        }
+        expressPort = port;
+    });
+}
 
 app.set('views', path.join(__dirname, 'server', 'views'));
 app.set('view engine', 'ejs');
+app.set('layout', 'layout.ejs'); // defaults to 'layout'
+
+app.use(expressLayouts);
 
 /**
  * Server middleware
@@ -47,4 +62,11 @@ app.get('/availability/:startDate/:endDate', function (req, res) {
         });
 });
 
-httpServer.listen(port);
+httpServer.listen(expressPort, function () {
+  console.log('Example app listening on port %s', expressPort);
+});
+
+
+module.exports = {
+  expressPort: expressPort
+};

@@ -5,24 +5,34 @@ var nib = require('nib');
 
 var config = require('config');
 
-var isDev = (process.env.NODE_ENV === 'development');
-var appEntry = './client/app';
+var isDevelopment = (process.env.NODE_ENV === 'development');
+
+
+var appEntry = './universal/universalApp.js';
 
 var defineEnvPlugin = new webpack.DefinePlugin({
-  __DEV__: isDev
+  __DEV__: isDevelopment,
+  'process.env': {
+    'NODE_ENV': JSON.stringify( isDevelopment? 'development' : 'production')
+  }
 });
 
 var entryScripts = [ appEntry ];
 var output = {
   path: path.join(__dirname, [ '/', config.get('buildDirectory') ].join('')),
-  filename: 'bundle.js'
+  filename: 'monitor.js',
+  publicPath: '/'
 };
+
+let extractCSS = new ExtractTextPlugin('monitor.css', {allChunks: true});
 
 var plugins = [
   defineEnvPlugin,
-  new ExtractTextPlugin('style.css'),
+  extractCSS,
   new webpack.NoErrorsPlugin()
 ];
+
+
 
 var moduleLoaders = [
   {
@@ -32,17 +42,17 @@ var moduleLoaders = [
     include: __dirname
   }, {
     test: /\.css?$/,
-    loaders: [ ExtractTextPlugin.extract('style-loader', 'css-loader'), 'raw' ],
+    loaders: [ extractCSS.extract('style-loader', 'css-loader'), 'raw' ],
     include: __dirname
   }, {
     test: /\.styl?$/,
-    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader'),
+    loader: extractCSS.extract('style-loader', 'css-loader!stylus-loader'),
     include: __dirname
-  }
+  },
+   {test: /\.scss$/i, loader: extractCSS.extract( 'style', 'css!sass'), include: __dirname},
 ];
 
-if (isDev) {
-  output.publicPath = 'http://localhost:3001/';
+if (isDevelopment) {
   plugins.push(new webpack.HotModuleReplacementPlugin());
   entryScripts = [
     'webpack-dev-server/client?http://localhost:3001',
@@ -67,10 +77,24 @@ if (isDev) {
     },
     {
       test: /\.scss$/,
-      loaders: [ "style", "css", "sass"],
+      loaders: [ 'style', 'css', 'sass'],
       include: __dirname
     }
   ];
+
+}else{
+
+  plugins = plugins.concat(
+    [ new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+      mangle: false,
+      sourceMap: false,
+      compress: {
+        warnings: false 
+      }
+    })
+    ]
+  );
 }
 
 module.exports = {
