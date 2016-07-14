@@ -11,6 +11,6 @@ describe('(Componente) Loading', () => {
 
   it('El componente tiene el path cargado de la imagen', () => {
     const component = mount(<Loading />);
-    expect(component.find('img').prop('src')).to.equal('/loading.gif');
+    expect(component.find('img').prop('src')).to.equal('loading.gif');
   });
 });
