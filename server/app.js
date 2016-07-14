@@ -60,8 +60,8 @@ app.get('/availability', indexController );
  * API Endpoints
  */
 
-app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, '../images', 'favicon.ico')));
-app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, '../images', 'loading.gif')));
+app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, './public/images', 'favicon.ico')));
+app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, './public/images', 'loading.gif')));
 
 app.get('/availability/:startDate/:endDate', availabilityController );
 
