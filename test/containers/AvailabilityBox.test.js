@@ -1,8 +1,8 @@
 import React from 'react'
-import AvailabilityBox from '../../universal/containers/availability_box/index.js';
+import AvailabilityBox from '../../universal/containers/AvailabilityBox/index.js';
 
-describe('(Component) AvailabilityBox', () => {
+describe.skip('(Component) AvailabilityBox', () => {
   it('should exist', () => {
 
   })
-})
+});

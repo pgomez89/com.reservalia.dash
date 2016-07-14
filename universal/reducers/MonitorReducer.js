@@ -4,13 +4,11 @@ const initialState = {
     linkNav: [
         {
             name: 'Dashboard',
-            route: '/',
-            icon: 'dashboard'
+            route: '/'
         },
         {
             name: 'Disponibilidad',
-            route: '/availability',
-            icon: 'table'
+            route: '/availability'
         }
     ]
 };

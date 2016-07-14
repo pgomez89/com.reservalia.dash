@@ -1,8 +1,10 @@
-import React from 'react'
-import TableBody from '../../universal/components/table_body/index.js';
+import React from 'react';
+import { expect } from 'chai';
+import { shallow, mount  } from 'enzyme';
+import TableBody from '../../universal/components/TableBody/index.js';
 
-describe('(Component) TableBody', () => {
+describe.skip('(Component) TableBody', () => {
   it('should exist', () => {
 
   })
-})
+});

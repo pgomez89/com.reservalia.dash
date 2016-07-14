@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
+//import styles
 import css from './index.scss';
-
-const propTypes = {};
 
 class Loading extends Component {
     render() {
@@ -14,5 +13,4 @@ class Loading extends Component {
     }
 }
 
-Loading.propTypes = propTypes;
 export default Loading;

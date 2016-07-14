@@ -1,41 +1,39 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 //import components
 import NavBar from '../../components/NavBar';
 import AvailabilityBox from '../../containers/AvailabilityBox';
 
-const propTypes = {};
+const propTypes = {
+    children: React.PropTypes.object,
+    monitor: React.PropTypes.object
+};
 
 class MonitorApp extends Component {
-    constructor(){
-        super();
-        this.state = {
-            userNav: 'admin',
-            brandNav: 'Monitor Reservalia',
-            linkNav: [
-                {
-                    name: 'Dashboard',
-                    route: '/',
-                    icon: 'dashboard'
-                },
-                {
-                    name: 'Disponibilidad',
-                    route: '/availability',
-                    icon: 'table'
-                }
-            ]
-        }
+    constructor(props) {
+        super(props);
     }
 
     render() {
+        const {monitor, children} = this.props;
         return (
             <div className="MonitorApp" id="wrapper">
-                <NavBar data={this.state}/>
-                {this.props.children}
+                <NavBar data={monitor}/>
+                {children}
             </div>
         );
     }
 }
 
+const mapStateToProps = state => {
+    return {monitor: state.appReducers.monitor};
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+};
+
 MonitorApp.propTypes = propTypes;
-export default MonitorApp;
+export default connect(mapStateToProps, mapDispatchToProps)(MonitorApp);
