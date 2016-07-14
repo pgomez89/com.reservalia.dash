@@ -35,7 +35,6 @@
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.13.1",
     "moment": "^2.11.2",
-    "nib": "^1.1.x",
     "node-uuid": "1.4.x",
     "react": "15.0.x",
     "react-datepicker": "^0.27.0",
@@ -48,7 +47,6 @@
     "redux-thunk": "2.1.x",
     "serve-static": "1.10.x",
     "superagent": "1.8.x",
-    "webpack-dev-middleware": "^1.6.1",
     "xss": "0.2.x"
   },
   "devDependencies": {
@@ -66,27 +64,11 @@
     "babel-template": "6.8.x",
     "chai": "^3.5.0",
     "css-loader": "0.23.x",
-<<<<<<< HEAD
-    "ejs-compiled-loader": "^2.1.1",
-    "eslint": "2.9.x",
-    "eslint-plugin-react": "5.1.x",
-    "extract-text-webpack-plugin": "1.0.x",
-    "html-webpack-plugin": "^2.21.0",
-    "karma": "0.13.x",
-    "karma-chai": "0.1.x",
-    "karma-chrome-launcher": "1.0.x",
-    "karma-mocha": "1.0.x",
-    "karma-mocha-reporter": "2.0.x",
-    "karma-phantomjs-launcher": "1.0.x",
-    "karma-sinon": "1.0.x",
-    "karma-webpack": "1.7.x",
-=======
     "enzyme": "^2.3.0",
     "eslint": "2.9.x",
     "eslint-plugin-react": "5.1.x",
     "extract-text-webpack-plugin": "1.0.x",
     "ignore-styles": "^4.0.0",
->>>>>>> 4b375ab2d5427fb3f4ad769259ec8fc625e3b2f4
     "mocha": "2.4.x",
     "mocha-loader": "0.7.x",
     "nock": "8.0.x",
@@ -110,10 +92,9 @@
     "stylus": "0.54.x",
     "stylus-loader": "2.0.x",
     "webpack": "^1.13.1",
-    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "1.14.x",
-    "webpack-hot-middleware": "^2.12.1",
     "webpack-manifest-plugin": "^1.0.1",
-    "webpack-shell-plugin": "^0.4.2"
+    "webpack-shell-plugin": "^0.4.2",
+    "nib": "^1.1.x"
   }
 }
