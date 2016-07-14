@@ -1,8 +1,8 @@
 import React from 'react'
-import TableHeader from '../../universal/components/table_header/index.js';
+import TableHeader from '../../universal/components/TableHeader/index.js';
 
-describe('(Component) TableHeader', () => {
+describe.skip('(Component) TableHeader', () => {
   it('should exist', () => {
 
   })
-})
+});

@@ -19,7 +19,7 @@ class SearchBoxDate extends Component {
         const {startDate, endDate, changeStartDate, changeEndDate, submitAvailability} = this.props;
         return (
             <div className="SearchBoxDate">
-                <form className="form-inline">
+                <span className="form-inline">
                     <div className="form-group">
                         <label className="label-margin">From: </label>
                         <DatePicker className="form-control"
@@ -41,7 +41,7 @@ class SearchBoxDate extends Component {
                     <button className="btn btn-default btn-warning" onClick={submitAvailability}>
                         Search
                     </button>
-                </form>
+                </span>
             </div>
         );
     }

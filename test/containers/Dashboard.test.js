@@ -1,8 +1,8 @@
 import React from 'react'
-import Dashboard from '../../universal/containers/dashboard/index.js';
+import Dashboard from '../../universal/containers/Dashboard/index.js';
 
-describe('(Component) Dashboard', () => {
+describe.skip('(Component) Dashboard', () => {
   it('should exist', () => {
 
   })
-})
+});

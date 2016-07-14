@@ -1,8 +1,8 @@
 import React from 'react'
-import TableRow from '../../universal/components/table_row/index.js';
+import TableRow from '../../universal/components/TableRow/index.js';
 
-describe('(Component) TableRow', () => {
+describe.skip('(Component) TableRow', () => {
   it('should exist', () => {
 
   })
-})
+});
