@@ -28,11 +28,7 @@ let plugins = [
   defineEnvPlugin,
   extractCSS,
   new webpack.NoErrorsPlugin(),
-  new ManifestPlugin(),
-  new HtmlWebpackPlugin({
-    template: path.join( __dirname, '/server/views/templates/layout.dev.ejs' ),
-    filename: path.join( __dirname, '/server/views/layout.ejs' )
-  })
+  new ManifestPlugin()
 ];
 
 
