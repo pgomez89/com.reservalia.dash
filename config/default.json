@@ -6,6 +6,9 @@
   },
   "buildDirectory": "build",
   "webpack":{
-    "appEntry": "./client/app"
+    "appEntry": "./universal/universalApp"
+  },
+  "mongo":{
+    "url": "mongodb://localhost/specialdom"
   }
 }

@@ -13,7 +13,7 @@
           type="text/css">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <%if (includeProductionCss) { %>
+    <%if (includeProductionCss ) { %>
         <link href="/monitor.css" 
           rel="stylesheet" 
           type="text/css">
@@ -21,6 +21,7 @@
     
 <body>
 <%-body%>
+
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" 
@@ -32,5 +33,8 @@
         crossorigin="anonymous">
 </script>
 
-<script type="text/javascript" src="/monitor.js"></script></body>
+<%if ( locals.isReactApp ) {%>
+  <script type="text/javascript" src="/monitor.js"></script></body>
+<%}%>
+
 </html>

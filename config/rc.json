@@ -1,0 +1,8 @@
+{
+  "express": {
+    "port": 9290
+  },
+  "mongo":{
+    "url": "mongodb://reservalia-db-00.servers.despegar.it, reservalia-db-01.servers.despegar.it, reservalia-db-02.servers.despegar.it/specialdom"
+  }
+}
