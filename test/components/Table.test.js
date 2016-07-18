@@ -86,4 +86,10 @@ describe('(Componente) Table', () => {
 
         expect(tableBody.prop('data')).to.eql([{}])
     });
+
+    it('Se muestra mensaje de error', () => {
+        const component = shallow(<Table headers={state.headers} data={[{}]} sort={state.sort}
+                                         isErrorFilter={true}/>);
+        expect(component.find('ErrorBox')).to.length(1);
+    });
 });

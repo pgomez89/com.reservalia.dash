@@ -1,6 +1,6 @@
 import React from 'react'
 import { expect } from 'chai';
-import { shallow, mount  } from 'enzyme';
+import { shallow } from 'enzyme';
 import Filter from '../../universal/components/Filter/index.js';
 
 describe('(Componente) Filter', () => {
@@ -11,7 +11,7 @@ describe('(Componente) Filter', () => {
 
     it('Existe la propiedad filterText en el input', () => {
         const handleChange = () => {};
-        const component = mount(<Filter filterText={'prueba'} chargeInput={handleChange}/>);
+        const component = shallow(<Filter filterText={'prueba'} chargeInput={handleChange}/>);
         expect(component.find('.form-control').prop('value')).to.equal('prueba');
     });
 
@@ -19,7 +19,7 @@ describe('(Componente) Filter', () => {
         const handleChange = () => {
             done();
         };
-        const component = mount(<Filter chargeInput={handleChange}/>);
+        const component = shallow(<Filter chargeInput={handleChange}/>);
         const input = component.find('.form-control');
         input.simulate('change');
     });
