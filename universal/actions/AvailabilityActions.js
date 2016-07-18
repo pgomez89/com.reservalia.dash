@@ -37,56 +37,34 @@ export const chargeFilter = text => {
 };
 
 export const changePageNumber = numberPage => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
-        var visibleData = utils.getVisibleData(data, filterText, numberPage, itemsPerPage);
-
-        dispatch({
-            type: types.CHANGE_PAGE_NUMBER,
-            payload: {
-                numberPage,
-                visibleData
-            }
-        })
-    }
+    return ({
+        type: types.CHANGE_PAGE_NUMBER,
+        numberPage
+    })
 };
 
 export const changeNextPage = () => {
     return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var pagination = getState().appReducers.availability.pagination;
+        let {pagination} = getState().appReducers.availability;
 
-        var nextPage = pagination.actualPage != pagination.pages ? pagination.actualPage + 1 : pagination.actualPage;
-        var visibleData = utils.getVisibleData(data, filterText, nextPage, pagination.itemsPerPage);
+        let nextPage = pagination.actualPage != pagination.pages ? pagination.actualPage + 1 : pagination.actualPage;
 
         dispatch({
             type: types.CHANGE_NEXT_PAGE,
-            payload: {
-                visibleData,
-                nextPage
-            }
+            nextPage
         });
     }
 };
 
 export const changePreviousPage = () => {
     return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var pagination = getState().appReducers.availability.pagination;
+        let {pagination} = getState().appReducers.availability;
 
-        var previousPage = pagination.actualPage != 1 ? pagination.actualPage - 1 : pagination.actualPage;
-        var visibleData = utils.getVisibleData(data, filterText, previousPage, pagination.itemsPerPage);
+        let previousPage = pagination.actualPage != 1 ? pagination.actualPage - 1 : pagination.actualPage;
 
         dispatch({
             type: types.CHANGE_PREVIOUS_PAGE,
-            payload: {
-                visibleData,
-                previousPage
-            }
+            previousPage
         });
     }
 };
