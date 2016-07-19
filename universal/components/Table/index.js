@@ -22,10 +22,10 @@ const propTypes = {
 
 class Table extends Component {
     render() {
-        const { headers, sort, data, sortRows } = this.props;
+        const { headers, sort, data, sortRows, isErrorFilter } = this.props;
         let error = [];
 
-        if (this.props.isErrorFilter) error.push(<ErrorBox key="errorFilter"/>);
+        if (isErrorFilter) error.push(<ErrorBox key="errorFilter"/>);
 
         return (
             <div className="Table">

@@ -3,6 +3,7 @@ import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_NO_MATCHING,
     SELECT_START_DATE, SELECT_END_DATE, RESET_STATE } from '../constants/ActionTypes';
 
+import {getVisibleData, getCantPages} from '../lib/utils';
 import moment from 'moment';
 
 const initialState = {
@@ -87,38 +88,38 @@ export default function availability(state = initialState, action) {
         case CHANGE_PAGE_NUMBER://Seleccionar pagina de la tabla, funciona solamente para la selección del número de página.
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(state.data, state.filterText, action.numberPage, state.pagination.itemsPerPage),
                 pagination: {
                     ...state.pagination,
-                    actualPage: action.payload.numberPage
+                    actualPage: action.numberPage
                 }
             };
         case CHANGE_NEXT_PAGE://Seleccionar pagina siguiente con las flechas
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(state.data, state.filterText, action.nextPage, state.pagination.itemsPerPage),
                 pagination: {
                     ...state.pagination,
-                    actualPage: action.payload.nextPage
+                    actualPage: action.nextPage
                 }
             };
         case CHANGE_PREVIOUS_PAGE://Seleccionar pagina anterior con las flechas
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(state.data, state.filterText, action.previousPage, state.pagination.itemsPerPage),
                 pagination: {
                     ...state.pagination,
-                    actualPage: action.payload.previousPage
+                    actualPage: action.previousPage
                 }
             };
         case SELECT_SHOW_ROWS://Seleccionar cantidad de páginas a mostrar.
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(state.data, state.filterText, 1, action.cantRows),
                 pagination: {
                     ...state.pagination,
-                    itemsPerPage: action.payload.cantRows,
-                    pages: action.payload.pagination.pages,
+                    itemsPerPage: action.cantRows,
+                    pages: getCantPages(state.pagination.items, action.cantRows),
                     actualPage: 1
                 }
             };

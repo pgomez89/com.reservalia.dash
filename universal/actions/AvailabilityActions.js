@@ -3,12 +3,11 @@ import * as utils from '../lib/utils';
 
 export const chargeFilter = text => {
     return (dispatch, getState) => {
-        var visibleData;
-        var data = getState().appReducers.availability.data;
-        var pagination = getState().appReducers.availability.pagination;
-        var filterData = utils.getFilterDataAvailability(data, text);
+        let {data, pagination} = getState().appReducers.availability;
+        let filterData = utils.getFilterDataAvailability(data, text);
 
         if (filterData) {
+            let visibleData;
             if (text) {
                 visibleData = utils.getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
                 pagination.items = filterData.length;
@@ -37,96 +36,50 @@ export const chargeFilter = text => {
 };
 
 export const changePageNumber = numberPage => {
-    return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
-        var visibleData = utils.getVisibleData(data, filterText, numberPage, itemsPerPage);
-
-        dispatch({
-            type: types.CHANGE_PAGE_NUMBER,
-            payload: {
-                numberPage,
-                visibleData
-            }
-        })
-    }
+    return ({
+        type: types.CHANGE_PAGE_NUMBER,
+        numberPage
+    })
 };
 
 export const changeNextPage = () => {
     return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var pagination = getState().appReducers.availability.pagination;
+        let {pagination} = getState().appReducers.availability;
 
-        var nextPage = pagination.actualPage != pagination.pages ? pagination.actualPage + 1 : pagination.actualPage;
-        var visibleData = utils.getVisibleData(data, filterText, nextPage, pagination.itemsPerPage);
+        let nextPage = pagination.actualPage != pagination.pages ? pagination.actualPage + 1 : pagination.actualPage;
 
         dispatch({
             type: types.CHANGE_NEXT_PAGE,
-            payload: {
-                visibleData,
-                nextPage
-            }
+            nextPage
         });
     }
 };
 
 export const changePreviousPage = () => {
     return (dispatch, getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var pagination = getState().appReducers.availability.pagination;
+        let {pagination} = getState().appReducers.availability;
 
-        var previousPage = pagination.actualPage != 1 ? pagination.actualPage - 1 : pagination.actualPage;
-        var visibleData = utils.getVisibleData(data, filterText, previousPage, pagination.itemsPerPage);
+        let previousPage = pagination.actualPage != 1 ? pagination.actualPage - 1 : pagination.actualPage;
 
         dispatch({
             type: types.CHANGE_PREVIOUS_PAGE,
-            payload: {
-                visibleData,
-                previousPage
-            }
+            previousPage
         });
     }
 };
 
 
 export const selectShowRows = cantRows => {
-    return (dispatch,getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var pagination = getState().appReducers.availability.pagination;
-        var visibleData;
-
-        if (filterText) {
-            var filterData = utils.getFilterDataAvailability(data, filterText);
-            visibleData = utils.getPaginationData(filterData, 1, cantRows);
-            pagination.items = filterData.length;
-        } else {
-            visibleData = utils.getPaginationData(data, 1, cantRows);
-            pagination.items = data.length;
-        }
-
-        pagination.pages = utils.getCantPages(pagination.items, cantRows);
-
-        dispatch({
-            type: types.SELECT_SHOW_ROWS,
-            payload: {
-                cantRows,
-                visibleData,
-                pagination
-            }
-        });
-    };
+    return ({
+        type: types.SELECT_SHOW_ROWS,
+        cantRows
+    });
 };
 
 export const sortRows = colSort => {
     return (dispatch,getState) => {
-        let data = getState().appReducers.availability.data;
-        let filterText = getState().appReducers.availability.filterText;
-        let sort = getState().appReducers.availability.sort;
-        let itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
+        let {data, filterText, sort, pagination} = getState().appReducers.availability;
+        let itemsPerPage = pagination.itemsPerPage;
 
         if (colSort == sort.colSort) {
             sort.order = sort.order == 'desc' ? 'asc' : 'desc';
@@ -179,7 +132,7 @@ export const fetchAvailability = isFirstGet => {
             type: types.LOAD_DATA_ATTEMPTED
         });
 
-        utils.getData('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
+        utils.getDataJson('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
                 pagination.items = data.length;
                 for (let i = 0; i < pagination.items; i++) {
