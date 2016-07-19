@@ -132,7 +132,7 @@ export const fetchAvailability = isFirstGet => {
             type: types.LOAD_DATA_ATTEMPTED
         });
 
-        utils.getData('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
+        utils.getDataJson('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
                 pagination.items = data.length;
                 for (let i = 0; i < pagination.items; i++) {

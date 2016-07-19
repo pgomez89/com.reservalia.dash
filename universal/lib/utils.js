@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-export const getData = url => {
+export const getDataJson = url => {
     return fetch(url).then(response => {
         if (response.ok) return response.json();
         throw {
