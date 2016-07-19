@@ -18,7 +18,7 @@ class NavBarDropDown extends Component {
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">{user}<b className="caret"></b></a>
                 <ul className="dropdown-menu">
                     <li>
-                        <Link to="/logout">Log Out</Link>
+                        <a href="/logout">Log Out</a>
                     </li>
                 </ul>
             </li>

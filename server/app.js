@@ -9,17 +9,14 @@ import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import http from 'http';
 import config from 'config';
-
+import cookieParser  from 'cookie-parser';
+import session  from 'express-session';
 import staticFiles  from 'serve-static';
 
-/**
- * Controllers (route handlers).
- */
-import { indexController, availabilityController } from './controllers';
-
 const app = express();
-let expressPort = config.get('express.port');
-
+const expressPort = config.get('express.port');
+const MongoStore = require('connect-mongo')(session);
+const routes = require('./routes');
 const isDevelopment = process.env.NODE_ENV !== 'development';
 
 // set locals to use in views *.ejs
@@ -28,8 +25,22 @@ app.locals.includeProductionCss = isDevelopment;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('layout', 'layout.ejs');
+app.set('mongoUrl', config.get('mongo.url'));
 
 app.use(expressLayouts);
+
+app.use(cookieParser());
+
+app.use(session({
+  store: new MongoStore({
+    url: config.get('mongo.url'),
+    autoRemove: 'interval',
+    autoRemoveInterval: 10
+  }),
+  secret: 's3cr3t',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use(staticFiles(
       path.join(__dirname,'..', config.get('buildDirectory')),
@@ -47,23 +58,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-
-/**
- * Application endpoints
- */
-app.get('/', indexController );
-app.get('/availability', indexController );
-
-
-
-/**
- * API Endpoints
- */
-
-app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, './public/images', 'favicon.ico')));
-app.get('/loading.gif', (req, res) => res.sendFile(path.join(__dirname, './public/images', 'loading.gif')));
-
-app.get('/availability/:startDate/:endDate', availabilityController );
+app.use('/', routes);
 
 
 app.listen(expressPort, function () {

@@ -1,6 +1,9 @@
 {
   "buildDirectory": "dist",
   "express": {
-    "port": 3005
+    "port": 9290
+  },
+  "mongo":{
+    "url": "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017/specialdom"
   }
 }
