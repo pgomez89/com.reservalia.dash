@@ -3,7 +3,7 @@ import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_NO_MATCHING,
     SELECT_START_DATE, SELECT_END_DATE, RESET_STATE } from '../constants/ActionTypes';
 
-import {getVisibleData} from '../lib/utils';
+import {getVisibleData, getCantPages} from '../lib/utils';
 import moment from 'moment';
 
 const initialState = {
@@ -115,11 +115,11 @@ export default function availability(state = initialState, action) {
         case SELECT_SHOW_ROWS://Seleccionar cantidad de páginas a mostrar.
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(state.data, state.filterText, 1, action.cantRows),
                 pagination: {
                     ...state.pagination,
-                    itemsPerPage: action.payload.cantRows,
-                    pages: action.payload.pagination.pages,
+                    itemsPerPage: action.cantRows,
+                    pages: getCantPages(state.pagination.items, action.cantRows),
                     actualPage: 1
                 }
             };

@@ -3,12 +3,11 @@ import * as utils from '../lib/utils';
 
 export const chargeFilter = text => {
     return (dispatch, getState) => {
-        var visibleData;
-        var data = getState().appReducers.availability.data;
-        var pagination = getState().appReducers.availability.pagination;
-        var filterData = utils.getFilterDataAvailability(data, text);
+        let {data, pagination} = getState().appReducers.availability;
+        let filterData = utils.getFilterDataAvailability(data, text);
 
         if (filterData) {
+            let visibleData;
             if (text) {
                 visibleData = utils.getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
                 pagination.items = filterData.length;
@@ -71,40 +70,16 @@ export const changePreviousPage = () => {
 
 
 export const selectShowRows = cantRows => {
-    return (dispatch,getState) => {
-        var data = getState().appReducers.availability.data;
-        var filterText = getState().appReducers.availability.filterText;
-        var pagination = getState().appReducers.availability.pagination;
-        var visibleData;
-
-        if (filterText) {
-            var filterData = utils.getFilterDataAvailability(data, filterText);
-            visibleData = utils.getPaginationData(filterData, 1, cantRows);
-            pagination.items = filterData.length;
-        } else {
-            visibleData = utils.getPaginationData(data, 1, cantRows);
-            pagination.items = data.length;
-        }
-
-        pagination.pages = utils.getCantPages(pagination.items, cantRows);
-
-        dispatch({
-            type: types.SELECT_SHOW_ROWS,
-            payload: {
-                cantRows,
-                visibleData,
-                pagination
-            }
-        });
-    };
+    return ({
+        type: types.SELECT_SHOW_ROWS,
+        cantRows
+    });
 };
 
 export const sortRows = colSort => {
     return (dispatch,getState) => {
-        let data = getState().appReducers.availability.data;
-        let filterText = getState().appReducers.availability.filterText;
-        let sort = getState().appReducers.availability.sort;
-        let itemsPerPage = getState().appReducers.availability.pagination.itemsPerPage;
+        let {data, filterText, sort, pagination} = getState().appReducers.availability;
+        let itemsPerPage = pagination.itemsPerPage;
 
         if (colSort == sort.colSort) {
             sort.order = sort.order == 'desc' ? 'asc' : 'desc';
