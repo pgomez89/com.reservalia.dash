@@ -9,13 +9,13 @@ const router = express.Router();
 import { indexController, availabilityController, loginController, authController, logoutController } from './controllers';
 
 
-router.use((req, res, next) => {
+/*router.use((req, res, next) => {
   if (req.session && req.session.user) {
     next();
   }else{
     next(new Error(401));
   }
-});
+});*/
 
 
 /**
