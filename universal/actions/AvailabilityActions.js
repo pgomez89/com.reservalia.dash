@@ -3,27 +3,15 @@ import * as utils from '../lib/utils';
 
 export const chargeFilter = text => {
     return (dispatch, getState) => {
-        let {data, pagination} = getState().appReducers.availability;
+        let {data} = getState().appReducers.availability;
         let filterData = utils.getFilterDataAvailability(data, text);
 
         if (filterData) {
-            let visibleData;
-            if (text) {
-                visibleData = utils.getPaginationData(filterData, pagination.actualPage, pagination.itemsPerPage);
-                pagination.items = filterData.length;
-            } else {
-                visibleData = utils.getPaginationData(data, 1, pagination.itemsPerPage);
-                pagination.items = data.length;
-            }
-
-            pagination.pages = utils.getCantPages(pagination.items, pagination.itemsPerPage);
-
             dispatch({
                 type: types.CHANGE_FILTER,
                 payload: {
                     text,
-                    visibleData,
-                    pagination
+                    filterData
                 }
             });
         } else {
@@ -77,25 +65,23 @@ export const selectShowRows = cantRows => {
 };
 
 export const sortRows = colSort => {
-    return (dispatch,getState) => {
-        let {data, filterText, sort, pagination} = getState().appReducers.availability;
-        let itemsPerPage = pagination.itemsPerPage;
+    return (dispatch, getState) => {
+        let {data, sort } = getState().appReducers.availability;
+        let order;
 
         if (colSort == sort.colSort) {
-            sort.order = sort.order == 'desc' ? 'asc' : 'desc';
+            order = sort.order == 'desc' ? 'asc' : 'desc';
         } else {
-            sort.order = 'desc';
+            order = 'desc';
         }
 
-        var sortData = utils.getDataSort(data, sort.order, colSort);
-        var visibleData = utils.getVisibleData(sortData, filterText, 1, itemsPerPage);
+        let sortData = utils.getDataSort(data, order, colSort);
 
         dispatch({
             type: types.SORT_ROWS,
             payload: {
                 sortData,
-                visibleData,
-                sort,
+                order,
                 colSort
             }
         });
@@ -122,41 +108,20 @@ export const resetStateAvailability = () => {
     }
 };
 
-export const fetchAvailability = isFirstGet => {
-    return (dispatch,getState) => {
-        let pagination = getState().appReducers.availability.pagination;
-        let startDate = getState().appReducers.availability.startDate;
-        let endDate = getState().appReducers.availability.endDate;
-
-        dispatch({
-            type: types.LOAD_DATA_ATTEMPTED
-        });
-
+export const fetchAvailability = () => {
+    return (dispatch, getState) => {
+        let {startDate, endDate} = getState().appReducers.availability;
+        dispatch({type: types.LOAD_DATA_ATTEMPTED});
         utils.getDataJson('/availability/' + startDate.format("YYYY-MM-DD") + '/' + endDate.format("YYYY-MM-DD"))
             .then(data => {
-                pagination.items = data.length;
-                for (let i = 0; i < pagination.items; i++) {
+                for (let i = 0; i < data.length; i++) {
                     data[i].percentAvailability = utils.calPercentage(data[i].sinDisponibilidad, data[i].total);
                 }
                 data = utils.getDataSort(data, 'desc', 'sinDisponibilidad');
-                if (isFirstGet) pagination.itemsPerPage = 10;
-                var visibleData = utils.getVisibleData(data, '', 1, pagination.itemsPerPage);
-                pagination.pages = utils.getCantPages(pagination.items, pagination.itemsPerPage);
-
-                dispatch({
-                    type: types.LOAD_DATA_SUCCEEDED,
-                    payload: {
-                        data,
-                        visibleData,
-                        pagination
-                    }
-                });
+                dispatch({type: types.LOAD_DATA_SUCCEEDED, data});
             })
-            .catch(err => {
-                dispatch({
-                    type: types.LOAD_DATA_FAILED,
-                    err
-                })
+            .catch(error => {
+                dispatch({type: types.LOAD_DATA_FAILED, error})
             })
     }
 };

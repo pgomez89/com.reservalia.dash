@@ -3,7 +3,7 @@ import { CHANGE_FILTER , CHANGE_PAGE_NUMBER, SELECT_SHOW_ROWS,
     CHANGE_NEXT_PAGE, CHANGE_PREVIOUS_PAGE, SORT_ROWS, CHANGE_FILTER_NO_MATCHING,
     SELECT_START_DATE, SELECT_END_DATE, RESET_STATE } from '../constants/ActionTypes';
 
-import {getVisibleData, getCantPages} from '../lib/utils';
+import {getVisibleData, getCantPages, getPaginationData} from '../lib/utils';
 import moment from 'moment';
 
 const initialState = {
@@ -38,14 +38,14 @@ export default function availability(state = initialState, action) {
         case LOAD_DATA_SUCCEEDED://Resolver promise exitosamente, setear valores necesario
             return {
                 ...state,
-                data: action.payload.data,
+                data: action.data,
                 isFetching: false,
                 isErrorFetch: false,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(action.data, state.filterText, 1, state.pagination.itemsPerPage),
                 pagination: {
-                    items: action.payload.pagination.items,
-                    itemsPerPage: action.payload.pagination.itemsPerPage,
-                    pages: action.payload.pagination.pages,
+                    ...state.pagination,
+                    items: action.data.length,
+                    pages: getCantPages(action.data.length, state.pagination.itemsPerPage),
                     actualPage: 1
                 },
                 filterText: '',
@@ -64,11 +64,11 @@ export default function availability(state = initialState, action) {
         case CHANGE_FILTER://Cargar filtro, filtra por Id y host.
             return {
                 ...state,
-                visibleData: action.payload.visibleData,
+                visibleData: getPaginationData(action.payload.filterData, 1, state.pagination.itemsPerPage),
                 pagination: {
                     ...state.pagination,
-                    items: action.payload.pagination.items,
-                    pages: action.payload.pagination.pages,
+                    items: action.payload.filterData.length,
+                    pages: getCantPages(action.payload.filterData.length, state.pagination.itemsPerPage),
                     actualPage: 1
                 },
                 filterText: action.payload.text,
@@ -127,13 +127,13 @@ export default function availability(state = initialState, action) {
             return {
                 ...state,
                 data: action.payload.sortData,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(action.payload.sortData, state.filterText, state.pagination.actualPage, state.pagination.itemsPerPage),
                 pagination: {
                     ...state.pagination,
                     actualPage: 1
                 },
                 sort: {
-                    order: action.payload.sort.order,
+                    order: action.payload.order,
                     colSort: action.payload.colSort
                 }
             };
