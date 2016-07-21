@@ -28,7 +28,7 @@ describe('Actions', () => {
             type: types.SELECT_START_DATE,
             startDate
         };
-        expect(action.selectShowRows(startDate)).to.eql(expectedAction)
+        expect(action.selectStartDate(startDate)).to.eql(expectedAction)
     });
 
     it('selectEndDate', () => {

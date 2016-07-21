@@ -66,24 +66,22 @@ export const selectShowRows = cantRows => {
 
 export const sortRows = colSort => {
     return (dispatch, getState) => {
-        let {data, filterText, sort, pagination} = getState().appReducers.availability;
-        let itemsPerPage = pagination.itemsPerPage;
+        let {data, sort } = getState().appReducers.availability;
+        let order;
 
         if (colSort == sort.colSort) {
-            sort.order = sort.order == 'desc' ? 'asc' : 'desc';
+            order = sort.order == 'desc' ? 'asc' : 'desc';
         } else {
-            sort.order = 'desc';
+            order = 'desc';
         }
 
-        var sortData = utils.getDataSort(data, sort.order, colSort);
-        var visibleData = utils.getVisibleData(sortData, filterText, 1, itemsPerPage);
+        let sortData = utils.getDataSort(data, order, colSort);
 
         dispatch({
             type: types.SORT_ROWS,
             payload: {
                 sortData,
-                visibleData,
-                sort,
+                order,
                 colSort
             }
         });

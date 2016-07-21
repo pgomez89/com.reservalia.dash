@@ -127,13 +127,13 @@ export default function availability(state = initialState, action) {
             return {
                 ...state,
                 data: action.payload.sortData,
-                visibleData: action.payload.visibleData,
+                visibleData: getVisibleData(action.payload.sortData, state.filterText, state.pagination.actualPage, state.pagination.itemsPerPage),
                 pagination: {
                     ...state.pagination,
                     actualPage: 1
                 },
                 sort: {
-                    order: action.payload.sort.order,
+                    order: action.payload.order,
                     colSort: action.payload.colSort
                 }
             };
