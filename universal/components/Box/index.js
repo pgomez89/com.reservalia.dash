@@ -8,7 +8,7 @@ const propTypes = {
 class Box extends Component {
   render() {
     return (<div className={css.Box}>
-              <h1> Box Presentational React Component </h1>
+              <h1> {this.props.title} </h1>
             </div>);
   }
 }

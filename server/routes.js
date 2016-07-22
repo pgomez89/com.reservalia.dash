@@ -35,6 +35,7 @@ router.post('/auth', authController );
 router.get('/health-check', (req, res) => { res.send({status: 'ok'}); });
 
 router.get('/availability', indexController );
+router.get('/stats', indexController );
 
 
 /**
