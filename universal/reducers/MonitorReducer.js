@@ -9,6 +9,10 @@ const initialState = {
         {
             name: 'Disponibilidad',
             route: '/availability'
+        },
+        {
+            name: 'Stats',
+            route: '/stats'
         }
     ]
 };
