@@ -13,6 +13,11 @@ const get = url => {
 };
 
 export default {
-    getTotalSales: () => get("/sales/totalSales?lastModified=0")
+    // getTotalSales: () => get("http://hotelmanager.reservalia.com:2020/sales/totalSales?lastModified=0")
+    getTotalSales: function(){
+        return new Promise(function(resolve,reject){
+            resolve(10);
+        });
+    }
 }
 

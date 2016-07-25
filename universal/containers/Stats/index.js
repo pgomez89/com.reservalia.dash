@@ -10,11 +10,14 @@ const propTypes = {
 class Stats extends Component {
     render() {
         return (
-            <div className="Stats" id="page-wrapper">
+
+            <div className="Stats container" id="page-wrapper">
                 <h1>El panel</h1>
-                <Boxes title={"Ventas"} type={"sales"}></Boxes>
-                <Boxes title={"Errores"} type={"errors"}></Boxes>
-                <Boxes title={"Totales"} type={"total"}></Boxes>
+                <div className="row">
+                    <Boxes title={"Ventas"} type={"sales"}></Boxes>
+                    <Boxes title={"Errores"} type={"errors"}></Boxes>
+                    <Boxes title={"Totales"} type={"total"}></Boxes>
+                </div>
             </div>
         );
     }
