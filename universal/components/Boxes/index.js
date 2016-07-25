@@ -4,10 +4,6 @@ import {bindActionCreators} from 'redux';
 
 import css from './index.scss';
 import Box from '../Box'
-import stats from '../../lib/stats';
-
-//Actions
-import {getTotalSales}  from '../../actions/StatsActions'
 
 
 const propTypes = {
@@ -16,11 +12,6 @@ const propTypes = {
 };
 
 class Boxes extends Component {
-
-
-    componentDidMount() {
-        this.props.getTotalSales();
-    }
 
     render() {
         let boxes = this.props.boxes[this.props.type];
@@ -43,15 +34,10 @@ class Boxes extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({
-        getTotalSales
-    }, dispatch);
-};
 
 const mapStateToProps = state => {
     return {boxes: state.appReducers.boxes};
 };
 
 Boxes.propTypes = propTypes;
-export default connect(mapStateToProps,mapDispatchToProps)(Boxes);
+export default connect(mapStateToProps)(Boxes);

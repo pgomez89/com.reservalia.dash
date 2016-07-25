@@ -13,10 +13,21 @@ const get = url => {
 };
 
 export default {
-    // getTotalSales: () => get("http://hotelmanager.reservalia.com:2020/sales/totalSales?lastModified=0")
     getTotalSales: function(){
         return new Promise(function(resolve,reject){
             resolve(10);
+        });
+    },
+
+    getSalesOK: function(){
+        return new Promise(function(resolve,reject){
+            resolve({"oneShot":20,"extraSteps":0});
+        });
+    },
+
+    getSalesWithBookingStatus: function(){
+        return new Promise(function(resolve,reject){
+            resolve([{"_id":"NEW_CREDIT_CARD","count":2}]);
         });
     }
 }
