@@ -11,8 +11,8 @@ const propTypes = {
 };
 
 class Stats extends Component {
-
-    componentDidMount() {
+    //http://stackoverflow.com/questions/26348557/issue-accessing-state-inside-setinterval-in-react-js
+    runMetrics(){
         this.props.getTotalSales();
         this.props.getSalesOK();
         this.props.getSalesWithBookingStatus();
@@ -21,6 +21,14 @@ class Stats extends Component {
         this.props.getErrorsWithBookingStatus();
         this.props.getTotalAttemps();
         this.props.getTotalTokens();
+    }
+
+    componentDidMount() {
+        setInterval(()=>{
+            this.runMetrics();
+            console.log("RUNNING METRICS");
+        },100000);
+        this.runMetrics();
     }
 
     render() {
