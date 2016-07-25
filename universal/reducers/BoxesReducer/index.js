@@ -33,6 +33,21 @@ export default function (state = defaultState, action) {
 
             newState["sales"][action.data.metric] = {key: newState["sales"].length+1 , title: action.data.metric, metric: action.data.metric, value:action.data.value};
             return newState;
+
+        case "LOAD_TOTAL_ERRORS":
+        case "LOAD_UNKNOWN_ERRORS":
+            newState["errors"][action.data.metric].value = action.data.value;
+            return newState;
+
+        case "LOAD_ERRORS_WITH_BOOKING_STATUS":
+            newState["errors"][action.data.metric] = {key: newState["sales"].length+1 , title: action.data.metric, metric: action.data.metric, value:action.data.value};
+            return newState;
+
+        case "LOAD_TOTAL_ATTEMPS":
+        case "LOAD_TOTAL_TOKENS":
+            newState["total"][action.data.metric].value = action.data.value;
+            return newState;
+
         default:
             return state;
     }

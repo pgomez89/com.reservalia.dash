@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import Boxes from '../../components/Boxes';
 
 //Actions
-import {getTotalSales,getSalesOK,getSalesWithBookingStatus}  from '../../actions/StatsActions'
+import {getTotalSales,getSalesOK,getSalesWithBookingStatus, getTotalErrors, getUnknownErrors, getErrorsWithBookingStatus, getTotalAttemps,getTotalTokens}  from '../../actions/StatsActions'
 
 const propTypes = {
     
@@ -16,6 +16,11 @@ class Stats extends Component {
         this.props.getTotalSales();
         this.props.getSalesOK();
         this.props.getSalesWithBookingStatus();
+        this.props.getTotalErrors();
+        this.props.getUnknownErrors();
+        this.props.getErrorsWithBookingStatus();
+        this.props.getTotalAttemps();
+        this.props.getTotalTokens();
     }
 
     render() {
@@ -42,7 +47,12 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         getTotalSales,
         getSalesOK,
-        getSalesWithBookingStatus
+        getSalesWithBookingStatus,
+        getTotalErrors,
+        getUnknownErrors,
+        getErrorsWithBookingStatus,
+        getTotalAttemps,
+        getTotalTokens
     }, dispatch);
 };
 
