@@ -9,16 +9,16 @@
 // Reducer
 export const defaultState = {
     sales: {
-        totalSales: {key: 1, title: "Ventas", metric: "totalSales", value: 0},
-        salesOK: {key: 2, title: "One Shot", metric: "salesOK", value: 0}
+        totalSales: {key: "totalSales", title: "Ventas", metric: "totalSales", value: 0},
+        salesOK: {key: "salesOK", title: "One Shot", metric: "salesOK", value: 0}
     },
     errors: {
-        totalErrors: {key: 3, title: "Errores", metric: "totalErrors", value: 0},
-        unknownErrors: {key: 4, title: "Unknown", metric: "unknown", value: 0}
+        totalErrors: {key: "totalErrors", title: "Errores", metric: "totalErrors", value: 0},
+        unknownErrors: {key: "unknownErrors", title: "Unknown", metric: "unknown", value: 0}
     },
     total: {
-        attemps: {key: 5, title: "Intentos", metric: "totalAttemps", value: 0},
-        tokens: {key: 6, title: "Tokens", metric: "tokens", value: 0}
+        attemps: {key: "attemps", title: "Intentos", metric: "totalAttemps", value: 0},
+        tokens: {key: "tokens", title: "Tokens", metric: "tokens", value: 0}
     }
 };
 
@@ -31,7 +31,7 @@ export default function (state = defaultState, action) {
             return newState;
         case "LOAD_SALES_WITH_BOOKING_STATUS":
 
-            newState["sales"][action.data.metric] = {key: newState["sales"].length+1 , title: action.data.metric, metric: action.data.metric, value:action.data.value};
+            newState["sales"][action.data.metric] = {key: action.data.metric , title: action.data.metric, metric: action.data.metric, value:action.data.value};
             return newState;
 
         case "LOAD_TOTAL_ERRORS":
@@ -40,7 +40,7 @@ export default function (state = defaultState, action) {
             return newState;
 
         case "LOAD_ERRORS_WITH_BOOKING_STATUS":
-            newState["errors"][action.data.metric] = {key: newState["sales"].length+1 , title: action.data.metric, metric: action.data.metric, value:action.data.value};
+            newState["errors"][action.data.metric] = {key: action.data.metric , title: action.data.metric, metric: action.data.metric, value:action.data.value};
             return newState;
 
         case "LOAD_TOTAL_ATTEMPS":

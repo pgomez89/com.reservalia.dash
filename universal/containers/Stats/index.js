@@ -27,7 +27,7 @@ class Stats extends Component {
         this.interval = setInterval(()=>{
             this.runMetrics();
             console.log("RUNNING METRICS");
-        },1000);
+        },10000);
         this.runMetrics();
     }
 
