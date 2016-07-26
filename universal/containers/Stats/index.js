@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import Boxes from '../../components/Boxes';
 
 //Actions
-import {getTotalSales,getSalesOK,getSalesWithBookingStatus, getTotalErrors, getUnknownErrors, getErrorsWithBookingStatus, getTotalAttemps,getTotalTokens}  from '../../actions/StatsActions'
+import * as metrics  from '../../actions/StatsActions'
 
 const propTypes = {
     
@@ -24,11 +24,15 @@ class Stats extends Component {
     }
 
     componentDidMount() {
-        setInterval(()=>{
+        this.interval = setInterval(()=>{
             this.runMetrics();
             console.log("RUNNING METRICS");
-        },100000);
+        },1000);
         this.runMetrics();
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.interval);
     }
 
     render() {
@@ -52,16 +56,7 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({
-        getTotalSales,
-        getSalesOK,
-        getSalesWithBookingStatus,
-        getTotalErrors,
-        getUnknownErrors,
-        getErrorsWithBookingStatus,
-        getTotalAttemps,
-        getTotalTokens
-    }, dispatch);
+    return bindActionCreators(metrics, dispatch);
 };
 
 Stats.propTypes = propTypes;
