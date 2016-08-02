@@ -3,6 +3,6 @@ machine:
     version: 6.3.1
 deployment:
   staging:
-    branch: master
+    branch: develop
     heroku:
       appname: com-reservalia-dash
