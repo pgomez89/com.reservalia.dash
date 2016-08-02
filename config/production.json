@@ -4,6 +4,6 @@
     "port": 9290
   },
   "mongo":{
-    "url": "mongodb://reservalia-db-00:27017,reservalia-db-01:27017,reservalia-db-02:27017/specialdom"
+    "url": "mongodb://bigote:bigote@ds139705.mlab.com:39705/heroku_2ztq1l49"
   }
 }
