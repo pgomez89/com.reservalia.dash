@@ -71,7 +71,27 @@
     "webpack": "^1.13.1",
     "webpack-dev-server": "1.14.x",
     "webpack-manifest-plugin": "^1.0.1",
-    "webpack-shell-plugin": "^0.4.2"
+    "webpack-shell-plugin": "^0.4.2",
+    "bluebird": "3.1.x",
+    "body-parser": "1.14.x",
+    "classnames": "2.2.x",
+    "config": "1.19.x",
+    "ejs": "2.3.x",
+    "express": "4.13.x",
+    "history": "1.13.x",
+    "node-uuid": "1.4.x",
+    "react": "15.0.x",
+    "react-dom": "15.0.x",
+    "react-redux": "4.4.x",
+    "react-router": "2.4.x",
+    "react-router-redux": "4.0.x",
+    "redux": "3.5.x",
+    "redux-logger": "2.6.x",
+    "redux-thunk": "2.1.x",
+    "serve-static": "1.10.x",
+    "superagent": "1.8.x",
+    "xss": "0.2.x"
+
   },
   "devDependencies": {
     "babel": "6.5.x",
