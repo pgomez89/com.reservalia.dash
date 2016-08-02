@@ -14,7 +14,7 @@ import session  from 'express-session';
 import staticFiles  from 'serve-static';
 
 const app = express();
-const expressPort = config.get('express.port');
+const expressPort = process.env.PORT || config.get('express.port');
 const MongoStore = require('connect-mongo')(session);
 const routes = require('./routes');
 const isDevelopment = process.env.NODE_ENV !== 'development';
