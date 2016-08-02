@@ -1,7 +1,7 @@
 {
   "buildDirectory": "dist",
   "express": {
-    "port": 9290
+    "port": 80
   },
   "mongo":{
     "url": "mongodb://bigote:bigote@ds139705.mlab.com:39705/heroku_2ztq1l49"

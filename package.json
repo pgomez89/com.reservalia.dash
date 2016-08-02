@@ -10,7 +10,7 @@
     "start:dev": "NODE_ENV=development webpack & node ./server.webpack.HMR.js & nodemon ./index.js",
     "start": "NODE_ENV=production node index.js",
     "test": "mocha --compilers js:babel-register --require ignore-styles --recursive",
-    "postinstall": "NODE_ENV=production webpack"
+    "postinstall": "webpack"
   },
   "keywords": [
     "react",
